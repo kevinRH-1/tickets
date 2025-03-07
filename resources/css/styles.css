@@ -1,0 +1,22 @@
+.logo-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+   }
+
+.reloj-contenedor {
+    margin-bottom: 0;
+}
+
+.boton-colapso-rojo {
+    color: rgb(255, 0, 0);
+    border-color: rgb(255, 0, 0);
+}
+
+.boton-colapso-rojo:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.icono-rojo {
+    color: rgb(255, 0, 0);
+}

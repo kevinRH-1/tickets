@@ -1,0 +1,10 @@
+body {
+  background: url('../imagen/pruebafondo2.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+}
+.border-active {
+  border-bottom: 3px solid red;
+}
