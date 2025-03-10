@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EquiposExport;
 use App\Http\Controllers\equipos\ImpresorasController;
 use App\Http\Controllers\equipos\LaptopController;
 use App\Http\Controllers\equipos\PcController;
@@ -18,6 +19,7 @@ use App\Models\CategoriasEquipos;
 use App\Models\Sucursal;
 use App\Models\User;
 use App\Models\EstadosEquipos;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EquipoController extends Controller
 {
@@ -249,6 +251,119 @@ class EquipoController extends Controller
 
             return response()->json(['message' => 'registro borrado']);
         }
+    }
+
+
+    public function filtros(Request $request){
+
+        $sucursal = $request->sucursal;
+        $estado = $request->estado;
+        $tipo =  $request->tipo;
+
+        $querypc =  Pc::with('categoria', 'lugar', 'estado')->OrderBy('id');
+        $querylaptop =  Laptops::with('categoria', 'lugar', 'estado')->OrderBy('id');
+        $queryimpresora =  Impresoras::with('categoria', 'lugar', 'estado')->OrderBy('id');
+
+        if($sucursal != 0){
+            $querypc->where('lugar_id', $sucursal);
+            $querylaptop->where('lugar_id', $sucursal);
+            $queryimpresora->where('lugar_id', $sucursal);
+        }
+        if($estado != 0){
+            $querypc->where('estado_id', $estado);
+            $querylaptop->where('estado_id', $estado);
+            $queryimpresora->where('estado_id', $estado);
+            
+        }
+
+        $tipoequipo =1;
+
+        if($tipo == 'excel'){
+
+            $equipos = collect();
+
+            if($tipoequipo==0){
+                $equipos = $equipos->merge($querypc->get())
+                               ->merge($querylaptop->get())
+                               ->merge($queryimpresora->get());
+            }if($tipoequipo==1){
+                $equipos = $equipos->merge($querypc->get());
+            }
+            
+            
+            return Excel::download(new EquiposExport($equipos, $tipoequipo), 'reportes_equipos.xlsx');
+
+        }else{
+            $pcs = $querypc->orderBy('created_at', 'desc')->paginate(10)->appends([
+                'sucursal' => $request->sucursal,
+                'estado'=> $request->estado,
+            ]);
+            $laptops = $querylaptop->orderBy('created_at', 'desc')->paginate(10)->appends([
+                'sucursal' => $request->sucursal,
+                'estado'=> $request->estado,
+            ]);
+            $impresoras = $queryimpresora->orderBy('created_at', 'desc')->paginate(10)->appends([
+                'sucursal' => $request->sucursal,
+                'estado'=> $request->estado,
+            ]);
+        }
+
+
+        $impresorasc = Impresoras::with('categoria', 'lugar', 'estado')->where('activo',1)->orderBy('id')->get();
+        $pcsc = Pc::with('categoria', 'lugar', 'estado')->where('activo',1)->orderBy('id')->get();
+        $laptopsc = Laptops::with('categoria', 'lugar', 'estado')->where('activo',1)->orderBy('id')->get();
+        // $teclados = Teclados::orderBy('id')->get();
+        // $ratones = Raton::orderBy('id')->get();
+        // $monitores = Monitores::orderBy('id')->get();
+        $usuarios= User::orderby('name')->where('activo',1)->get();
+        $categorias= CategoriasEquipos::orderby('id')->get();
+        $sucursales= Sucursal::orderby('id')->where('activo', 1)->get();
+        $estados = EstadosEquipos::orderby('id')->get();
+
+        $query_totales = collect();
+        $query_buenos = collect();
+        $query_danados = collect();
+        $query_nouso = collect();
+
+        $query_totales = $query_totales->merge($impresorasc)
+                                        ->merge($pcsc)
+                                       ->merge($laptopsc)
+                                       ;
+
+        $equipostotales = count($query_totales);
+
+
+        $query_buenos = $query_buenos->merge($impresorasc->where('estado_id', 1))
+                                     ->merge($pcsc->where('estado_id',1))
+                                     ->merge($laptopsc->where('estado_id',1))
+                                     ;
+
+        $equiposbuenos = count($query_buenos);
+
+        $query_danados = $query_danados->merge($impresorasc->where('estado_id', 2))
+                                     ->merge($pcsc->where('estado_id',2))
+                                     ->merge($laptopsc->where('estado_id',2))
+                                     ;
+
+        $equiposdanados = count($query_danados);
+
+        $query_nouso = $query_nouso->merge($impresorasc->where('estado_id', 4))
+                                     ->merge($pcsc->where('estado_id',4))
+                                     ->merge($laptopsc->where('estado_id',4))
+                                     ;
+
+        $equiposnouso = count($query_nouso);
+
+        if($request->tipo == 'excel'){
+            
+        }else{
+            return view('equipos.equiposgeneral', compact('impresoras', 'pcs', 'laptops', 'equipostotales', 'equiposbuenos', 'equiposdanados', 
+                'equiposnouso', 'query_totales', 'sucursales', 'estados', 'categorias',
+                'usuarios'));
+        }
+
+
+
     }
 
 }

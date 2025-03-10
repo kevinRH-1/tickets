@@ -107,6 +107,7 @@ Route::post('asignar/{id}/{cate}',[EquipoController::class, 'asignar'])->name('e
 Route::post('actualizar/{id}/{cate}',[EquipoController::class, 'update'])->name('equipo.update');
 Route::post('equipos/store', [EquipoController::class, 'store'])->name('equipo.store');
 Route::delete('equipo/eliminar/{id}/{cate}', [EquipoController::class, 'eliminar'])->name('equipo.eliminar');
+Route::get('filtrosequipos', [EquipoController::class, 'filtros'])->name('filtros.equipos');
 //  Pc
 Route::post('pc/create', [PcController::class, 'store'])->name('pc.store');
 Route::get('/consulta-datos/pc/{id}', [PcController::class, 'find'])->name('consulta.pc');

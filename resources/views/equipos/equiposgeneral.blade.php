@@ -44,6 +44,67 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade pt-[20%] md:!pt-0" id="modalfiltro" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-body text-center px-1 py-9 overflow-auto">
+                  <div class="">
+                      {{-- <label for="" class="block mb-6">FECHA: </label>
+                      <div class="flex w-full justify-center">
+                          <input type="date" id="filtrofecha1" name="filtrofecha1" class="ml-2 mb-2 pl-1 max-w-[130px] md:max-w-[200px] rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm">
+                          <h1 class="m-2 mt-2 text-1xl">hasta</h1>
+                          <input type="date" name="filtrofecha2" id="filtrofecha2" class="ml-2 mb-2 pl-1 max-w-[130px] md:max-w-[200px]  rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm">
+                      </div> --}}
+                      <label for="" class="block mt-4 mb-2">SUCURSAL DEL USUARIO: </label>
+                      <select name="filtrosucursal" id="filtrosucursal" class="ml-2 mb-2 pl-1 rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm">
+                          <option value="0">todas las sucursales</option>
+                          @forEach($sucursales as $item)
+                              <option value="{{$item->id}}">{{$item->nombre}}</option>
+                          @endforeach
+                      </select>
+                      {{-- <div class="flex w-11/12 mx-auto justify-around">
+                          <div>
+                              <label for="" class="block mt-4 mb-2">SISTEMA DEL TICKET: </label>
+                              <select name="filtrosistema" id="filtrosistema" class="ml-2 mb-2 pl-1 rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm">
+                                  <option value="0">todos los sistemas</option>
+                                  @forEach($sistemas as $item)
+                                      <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                  @endforeach
+                              </select>
+                          </div>
+                          <div>
+                              <label for="" class="block mt-4 mb-2">MIS TICKETS: </label>
+                              <input type="checkbox" name="propios" id="propios" class="rounded-md mt-2">
+                              <input type="text" hidden name="usuariotecnico" id="usuariotecnico" value="{{Auth::user()->id}}">
+                          </div>
+                      </div> --}}
+                      <label for="" class="block mt-4 mb-2">ESTADO DEL EQUIPO: </label>
+                      <select name="filtroestado" id="filtroestado" class="ml-2 mb-2 pl-1 rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm">
+                          <option value="0">todos los estados</option>
+                          @forEach($estados as $item)
+                              <option value="{{$item->id}}">{{$item->descripcion}}</option>
+                          @endforeach
+                      </select>
+                      {{-- <label for="" class="block mt-4 mb-2">NIVEL DE IMPORTANCIA: </label>
+                      <select name="filtronivel" id="filtronivel" class="ml-2 mb-2 pl-1 rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm">
+                          <option value="10">todos los estados</option>
+                          <option value="0">sin informacion</option>
+                          @forEach($nivel as $item)
+                              <option value="{{$item->id}}">{{$item->descripcion}}</option>
+                          @endforeach
+                      </select> --}}
+                      
+                      <p id="filtro-error" class="text-red-500 text-sm hidden">Debe llenar al menos una de las opciones!</p>
+                      <div class="mb-10"></div>
+
+                      <button class="block p-2 bg-emerald-500 rounded-md text-white w-40 m-auto" id="filtroboton" data-type="filtro">VER RESULTADOS</button>
+                      <button class="block p-2 bg-emerald-500 rounded-md text-white w-50 m-auto mt-2" id="filtroboton" data-type='excel'>DESCARGAR EXCEL</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
     
     <div class="container-fluid mt-14">
         <div class="w-1/4 flex items-end ">
@@ -60,12 +121,15 @@
         <div class=" bg-white border-0 rounded-tr-lg shadow mb-5 pt-4">
 
           <div class="d-grid gap-2 hidden md:block d-md-flex justify-content-md-end  mr-10">
-            <button type="button" class="btn btn-primary hidden md:block" data-bs-toggle="modal" data-bs-target="#modalAgregarEquipo"><i class="bi bi-check2-square"></i>
+            <button class="p-2 md:mb-4 mb-2 bg-emerald-500 rounded-md text-white md:w-40 mt-2 md:mt-0  ml-2 md:ml-0 hidden md:block" onclick="mostrarfiltro()">FILTRAR</button>
+            <button type="button" class="btn btn-primary hidden md:block mt-2 mb-2" data-bs-toggle="modal" data-bs-target="#modalAgregarEquipo"><i class="bi bi-check2-square"></i>
                 Agregar</button>
           </div>
 
-          <div class="d-grid gap-2 md:!hidden d-md-flex justify-content-end mr-4">
-            <button type="button" class="btn btn-primary w-16" data-bs-toggle="modal" data-bs-target="#modalAgregarEquipo">
+          <div class="w-full md:!hidden flex justify-end mr-4">
+            <button class="p-2 md:mb-4 mb-2 bg-emerald-500 rounded-md text-white md:w-40 w-20 mt-2 md:mt-0  ml-2 md:ml-0 mr-2" onclick="mostrarfiltro()">FILTRAR</button>
+
+            <button type="button" class="btn btn-primary w-16 my-2 mr-2" data-bs-toggle="modal" data-bs-target="#modalAgregarEquipo">
                 +</button>
           </div>
             
@@ -1460,6 +1524,33 @@
       }
     })
 
+  }
+
+
+  function mostrarfiltro(){
+    $('#modalfiltro').modal('show');
+
+    $(document).off('click', '#filtroboton').on('click','#filtroboton', function(){
+      var type = $(this).data('type');
+      const formData = {
+        sucursal: $('#filtrosucursal').val(),
+        estado: $('#filtroestado').val(),
+        tipo : type,
+      }
+
+      console.log(formData);
+
+
+      
+      // Construir la URL con los parámetros
+      let query = $.param(formData);
+      let url = `/filtrosequipos?${query}`;
+
+      // Redirigir a la página con los filtros
+      window.location.href = url;
+      
+      
+    });
   }
   
 
