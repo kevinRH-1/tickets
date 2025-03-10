@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ticketshardwareExport;
 use App\Models\ReportesHardware;
 use Illuminate\Http\Request;
 use App\Models\equipos\Pc;
@@ -21,6 +22,7 @@ use App\Models\TipoSolucion;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ControllerHardwareReporte extends Controller
 {
@@ -477,10 +479,12 @@ class ControllerHardwareReporte extends Controller
         $maquina = $request->maquina;
         $problema = $request->problema;
         $estado = $request->estado;
+        $usuario = $request->usuario;
+        $check = $request->check;
 
         $reportest = ReportesHardware::orderBy('id')->get();
 
-        $query = ReportesHardware::with('usuario.sucursal', 'status');
+        $query = ReportesHardware::with('usuario.sucursal', 'status')->OrderBy('noti_t', 'desc');
 
         if ($fecha1 != '') {
             $query->where('created_at', '>=', $fecha1);
@@ -510,14 +514,26 @@ class ControllerHardwareReporte extends Controller
             $query->where('status_id', $estado);
         }
 
-        $reportes = $query->orderBy('created_at', 'desc')->paginate(10)->appends([
-            'fecha1' => $request->fecha1,
-            'fecha2' => $request->fecha2,
-            'sucursal' => $request->sucursal,
-            'maquina' => $request->maquina,
-            'problema' => $request->problema,
-            'estado' => $request->estado,
-        ]);
+        if($check=='true'){
+            $query->where('idtecnico', $usuario);
+        }
+
+        if($request->tipo =='excel'){
+            $reportes = $query->orderBy('created_at', 'desc')->get();
+        }else{
+            $reportes = $query->orderBy('created_at', 'desc')->paginate(10)->appends([
+                'fecha1' => $request->fecha1,
+                'fecha2' => $request->fecha2,
+                'sucursal' => $request->sucursal,
+                'maquina' => $request->maquina,
+                'problema' => $request->problema,
+                'estado' => $request->estado,
+                'usuario' => $request->usuario,
+                // 'check' => $request->check,
+            ]);
+        }
+
+        
 
         $sucursales = Sucursal::where('id', '!=', 1)->where('activo', 1)->orderBy('id')->get();
         $fallas = TipoFalla::orderBy('id')->get();
@@ -535,7 +551,13 @@ class ControllerHardwareReporte extends Controller
         $revision = count($queryrevision);
         $solucionados = count($querysolucionados);
 
-        return view('reportes.reportesgeneral', compact('reportes', 'solucionados', 'generados', 'revision', 'sucursales', 'fallas', 'estatus'));
+        if($request->tipo=='excel'){
+            return Excel::download(new ticketshardwareExport($reportes), 'reportes_hardware.xlsx');
+        }else{
+            return view('reportes.reportesgeneral', compact('reportes', 'solucionados', 'generados', 'revision', 'sucursales', 'fallas', 'estatus'));
+
+        }
+
 
     }
 

@@ -7,7 +7,7 @@
 
         <!-- Título en el centro -->
         <h1 class="text-lg font-semibold text-gray-800 text-center">
-            Gestion de tickets
+            Gestion de tickets || Hardware 
         </h1>
 
         <!-- Botón derecho -->
@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <div class="modal fade mt-[5%]" id="modalfiltro" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+    <div class="modal fade mt-[1%]" id="modalfiltro" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body text-center py-9">
@@ -51,14 +51,23 @@
                                 <option value="{{$item->id}}">{{$item->nombre}}</option>
                             @endforeach
                         </select>
-                        <label for="" class="block mt-2 mb-2">TIPO DE MAQUINA: </label>
-                        <select name="filtromaquina" id="filtromaquina" class="ml-2 mb-2 pl-1 rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm">
-                            <option value="0">todos las maquinas</option>
-                            <option value="1">PC</option>
-                            <option value="2">Laptop</option>
-                            <option value="3">Impresora</option>
-                            
-                        </select>
+                        <div class="flex w-11/12 mx-auto justify-around">
+                            <div>
+                                <label for="" class="block mt-2 mb-2">TIPO DE MAQUINA: </label>
+                                <select name="filtromaquina" id="filtromaquina" class="ml-2 mb-2 pl-1 rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm">
+                                    <option value="0">todos las maquinas</option>
+                                    <option value="1">PC</option>
+                                    <option value="2">Laptop</option>
+                                    <option value="3">Impresora</option>
+                                    
+                                </select>
+                            </div>
+                            <div>
+                                <label for="" class="block mt-4 mb-2">MIS TICKETS: </label>
+                                <input type="checkbox" name="propios" id="propios" class="rounded-md mt-2">
+                                <input type="text" hidden name="usuariotecnico" id="usuariotecnico" value="{{Auth::user()->id}}">
+                            </div>
+                        </div>
                         <label for="" class="block mt-4 mb-2">TIPO DE PROBLEMA: </label>
                         <select name="filtroproblema" id="filtroproblema" class="ml-2 mb-2 pl-1 rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm">
                             <option value="0">todos los problemas</option>
@@ -77,6 +86,7 @@
                         <div class="mb-10"></div>
 
                         <button class="block p-2 bg-emerald-500 rounded-md text-white w-40 m-auto" id="filtroboton">VER RESULTADOS</button>
+                        <button class="block p-2 bg-emerald-500 rounded-md text-white w-50 m-auto mt-2" id="filtroboton" data-type='excel'>DESCARGAR EXCEL</button>
                     </div>
                 </div>
             </div>
@@ -215,6 +225,7 @@
         
 
         $(document).off('click', '#filtroboton').on('click','#filtroboton', function(){
+            var type = $(this).data('type');
             const formData ={
                 fecha1: $('#filtrofecha1').val(),
                 fecha2: $('#filtrofecha2').val(),
@@ -222,6 +233,9 @@
                 maquina: $('#filtromaquina').val(),
                 problema: $('#filtroproblema').val(),
                 estado: $('#filtroestado').val(),
+                usuario:$('#usuariotecnico').val(),
+                check:$('#propios').prop('checked'),
+                tipo: type,
             };
 
             console.log(formData);

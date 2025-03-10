@@ -8,7 +8,7 @@
 
         <!-- Título en el centro -->
         <h1 class="text-lg font-semibold text-gray-800 text-center">
-            Gestion de tickets
+            Gestion de tickets || Sistemas
         </h1>
 
         <!-- Botón derecho -->
@@ -246,7 +246,7 @@
                 estado: $('#filtroestado').val(),
                 nivel: $('#filtronivel').val(),
                 usuario:$('#usuariotecnico').val(),
-                check:$('#propios').val(),
+                check:$('#propios').prop('checked'),
                 tipo: type,
             };
 

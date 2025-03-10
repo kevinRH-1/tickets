@@ -377,7 +377,7 @@ class ControllerSoftwareReporte extends Controller
         if($niveli == 0){
             $query->where('falla_comun_id', 0);
         }
-        if($check){
+        if($check=='true'){
             $query->where('tecnico_id', $usuario);
         }
 
@@ -393,6 +393,7 @@ class ControllerSoftwareReporte extends Controller
                 'estado' => $request->estado,
                 'niveli' => $request->nivel,
                 'usuario' => $request->usuario,
+                // 'check' => $request->check,
             ]);
         }
 

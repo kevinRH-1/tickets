@@ -2,15 +2,11 @@
 
 namespace App\Exports;
 
-use App\Models\ReportesSoftware;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class ticketsSistemaExport implements FromCollection, WithMapping, ShouldAutoSize
+class ticketshardwareExport implements FromCollection, WithMapping, ShouldAutoSize
 {
 
     public $reportes;
@@ -19,10 +15,9 @@ class ticketsSistemaExport implements FromCollection, WithMapping, ShouldAutoSiz
     {
         $this->reportes = $reportes;
     }
-    
 
+    protected $index =0;
 
-    protected $index = 0;
 
 
     /**
@@ -34,13 +29,14 @@ class ticketsSistemaExport implements FromCollection, WithMapping, ShouldAutoSiz
     }
 
     public function map($reportes):array{
+
         if($this->index ==0){
             $result = [
                 [
-                    'CODIGO', 'SUCURSAL/DEPARTAMENTO', 'USUARIO', 'SISTEMA', 'MODULO', 'PROBLEMA', 'FECHA_CREACION',
+                    'CODIGO', 'SUCURSAL/DEPARTAMENTO', 'USUARIO', 'TIPO', 'EQUIPO', 'PROBLEMA', 'FECHA_CREACION',
                      'FECHA_SOLUCION', 'TIEMPO (HORAS)', 'TECNICO'
                 ]
-                ];
+            ];
         }
         $this->index++;
 
@@ -55,13 +51,24 @@ class ticketsSistemaExport implements FromCollection, WithMapping, ShouldAutoSiz
             $tiempo = 'sin solucion';
         };
 
+        if($reportes->pc){
+            $tipo = $reportes->pc->categoria->name;
+            $equipo= $reportes->pc->descripcion;
+        }elseif($reportes->laptop){
+            $tipo = $reportes->laptop->categoria->name;
+            $equipo= $reportes->laptop->descripcion;
+        }elseif($reportes->impresora){
+            $tipo = $reportes->impresora->categoria->name;
+            $equipo= $reportes->impresora->descripcion;
+        }
+
         $result[]=[
             $reportes['codigo'],
             $reportes->usuario->sucursal->nombre,
             $reportes->usuario->name,
-            $reportes->sistema->nombre,
-            isset($reportes->modulo) ? $reportes->modulo->nombre : 'sin modulo',
-            isset($reportes->falla)? $reportes->falla->descripcion : 'no es problema comun',
+            $tipo,
+            $equipo,
+            isset($reportes->falla)? $reportes->falla->desc : 'no es problema comun',
             $reportes->created_at->format('d/m/Y'),
             isset($reportes)? $reportes->tiempo_solucion : 'sin solucionar',
             $tiempo,
@@ -70,5 +77,6 @@ class ticketsSistemaExport implements FromCollection, WithMapping, ShouldAutoSiz
 
         return $result;
     }
+
 
 }
