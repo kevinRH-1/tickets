@@ -331,7 +331,7 @@
                                                 <div class="w-[98%] m-auto my-4">
                                                     <label for="password" class="block text-sm font-medium text-gray-700">contraseña</label>
                                                     <input type="password" id="contrasena" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Ingrese su contraseña">
-                                                    <p id="contrasena-error" class="text-red-500 text-sm hidden">La contraseña debe tener al menos 8 caracteres, una letra en mayuscula, y un caracter especial.</p>
+                                                    <p id="contrasena-error" class="text-red-500 text-sm hidden">La contraseña debe tener al menos 8 caracteres</p>
                                                 </div>
                                             
                                                 <div class="w-[98%] m-auto my-4">
@@ -530,7 +530,7 @@
         // console.log(contrasena)
         // Validar Contraseña (si aplica)
         if (formulario === 'registration-modal' ) {
-            const regexContrasena = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d)[A-Za-z\d!@#$%^&*]{8,}$/;
+            const regexContrasena = /^[A-Za-z\d]{8,}$/;
             if (!regexContrasena.test(contrasena) ||!contrasena || contrasena.trim() === "") {
                 $("#"+ formulario +" #contrasena-error").removeClass('hidden');
                 esValido = false;
