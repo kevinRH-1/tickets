@@ -271,6 +271,11 @@
                     <div class="w-11/12 mx-auto mt-4">
                         <textarea type="text" id="solucionfalla" class="w-full border-1 border-gray-300 rounded-lg" readonly></textarea>
                     </div>
+                    <div id="divcheck" class="flex justify-between w-2/4 mt-4 mx-auto hidden">
+                        <label for="">Solucion para el usuario:</label>
+                        <input type="checkbox" name="checkusuario" id="checkusuario" class="rounded-md">
+    
+                    </div>
                     <div class="mt-6">
                         <button id="cambiarsolucion" class="btn btn-success">cambiar solucion</button>
                     </div>
@@ -399,6 +404,11 @@
                             $('#modalfalla #solucion').val(0);
                         }
                         $('#modalfalla #idfalla').val(data[0].id);
+                        if(data[0].solucion){
+                            $('#divcheck').removeClass('hidden');
+                        }else{
+                            $('#divcheck').addClass('hidden', true);
+                        }
 
 
                         $('#modalfalla').modal('show');
@@ -426,6 +436,7 @@
                         solucion:$('#solucionfalla').val(),
                         existesolucion: $('#solucion').val(),
                         tecnico: $('#tecnico').val(),
+                        checked: $('#checkusuario').prop('checked'),
                     };
 
                     console.log(formData);

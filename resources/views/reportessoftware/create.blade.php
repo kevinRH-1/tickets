@@ -30,13 +30,15 @@
 
           <div class="mb-4">
             <label for="fallaselec" class="block text-sm font-bold text-gray-700 mb-1">Tipos de problemas frecuentes, seleccione una opcion en caso de que su problema aparezca aqui: </label>
-            <select id="falla" name="falla" class="w-full border-gray-300 rounded-lg shadow focus:ring p-2 focus:ring-teal-300">
+            <select id="falla" name="falla" class="w-full border-gray-300 rounded-lg shadow focus:ring p-2 focus:ring-teal-300" onchange="buscarsolucion()">
               <option value="0" selected>no es problema frecuente</option>
             </select>
           </div>
+
+          <span id="tip_solucion" class="hidden text-md text-yellow-500 mb-4"></span>
     
           <!-- Campo de Texto -->
-          <div class="mb-4">
+          <div class="mb-4 mt-4">
             <label for="campo-texto" class="block text-sm font-bold text-gray-700 mb-1">Explique su problema o detalles del mismo</label>
             <textarea type="text" id="desc" name="desc" rows="7" class="w-full border-gray-300 rounded-lg shadow focus:ring focus:ring-teal-300" placeholder="Escribe aquí"></textarea>
             <p id="problema-error" class="text-red-500 text-sm " hidden>Debe dejar detalles sobre su problema!</p>
@@ -329,7 +331,34 @@
 
 
 
+        function buscarsolucion(){
+          const falla = $('#falla').val();
+          console.log(falla);
 
+          $.ajax({
+            url: '/buscarsolucion/'+falla,
+            type:'GET',
+            headers:{
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(data){
+              console.log(data);
+              if(data[0]){
+                if(data[0].checked == 1){
+                  $('#tip_solucion').text( 'posible solucion a dicho problema: '+  data[0].solucion);
+                  $('#tip_solucion').removeClass('hidden');
+                }else{
+                  $('#tip_solucion').addClass('hidden');
+                }
+              }else{
+                $('#tip_solucion').addClass('hidden');
+              }
+            },
+            error: function(xhr){
+              console.log('error');
+            }
+          })
+        }
         
       </script>
 

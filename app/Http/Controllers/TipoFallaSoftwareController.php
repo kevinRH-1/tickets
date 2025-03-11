@@ -52,20 +52,39 @@ class TipoFallaSoftwareController extends Controller
             $solucionfalla->solucion = $request->solucion;
             $solucionfalla->tecnico_id = $request->tecnico;
             $solucionfalla->tipo = 1;
+            if($request->checked =='true'){
+                $solucionfalla->checked = 1;
+            }else{
+                $solucionfalla->checked = 0;
+            }
             $solucionfalla->falla_id = $request->id;
             $solucionfalla->save();
         }else{
             $solucionfalla = solucionFalla::where('falla_id', $request->id)->where('tipo',1)->get();
             $solucionfalla[0]->solucion = $request->solucion;
             $solucionfalla[0]->tecnico_id = $request->tecnico;
+            if($request->checked == 'true'){
+                $solucionfalla[0]->checked = 1;
+            }else{
+                $solucionfalla[0]->checked = 0;
+            }
             $solucionfalla[0]->save();
         }
+
+       
     }
 
     public function delete($id){
         $tipofalla = TipoFallaSoftware::findOrFail($id);
         $tipofalla->activo=0;
         $tipofalla->save();
+    }
+
+
+    public function buscarsolucion($falla){
+        $solucion  = solucionFalla::where('falla_id', $falla)->get();
+
+        return response()->json($solucion);
     }
 
     

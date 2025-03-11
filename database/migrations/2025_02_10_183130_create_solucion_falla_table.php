@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('tipo');
             $table->text('solucion')->nullable();
             $table->integer('tecnico_id');
+            $table->integer('checked')->nullable();
             $table->timestamps();
         });
     }

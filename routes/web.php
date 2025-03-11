@@ -208,6 +208,7 @@ Route::delete('borrarfalla/{id}', [TipoFaLLaController::class, 'delete'])->name(
 Route::post('solucionstore', [TipoSolucionController::class, 'store'])->name('solucion.store');
 Route::delete('borrarsolucion/{id}', [TipoSolucionController::class, 'delete'])->name('borrar.solucion');
 Route::post('actsolucion', [TipoSolucionController::class, 'update'])->name('solucion.act');
+Route::get('buscarsolucion/{falla}', [TipoFallaSoftwareController::class, 'buscarsolucion'])->name('buscar.solucion');
 
 //EXCEL
 

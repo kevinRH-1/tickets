@@ -192,6 +192,12 @@
 
                 <p id="act1-error" class="text-red-500 text-sm mb-5 m-auto" hidden>todos los campos son obligatorios!</p>
 
+                {{-- <div id="divcheck" class="flex justify-between ">
+                    <label for="">Solucion para el usuario:</label>
+                    <input type="check" class="rounded-md">
+
+                </div> --}}
+
                 <div class="flex justify-between mt-8">
                     <button id="act1" class="btn btn-primary text-white px-4 py-2 rounded">
                         actualizar

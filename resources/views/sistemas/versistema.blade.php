@@ -504,6 +504,7 @@
                     <div class="w-11/12 mx-auto mt-4">
                         <textarea type="text" id="solucionfalla" class="w-full border-1 border-gray-300 rounded-lg" readonly></textarea>
                     </div>
+                    
                     <div class="mt-6">
                         <button id="cambiarsolucion" class="btn btn-success">cambiar solucion</button>
                     </div>
