@@ -77,7 +77,20 @@ class EquiposExport implements FromCollection, WithHeadings, ShouldAutoSize
                     'ESTADO' => $equipo->estado->descripcion,
                 ];
             }elseif($this->tipo==3){
-                
+                $tipoequipo = match ($equipo->categoria_id) {
+                    1 => 'PC',
+                    2 => 'LAPTOP',
+                    3 => 'IMPRESORA',
+                };
+                return [
+                    'CODIGO' => $equipo->codigo,
+                    'SUCURSAL/DEPARTAMENTO' => $equipo->lugar->nombre,
+                    'NOMBRE' => $equipo->descripcion,
+                    'TIPO DE EQUIPO' => $tipoequipo,
+                    'MARCA'=> $equipo->marca,
+                    'MODELO'=> $equipo->modelo,
+                    'ESTADO' => $equipo->estado->descripcion,
+                ];
             }
         });
     }
@@ -89,9 +102,9 @@ class EquiposExport implements FromCollection, WithHeadings, ShouldAutoSize
         }elseif($this->tipo==1){
             return ['CODIGO', 'SUCURSAL/DEPARTAMENTO', 'NOMBRE', 'TIPO DE EQUIPO', 'MARCA', 'MODELO', 'PROCESADOR', 'RAM', 'ALMACENAMIENTO', 'ESTADO'];
         }elseif($this->tipo==2){
-            return ['CODIGO', 'SUCURSAL/DEPARTAMENTO', 'NOMBRE', 'TIPO DE EQUIPO', 'ESTADO'];
+            return ['CODIGO', 'SUCURSAL/DEPARTAMENTO', 'NOMBRE', 'TIPO DE EQUIPO', 'MARCA', 'MODELO', 'PROCESADOR', 'RAM', 'ALMACENAMIENTO', 'ESTADO'];
         }elseif($this->tipo==3){
-            return ['CODIGO', 'SUCURSAL/DEPARTAMENTO', 'NOMBRE', 'TIPO DE EQUIPO', 'ESTADO'];
+            return ['CODIGO', 'SUCURSAL/DEPARTAMENTO', 'NOMBRE', 'TIPO DE EQUIPO', 'MARCA', 'MODELO', 'ESTADO'];
         }else{
             return ['CODIGO', 'SUCURSAL/DEPARTAMENTO', 'NOMBRE', 'TIPO DE EQUIPO', 'ESTADO'];
         }

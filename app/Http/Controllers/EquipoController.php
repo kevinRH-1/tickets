@@ -259,6 +259,7 @@ class EquipoController extends Controller
         $sucursal = $request->sucursal;
         $estado = $request->estado;
         $tipo =  $request->tipo;
+        $tipoequipo= $request->tipoequipo;
 
         $querypc =  Pc::with('categoria', 'lugar', 'estado')->OrderBy('id');
         $querylaptop =  Laptops::with('categoria', 'lugar', 'estado')->OrderBy('id');
@@ -276,8 +277,6 @@ class EquipoController extends Controller
             
         }
 
-        $tipoequipo =1;
-
         if($tipo == 'excel'){
 
             $equipos = collect();
@@ -288,6 +287,10 @@ class EquipoController extends Controller
                                ->merge($queryimpresora->get());
             }if($tipoequipo==1){
                 $equipos = $equipos->merge($querypc->get());
+            }if($tipoequipo==2){
+                $equipos = $equipos->merge($querylaptop->get());
+            }if($tipoequipo==3){
+                $equipos = $equipos->merge($queryimpresora->get());
             }
             
             

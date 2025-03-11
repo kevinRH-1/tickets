@@ -86,14 +86,13 @@
                               <option value="{{$item->id}}">{{$item->descripcion}}</option>
                           @endforeach
                       </select>
-                      {{-- <label for="" class="block mt-4 mb-2">NIVEL DE IMPORTANCIA: </label>
-                      <select name="filtronivel" id="filtronivel" class="ml-2 mb-2 pl-1 rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm">
-                          <option value="10">todos los estados</option>
-                          <option value="0">sin informacion</option>
-                          @forEach($nivel as $item)
-                              <option value="{{$item->id}}">{{$item->descripcion}}</option>
-                          @endforeach
-                      </select> --}}
+                      <label for="" class="block mt-4 mb-2">TIPO DE EQUIPO: </label>
+                      <select name="filtrotipo" id="filtrotipo" class="ml-2 mb-2 pl-1 rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm">
+                          <option value="0">TODOS</option>
+                          <option value="1">PC</option>
+                          <option value="2">LAPTOP</option>
+                          <option value="3">IMPRESORA</option>
+                      </select>
                       
                       <p id="filtro-error" class="text-red-500 text-sm hidden">Debe llenar al menos una de las opciones!</p>
                       <div class="mb-10"></div>
@@ -1514,6 +1513,7 @@
       const formData = {
         sucursal: $('#filtrosucursal').val(),
         estado: $('#filtroestado').val(),
+        tipoequipo: $('#filtrotipo').val(),
         tipo : type,
       }
 
