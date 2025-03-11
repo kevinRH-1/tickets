@@ -239,19 +239,6 @@
                 </div>
               </div>
 
-
-              {{-- TABLA DE MOUSE --}}
-
-            
-
-
-            {{-- TABLA DE MONITORES --}}
-
-            
-
-
-            {{-- TABLA DE IMPRESORAS --}}
-
             <div id="tablaimpresorasLoad" class="oculto">
               <div class="overflow-x-auto">
                 <table class="table-auto w-full  border-gray-200  rounded-t-lg " id="tablaEquiposDataTable">
@@ -294,7 +281,6 @@
               </div>
             </div>
           </div>
-
                 <div>
                   <div class="modal fade" id="modalModificarpc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-md">
@@ -423,13 +409,6 @@
                               </div>
 
                               
-                    
-                              {{-- <div class="row">
-                                <div class="col-sm-12">
-                                  <label for="descripcion">Descripcion</label>
-                                  <textarea name="descripcion" id="descripcion" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Enter your first name" readonly></textarea>
-                                </div>
-                              </div> --}}
                               <input type="hidden" id="idEquipo" name="idEquipo">
                              
                     
