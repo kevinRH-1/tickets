@@ -57,7 +57,7 @@
                     </div>
                     
 
-                    <button class="btn btn-primary btn-sm mb-4 hidden md:block md:h-[50px] mt-4 mr-8" data-bs-toggle="modal" data-bs-target="#registration-modal"><i
+                    <button class="btn hidden btn-primary btn-sm mb-4  md:h-[50px] mt-4 mr-8" data-bs-toggle="modal" data-bs-target="#registration-modal"><i
                             class="bi bi-person-plus-fill"></i>
                         Crear Usuario
                     </button>
@@ -112,7 +112,7 @@
                                                 id=""><i class="bi bi-power"></i>
                                             </button>
                                         @endif
-                                        <button class="btn btn-danger btn-sm md:w-10 md:h-10 w-8 h-8" id="borrar"><i
+                                        <button class="btn hidden btn-danger btn-sm md:w-10 md:h-10 w-8 h-8" id="borrar"><i
                                                 class="bi bi-trash"></i>
                                         </button>
 
@@ -150,7 +150,7 @@
                                                     <p id="nombre-error" class="text-red-500 text-sm hidden">El nombre es obligatorio</p>
                                                 </div>
 
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-6 hidden">
                                                     <label for="last-name" class="block text-sm font-medium text-gray-700">Apellido</label>
                                                     <input type="text" id="apellido" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Enter your last name" readonly>
                                                     <p id="apellido-error" class="text-red-500 text-sm hidden">El apellido es obligatorio</p>
@@ -168,7 +168,7 @@
                                         
                                                 <div class="col-sm-6">
                                                     <label for="email" class="block text-sm font-medium text-gray-700">Correo</label>
-                                                    <input type="email" id="correo" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Enter your email" readonly>
+                                                    <input type="email" id="correo" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm"  readonly>
                                                     <p id="correo-error" class="text-red-500 text-sm hidden">El formato del correo es invalido</p>
                                                 </div>
 
@@ -176,7 +176,7 @@
                                             
                                                 <div class="col-sm-6">
                                                     <label for="password" class="block text-sm font-medium text-gray-700">numero celular</label>
-                                                    <input type="text" id="numero" maxlength="11" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Enter your password" readonly>
+                                                    <input type="text" id="numero" maxlength="11" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm"  readonly>
                                                     <p id="numero-error" class="text-red-500 text-sm hidden">formato de numero invalido</p>
                                                 </div>
                                             </div>
@@ -212,10 +212,10 @@
 
                                             </div>
                                                     </div>
-                                                    <div class="modal-footer flex justify-around">
+                                                    <div class="modal-footer hidden flex justify-around">
                                                         <button class="btn btn-success btn-sm"
                                                             id="reset">cambiar contraseña</button>
-                                                        <button class="btn btn-primary btn-sm"
+                                                        <button class="btn hidden btn-primary btn-sm"
                                                             id="actualizar">Actualizar</button>
                                                         {{-- <button class="btn btn-danger btn-sm"
                                                             id="borrar">Borrar</button> --}}

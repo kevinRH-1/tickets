@@ -17,7 +17,7 @@
             <div class="card-body md:!p-4 p-0 ">
                 <div class="flex ">
                     <div class="md:!mb-4 mb-2 w-full flex justify-end ">
-                        <button type="button" class="btn btn-primary mt-2" id="openmodal1" onclick="$('#registrar').modal('show')"><i class="bi bi-check2-square"></i>
+                        <button type="button" class="btn hidden btn-primary mt-2" id="openmodal1" onclick="$('#registrar').modal('show')"><i class="bi bi-check2-square"></i>
                             Agregar
                         </button>
                     </div>
@@ -53,7 +53,7 @@
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->usuarios}}</td>
                                         <td class="text-center md:p-4 pt-4 flex justify-around">
                                             <button id="btnConsulta" class="bi btn btn-warning btn-sm w-10 h-10" data-type="pc"><i class="bi bi-pencil-square"></i></button>
-                                            <button class="btn btn-danger btn-sm w-10 h-10" id="borrarf"><i class="bi bi-trash"></i></button>
+                                            <button class="btn btn-danger hidden btn-sm w-10 h-10" id="borrarf"><i class="bi bi-trash"></i></button>
                                         </td>
                                     </tr>
                             @endforeach
