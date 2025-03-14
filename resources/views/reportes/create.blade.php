@@ -115,7 +115,7 @@
             <p id="desc-error" class="text-red-500 text-sm " hidden>Debe dar detalles de su problema!</p>
         </div>
 
-        <div class=" flex w-11/12 mx-auto" id="divimg">
+        <div class=" flex mx-auto" id="divimg">
             <div id="imagePreview" style="margin-top: 20px;" class="col-span-5"></div>
             <div class="col-span-1 pt-6" id="quitarimagen" hidden>
                 <button onclick="quitarimg(event)" class="ml-2"><i class="fa-regular fa-circle-xmark fa-2xl"></i></button>
@@ -458,12 +458,18 @@
     function showPreview(event) {
         const file = event.target.files[0];
         const reader = new FileReader();
+        var pantalla = window.innerWidth < 700;
         
         reader.onload = function() {
             const img = document.createElement("img");
             img.src = reader.result;
-            img.style.maxWidth = "450px";
-            img.style.maxHeight = "300px";
+            if(pantalla){
+                img.style.maxWidth = "300px";
+                img.style.maxHeight = "250px";
+            }else{
+                img.style.maxWidth = "450px";
+                img.style.maxHeight = "300px";
+            }
             const imagePreview = document.getElementById("imagePreview");
             imagePreview.innerHTML = "";
             imagePreview.appendChild(img);
