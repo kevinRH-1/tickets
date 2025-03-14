@@ -26,8 +26,8 @@
         </h1>
 
         <!-- Botón derecho -->
-        <button class="btn btn-primary btn-sm mt-1 md:hidden" data-bs-toggle="modal" data-bs-target="#registration-modal">+</button>
-        <div class="hidden md:block"></div>
+        <button class="btn btn-primary hidden btn-sm mt-1 md:hidden" data-bs-toggle="modal" data-bs-target="#registration-modal">+</button>
+        <div class=" md:block"></div>
 
         
     </div>
@@ -82,8 +82,8 @@
                                 <tr class="border-r-2 border-l-2 border-b-2 border-gray-200 odd:bg-white even:bg-gray-100">
                                     <td hidden id="id">{{ $item->id }}</td>
                                     <td class="p-4 hidden md:table-cell" >{{ $item->rol->nombre }}</td>
-                                    <td class="p-4 hidden md:table-cell" nombre="tdnombre" >{{ $item->name }}</td>
-                                    <td class="p-4 md:hidden" nombre="tdnombre" >{{ $item->name }} <br> {{$item->sucursal?->nombre?? 'Sin sucursal'}}</td>
+                                    <td class="p-4 hidden md:table-cell" nombre="tdnombre" >{{ $item->descripcion }}</td>
+                                    <td class="p-4 md:hidden" nombre="tdnombre" >{{ $item->descripcion }} <br> {{$item->sucursal?->nombre?? 'Sin sucursal'}}</td>
                                     <td class="p-4 hidden md:table-cell" correo="tdcorreo">{{ $item->email }}</td>
                                     <td class="p-4 hidden md:table-cell" sucursal="sucursal">{{ $item->sucursal?->nombre ?? 'Sin sucursal' }}</td>
                                     <td class="text-right flex justify-between md:pt-[13px] pt-[20px]">
@@ -582,8 +582,8 @@
                     var datos = data[0];
                     console.log(datos);
                     // $("#modalModificarpc").modal("show");
-                    $("#ActualisarUsuarios #nombre").val(datos.name);
-                    $("#ActualisarUsuarios #apellido").val(datos.lastname);
+                    $("#ActualisarUsuarios #nombre").val(datos.descripcion);
+                    // $("#ActualisarUsuarios #apellido").val(datos.lastname);
                     $("#ActualisarUsuarios #correo").val(datos.email);
                     $("#ActualisarUsuarios #numero").val(datos.number);
                     $("#ActualisarUsuarios #idusuario").val(datos.id);
@@ -599,7 +599,7 @@
                     $("#ActualisarUsuarios #idUsuario").val(datos.id);
 
                     $("#ActualisarUsuarios #nombre").attr('readonly', true);
-                    $("#ActualisarUsuarios #apellido").attr('readonly', true);
+                    // $("#ActualisarUsuarios #apellido").attr('readonly', true);
                     $("#ActualisarUsuarios #correo").attr('readonly', true);
                     $("#ActualisarUsuarios #numero").attr('readonly', true);
                     $("#ActualisarUsuarios #rol").attr('readonly', true);
@@ -911,7 +911,7 @@
                     row.innerHTML = `
                         <td hidden id="id">${item.id}</td>
                         <td class="p-4 hidden md:table-cell">${item.rol.nombre}</td>
-                        <td class="p-4 hidden md:table-cell" nombre="tdnombre">${item.name}</td>
+                        <td class="p-4 hidden md:table-cell" nombre="tdnombre">${item.descripcion}</td>
                         <td class="p-4 md:hidden" nombre="tdnombre" >${item.name} <br> ${item.sucursal?.nombre?? 'Sin sucursal'}</td>
                         <td class="p-4 hidden md:table-cell" correo="tdcorreo">${item.email}</td>
                         <td class="p-4 hidden md:table-cell" sucursal="sucursal">${item.sucursal?.nombre ?? 'Sin sucursal'}</td>
@@ -934,7 +934,7 @@
                                     <i class="bi bi-power"></i>
                                 </button>
                             `}
-                            <button class="btn btn-danger btn-sm md:w-10 md:h-10 w-8 h-8" id="borrar">
+                            <button class="btn hidden btn-danger btn-sm md:w-10 md:h-10 w-8 h-8" id="borrar">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </td>

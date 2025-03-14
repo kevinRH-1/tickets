@@ -8,6 +8,7 @@ use App\Models\Sucursal;
 use App\Models\Roles;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -111,7 +112,9 @@ class UserController extends Controller
         $query = $request->get('query');  // Obtener el término de búsqueda
 
         // Buscar usuarios donde el nombre tenga alguna coincidencia con el término
-        $usuarios = User::where('name', 'LIKE', '%' . $query . '%')->where('activo',1)->get();
+        $usuarios = User::whereRaw('LOWER(descripcion) LIKE ?', ['%' . strtolower($query) . '%'])
+                ->where('activo', 1)
+                ->get();
 
         // Generar el HTML de las filas de la tabla
         $html = '';
@@ -120,8 +123,8 @@ class UserController extends Controller
                 <tr class='border-r-2 border-l-2 border-b-2 border-gray-200 odd:bg-white even:bg-gray-100'>
                     <td hidden id='id'>{$item->id}</td>
                     <td class='p-4 hidden md:table-cell'>{$item->rol->nombre}</td>
-                    <td class='p-4 hidden md:table-cell' nombre='tdnombre'>{$item->name}</td>
-                    <td class='p-4 md:hidden' nombre='tdnombre' >{$item->name} <br>".  ($item->sucursal?->nombre?? 'Sin sucursal')."</td>
+                    <td class='p-4 hidden md:table-cell' nombre='tdnombre'>{$item->descripcion}</td>
+                    <td class='p-4 md:hidden' nombre='tdnombre' >{$item->descripcion} <br>".  ($item->sucursal?->nombre?? 'Sin sucursal')."</td>
                     <td class='p-4 hidden md:table-cell' correo='tdcorreo'>{$item->email}</td>
                     <td class='p-4 hidden md:table-cell' sucursal='sucursal'>" . ($item->sucursal ? $item->sucursal->nombre : 'Sin sucursal') . "</td>
                     <td class='text-right flex justify-between px-2 pt-[20px] md:ml-20 md:max-w-[200px]'>
@@ -151,7 +154,7 @@ class UserController extends Controller
                                 </button>";
             }
 
-            $html .=" <button class='btn btn-danger btn-sm md:w-10 md:h-10 w-8 h-8' id='borrar'>
+            $html .=" <button class='btn btn-danger hidden btn-sm md:w-10 md:h-10 w-8 h-8' id='borrar'>
                                 <i class='bi bi-trash'></i>
                             </button>";
         
@@ -170,8 +173,8 @@ class UserController extends Controller
                 <tr class='border-r-2 border-l-2 border-b-2 border-gray-200 odd:bg-white even:bg-gray-100'>
                     <td hidden id='id'>{$item->id}</td>
                     <td class='p-4 hidden md:table-cell'>{$item->rol->nombre}</td>
-                    <td class='p-4 hidden md:table-cell' nombre='tdnombre'>{$item->name}</td>
-                    <td class='p-4 md:hidden' nombre='tdnombre' >{$item->name} <br>".  ($item->sucursal?->nombre?? 'Sin sucursal')."</td>
+                    <td class='p-4 hidden md:table-cell' nombre='tdnombre'>{$item->descripcion}</td>
+                    <td class='p-4 md:hidden' nombre='tdnombre' >{$item->descripcion} <br>".  ($item->sucursal?->nombre?? 'Sin sucursal')."</td>
                     <td class='p-4 hidden md:table-cell' correo='tdcorreo'>{$item->email}</td>
                     <td class='p-4 hidden md:table-cell' sucursal='sucursal'>" . ($item->sucursal ? $item->sucursal->nombre : 'Sin sucursal') . "</td>
                     <td class='text-right flex justify-between px-2 pt-[20px] md:ml-20 md:max-w-[200px]'>
@@ -201,7 +204,7 @@ class UserController extends Controller
                                 </button>";
             }
 
-            $html .=" <button class='btn btn-danger btn-sm md:w-10 md:h-10 w-8 h-8' id='borrar'>
+            $html .=" <button class='btn btn-danger hidden btn-sm md:w-10 md:h-10 w-8 h-8' id='borrar'>
                                 <i class='bi bi-trash'></i>
                             </button>";
         

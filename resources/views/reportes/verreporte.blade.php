@@ -21,9 +21,9 @@
                     <label for="" class="block md:w-2/4 m-auto text-center text-2xl md:!mb-2 mb-4 text-red-600">DATOS DEL EQUIPO</label>                   
                     @if($reporte[0]->pc ?? false)
                         <div class="mt-4 grid md:grid-cols-2 grid-cols-1 md:gap-2">                         
-                            <div class="col-span-1">
+                            <div class="col-span-1 pl-10 md:!pl-0">
                                 <label for="" class=" text-gray-700 w-2/4 m-auto text-lg font-semibold hidden md:!inline" >Codigo: </label>
-                                <label type="text" name="codigo" id="codigo" class="text-2xl w-2/4 p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->pc->codigo }}</label>
+                                <label type="text" name="codigo" id="codigo" class="text-2xl  p-0  md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->pc->codigo }}</label>
                             </div>
                             <div class="col-span-1">
                                 <label for="" class=" text-gray-700 w-2/4 text-lg font-semibold hidden md:!inline" >Nombre: </label>
@@ -42,9 +42,9 @@
 
                     @if($reporte[0]->laptop ?? false)
                         <div class="mt-4 grid md:grid-cols-2 grid-cols-1 md:gap-2">                         
-                            <div class="col-span-1">
+                            <div class="col-span-1 pl-10 md:!pl-0">
                                 <label for="" class="hidden md:!inline text-gray-700 w-2/4 m-auto text-lg font-semibold" >Codigo: </label>
-                                <label type="text" name="codigo" id="codigo" class="text-2xl w-2/4 p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->laptop->codigo }}</label>
+                                <label type="text" name="codigo" id="codigo" class="text-2xl  p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->laptop->codigo }}</label>
                             </div>
                             <div class="col-span-1">
                                 <label for="" class="hidden md:!inline text-gray-700 w-2/4 text-lg font-semibold" >Nombre: </label>
@@ -63,9 +63,9 @@
 
                     @if($reporte[0]->impresora ?? false)
                         <div class="mt-4 grid md:grid-cols-2 grid-cols-1 md:gap-2">                         
-                            <div class="col-span-1">
+                            <div class="col-span-1 pl-10 md:!pl-0">
                                 <label for="" class="hidden md:!inline text-gray-700 w-2/4 m-auto text-lg font-semibold" >Codigo: </label>
-                                <label type="text" name="codigo" id="codigo" class="text-2xl w-2/4 md:!p-2 p-0 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->impresora->codigo }}</label>
+                                <label type="text" name="codigo" id="codigo" class="text-2xl  md:!p-2 p-0 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->impresora->codigo }}</label>
                             </div>
                             <div class="col-span-1">
                                 <label for="" class="hidden md:!inline text-gray-700 w-2/4 text-lg font-semibold" >Nombre: </label>
@@ -88,18 +88,18 @@
                     <div class="md:!mt-4 mt-2 grid md:grid-cols-2 grid-cols-1 md:gap-2">
                         <div class="col-span-1">
                             <label for="sucursal" class="hidden md:!inline text-gray-700 w-2/4 m-auto  font-semibold text-2xl" >Sucursal: </label>
-                            <label type="text" name="codigo" id="codigo" class="md:w-2/4 text-xl md:text-2xl m-auto p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->sucursal->nombre }}</label>
+                            <label type="text" name="codigo" id="codigo" class=" text-xl md:text-2xl m-auto p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->sucursal->nombre }}</label>
                         </div>
                         <div class="col-span-1">
                             <label for="usuario" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold m-auto">Usuario: </label>
-                            <label type="text" name="codigo" id="codigo" class="w-2/4 text-lg m-auto p-0 pt-2  md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->name }}</label>
+                            <label type="text" name="codigo" id="codigo" class=" text-lg m-auto p-0 pt-2  md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->descripcion }}</label>
                         </div>
                         <div class="col-span-1">
                             <label for="correo" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold m-auto">Correo: </label>
                             <label type="text" name="codigo" id="codigo"  class="w-2/4 text-lg m-auto p-0 pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->email }}</label>
                         
                         </div>
-                        <div class="col-span-1">
+                        <div class="col-span-1 md:pt-2">
                             <label for="telefono" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold m-auto">Teléfono: </label>
                             <label type="text" name="codigo" id="codigo"  class="w-2/4 text-lg m-auto p-0 pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->number }}</label>
                         </div>
@@ -162,7 +162,7 @@
                     <div class="mt-4 w-[99%] m-auto text-center">
                         <label for="tecnico" >Tecnico: </label>
                         @if($reporte[0]->status_id != 1)
-                            <label for="nombret" id="nombret" class="text-center">{{$reporte[0]->tecnico->name}}</label>
+                            <label for="nombret" id="nombret" class="text-center">{{$reporte[0]->tecnico->descripcion}}</label>
                             <br>
                             <label for="solucion" >solucionado mediante: </label>
                             @if($reporte[0]?->solucion?->tiposolucion)
@@ -204,7 +204,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <h3 class="flex justify-end mb-4 text-gray-400 pr-2">{{$item->usuario->name}}</h3>
+                                <h3 class="flex justify-end mb-4 text-gray-400 pr-2">{{$item->usuario->descripcion}}</h3>
                             @else
                                 <!-- Mensaje alineado a la izquierda -->
                                 <div class="flex justify-start">
@@ -215,7 +215,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <h3 class="flex mb-4 text-gray-400 pl-2">{{$item->usuario->name}}</h3>
+                                <h3 class="flex mb-4 text-gray-400 pl-2">{{$item->usuario->descripcion}}</h3>
                             @endif
                         @endforeach
                     </div>

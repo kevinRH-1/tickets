@@ -116,7 +116,7 @@
                                             <p class="pt-2">{{$item->impresora->descripcion}}</p>
                                           @endif
                                           
-                                          <p class="pt-1">{{$item->tecnico?->name?? 'sin tecnico'}}</p>
+                                          <p class="pt-1">{{$item->tecnico?->descripcion?? 'sin tecnico'}}</p>
                                           <div class="flex pt-1">
                                               <p class="{{$color_status}}">{{$item->status->nombre}} </p><p class="mx-1"> | </p>
                                               <p class="{{$color}}"> {{$item->falla?->nivel?->descripcion?? 'sin informacion'}}</p>
@@ -126,8 +126,8 @@
                                         <td class="py-4 text-center hidden md:table-cell">{{$item->created_at}}</td>
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->codigo}}</td>
                                         {{-- <td class="p-4 text-center">{{$item->usuario->sucursal->nombre}}</td> --}}
-                                        <td class="p-4 text-center hidden md:table-cell">{{$item->usuario->name}}</td>
-                                        <td class="p-4 text-center hidden md:table-cell">{{$item->tecnico?->name?? 'sin tecnico'}}</td>
+                                        <td class="p-4 text-center hidden md:table-cell">{{$item->usuario->descripcion}}</td>
+                                        <td class="p-4 text-center hidden md:table-cell">{{$item->tecnico?->descripcion?? 'sin tecnico'}}</td>
                                         @if($item->pc->descripcion?? false)
                                             <td class="p-4 text-center hidden md:table-cell">{{$item->pc->descripcion}}</td>
                                         @endif

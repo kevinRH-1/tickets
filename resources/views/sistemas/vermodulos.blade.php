@@ -144,8 +144,8 @@
                                             @endif
                                         </td>
 
-                                        <td class="text-left p-1 pt-2 md:!pt-1  md:hidden" datos="datos"><h1 class="text-lg font-semibold">{{ \Illuminate\Support\Str::limit($item->codigo, 35, '...')}}</h1><p class="pt-2">{{$item->usuario->name}} || {{$item->usuario->sucursal->nombre}}</p>
-                                            <p class="pt-1">{{$item->tecnico?->name?? 'sin tecnico'}}</p>
+                                        <td class="text-left p-1 pt-2 md:!pt-1  md:hidden" datos="datos"><h1 class="text-lg font-semibold">{{ \Illuminate\Support\Str::limit($item->codigo, 35, '...')}}</h1><p class="pt-2">{{$item->usuario->descripcion}} || {{$item->usuario->sucursal->nombre}}</p>
+                                            <p class="pt-1">{{$item->tecnico?->descripcion?? 'sin tecnico'}}</p>
                                             <div class="flex pt-1">
                                                 <p class="{{$color_status}}">{{$item->status->nombre}} </p><p class="mx-1"> | </p>
                                                 <p class="{{$color}}"> {{$item->falla?->importancia?->descripcion?? 'sin informacion'}}</p>
@@ -157,7 +157,7 @@
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->created_at}}</td>
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->codigo}}</td>
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->usuario->sucursal->nombre}}</td>
-                                        <td class="p-4 text-center hidden md:table-cell">{{$item->usuario->name}}</td>
+                                        <td class="p-4 text-center hidden md:table-cell">{{$item->usuario->descripcion}}</td>
                                         {{-- <td class="p-4 text-center">{{$item->sistema->nombre}}</td> --}}
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->modulo?->nombre?? 'sin modulo'}}</td>
                                         <td class="p-4 text-center hidden md:table-cell">{{ \Illuminate\Support\Str::limit($item->falla?->descripcion ?? $item->mensajes[0]->mensaje, 40, '...') }}</td>

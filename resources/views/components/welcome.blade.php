@@ -48,7 +48,7 @@
 
               <div class="row flex justify-around">
 
-                <div class="col-sm-4">Nombre: {{ Auth::user()->name }}</div>
+                <div class="col-sm-4">Nombre: {{ Auth::user()->descripcion }}</div>
                 {{-- <div class="col-sm-4">Teléfono:{{Auth::user()->number}}</div> --}}
 
                 <div class="col-sm-4">Rol de Usuario: {{ Auth::user()->rol->nombre }}</div>
@@ -57,7 +57,7 @@
 
               <div class="row flex justify-around">
                 <div class="col-sm-4">
-                  Apellido: {{ Auth::user()->lastname }}
+                  {{-- Apellido: {{ Auth::user()->lastname }} --}}
                 </div>
                 <div class="col-sm-4">
 
@@ -152,7 +152,7 @@
 
             <div class="row flex justify-around">
 
-              <div class="col-sm-4">Nombre: {{ Auth::user()->name }}</div>
+              <div class="col-sm-4">Nombre: {{ Auth::user()->descripcion }}</div>
               {{-- <div class="col-sm-4">Teléfono:{{Auth::user()->number}}</div> --}}
 
               <div class="col-sm-4">Rol de Usuario: {{ Auth::user()->rol->nombre }}</div>
@@ -161,7 +161,7 @@
 
             <div class="row flex justify-around">
               <div class="col-sm-4">
-                Apellido: {{ Auth::user()->lastname }}
+                {{-- Apellido: {{ Auth::user()->lastname }} --}}
               </div>
               <div class="col-sm-4">
 

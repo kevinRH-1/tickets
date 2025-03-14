@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sucursals', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->integer('activo')->nullable();
+            $table->integer('activo')->default(1)->nullable();
             $table->timestamps();
         });
     }

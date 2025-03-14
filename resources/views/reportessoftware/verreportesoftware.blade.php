@@ -73,7 +73,7 @@
                         <div class="col-span-1"></div>
                         <div class="col-span-1">
                             <label for="usuario" class=" text-gray-700 mt-4 w-2/4 text-lg font-bold m-auto hidden md:!inline">Usuario: </label>
-                            <label name="codigo" id="codigo"  class="h-7 md:text-lg text-xl m-auto p-2 ">{{ $reporte[0]->usuario->name }}</label>
+                            <label name="codigo" id="codigo"  class="h-7 md:text-lg text-xl m-auto p-2 ">{{ $reporte[0]->usuario->descripcion }}</label>
                         </div>
                         <div class="col-span-1">
                             <label for="telefono" class=" text-gray-700 mt-4 w-2/4 text-lg font-bold m-auto hidden md:!inline">Teléfono: </label>
@@ -136,7 +136,7 @@
                     <div class="mt-4 w-[99%] m-auto text-center">
                         <label for="tecnico" >Tecnico: </label>
                         @if($reporte[0]->status_id != 1)
-                            <label for="nombret" id="nombret" class="text-center">{{$reporte[0]->tecnico->name}}</label>
+                            <label for="nombret" id="nombret" class="text-center">{{$reporte[0]->tecnico->descripcion}}</label>
                             <br>
                             <label for="solucion" >solucionado mediante: </label>
                             @if($reporte[0]?->solucion?->tiposolucion)
@@ -192,7 +192,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <h3 class="flex justify-end mb-4 text-gray-400 pr-2">{{$item->usuario->name}}</h3>
+                                <h3 class="flex justify-end mb-4 text-gray-400 pr-2">{{$item->usuario->descripcion}}</h3>
                             @else
                                 <!-- Mensaje alineado a la izquierda -->
                                 <div class="flex justify-start">
@@ -204,7 +204,7 @@
                                     </div>
                                     
                                 </div>
-                                <h3 class="flex mb-4 text-gray-400 pl-2">{{$item->usuario->name}}</h3>
+                                <h3 class="flex mb-4 text-gray-400 pl-2">{{$item->usuario->descripcion}}</h3>
                             @endif
                         @endforeach
                     </div>
