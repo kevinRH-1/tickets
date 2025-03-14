@@ -27,15 +27,34 @@ class FortifyServiceProvider extends ServiceProvider
         //
     }
 
+    private function verificarContrasenaIdempiere($inputPassword, $hashedPassword, $hexsalt)
+    {
+        // convertir el salt de hexadecimal a binario
+        $salt = hex2bin($hexsalt);
+
+        // crear la instancia del hash inicial (equivalente a `digest.update(salt)`)
+        $hashCalculado = hash('sha512', $salt . $inputPassword, true);
+
+        // iterar el hash 1000 veces
+        for ($i = 0; $i < 1000; $i++) {
+            $hashCalculado = hash('sha512', $hashCalculado, true);
+        }
+
+        // convertir el resultado final a hexadecimal (como lo hace `convertToHexString`)
+        $hashCalculado = bin2hex($hashCalculado);
+    
+        return hash_equals($hashCalculado, $hashedPassword);
+    }
+
     /**
      * Bootstrap any application services.
      */
     public function boot(): void
     {
         Fortify::authenticateUsing(function ($request) {
-            $user = \App\Models\User::where('email', $request->email)->first();
+            $user = \App\Models\User::where('name', $request->email)->first();
 
-            if (!$user || !Hash::check($request->password, $user->password)) {
+            if (!$user || !$this->verificarContrasenaIdempiere($request->password, $user->password, $user->salt)) {
                 return null; // Credenciales inválidas
             }
 
