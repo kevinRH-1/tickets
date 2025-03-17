@@ -949,6 +949,7 @@
 
   $(document).ready(function() {
       var idToDelete = null; // Variable para almacenar el ID del usuario a eliminar
+      var categoriaval = 0;
 
       // Mostrar el modal de confirmación al hacer clic en "Borrar"
       $(document).on('click', '#borrar', function(event) {
@@ -956,11 +957,11 @@
           // Almacena el ID del usuario
           idToDelete = $(this).closest('tr').find('td[id]').text();
           const nombre = $(this).closest('tr').find('td[nombre]').text();
-          const categoria = $(this).closest('tr').find('td[categoria]').text();
+          categoriaval = $(this).closest('tr').find('td[categoria]').text();
 
-
+          console.log(categoriaval);
           $('#confirmModal #bnombre').text(nombre);
-          $('#confirmModal #bcategoria').text(categoria);
+          $('#confirmModal #bcategoria').text(categoriaval);
           // Muestra el modal
           $('#confirmModal').modal('show');
       });
@@ -968,9 +969,10 @@
       // Acción al confirmar "Sí, eliminar"
       $(document).on('click', '#confirmYes2', function() {
           console.log(idToDelete)
+          console.log(categoriaval)
           if (idToDelete) {
               $.ajax({
-                  url: 'equipo/eliminar/'+idToDelete +'/'+categoria,
+                  url: '/equipo/eliminar/'+idToDelete +'/'+categoriaval,
                   type: 'DELETE',
                   headers: {
                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF Token
@@ -984,7 +986,12 @@
                     }, 2000);
                   },
                   error: function(xhr) {
-                      alert('Error al borrar el usuario. Intente nuevamente.');
+                    $('#confirmModal').modal('hide')
+                    $('#mensaje').text('Error al borrar el equipo. Intente nuevamente.');
+                    $('#modalmensaje').modal('show');
+                    setTimeout(() => {
+                      location.reload();
+                    }, 2000);
                   }
               });
           }

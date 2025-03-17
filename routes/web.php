@@ -152,13 +152,13 @@ Route::get('filtrosreportesS', [ControllerSoftwareReporte::class, 'filtros'])->n
 
 
 //          REPORTES HARDWARE
-
+Route::delete('reporteshardware/borrar/{id}', [ControllerHardwareReporte::class, 'delete'])->name('reporteh.borrar');
 Route::post('reporteh/store', [ControllerHardwareReporte::class, 'store'])->name('reporteh.store');
 Route::get('/reporte-detalles/{id}{role}', [ControllerHardwareReporte::class, 'detalles'])->name('reportes.detalles');
 Route::post('/enviar/solucion', [ControllerHardwareReporte::class, 'problemaysolucion'])->name('enviar.solucion');
 Route::get('cambiar/estatus/{id}/{rol}/{sucursal}', [ControllerHardwareReporte::class , 'cambiarestatus'])->name('cambiar.status');
 Route::get('/verfallas/{id}', [TipoFaLLaController::class, 'verfallas'])->name('verfallas');
-Route::get('reporte/eliminar{id}{sucursal}', [ControllerHardwareReporte::class, 'delete'])->name('reporte.eliminar');
+// Route::get('reporte/eliminar{id}{sucursal}', [ControllerHardwareReporte::class, 'delete'])->name('reporte.eliminar');
 Route::get('reportes', [ControllerHardwareReporte::class,'indexgeneral'])->name('reportes.general');
 Route::get('/reportes/create{id}{categoria}', [ControllerHardwareReporte::class, 'createid'])->name('reportes.createid');
 Route::get('reportes/create{id}', [ControllerHardwareReporte::class , 'create'])->name('reportes.create');

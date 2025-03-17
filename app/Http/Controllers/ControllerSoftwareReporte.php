@@ -323,6 +323,9 @@ class ControllerSoftwareReporte extends Controller
     public function delete($id){
         $reporte = ReportesSoftware::findOrFail($id);
         $reporte->delete();
+
+        return response()->json(['message' => 'ticket cancelado']);
+
     }
 
     public function filtros(Request $request) {

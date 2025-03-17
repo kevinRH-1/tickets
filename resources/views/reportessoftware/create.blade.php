@@ -44,7 +44,7 @@
             <p id="problema-error" class="text-red-500 text-sm " hidden>Debe dejar detalles sobre su problema!</p>
           </div>
 
-          <div class=" flex mx-auto" id="divimg">
+          <div class=" flex mx-auto md:justify-center" id="divimg">
             <div id="imagePreview" style="margin-top: 20px;" class="col-span-5"></div>
             <div class="col-span-1 pt-6" id="quitarimagen" hidden>
                 <button onclick="quitarimg(event)" class="ml-2"><i class="fa-regular fa-circle-xmark fa-2xl"></i></button>

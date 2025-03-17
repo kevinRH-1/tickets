@@ -115,7 +115,7 @@
             <p id="desc-error" class="text-red-500 text-sm " hidden>Debe dar detalles de su problema!</p>
         </div>
 
-        <div class=" flex mx-auto" id="divimg">
+        <div class=" flex mx-auto md:justify-center" id="divimg">
             <div id="imagePreview" style="margin-top: 20px;" class="col-span-5"></div>
             <div class="col-span-1 pt-6" id="quitarimagen" hidden>
                 <button onclick="quitarimg(event)" class="ml-2"><i class="fa-regular fa-circle-xmark fa-2xl"></i></button>
@@ -320,13 +320,11 @@
         let problema = form.get('problema');
         let nuevafalla = form.get('nuevafalla');
 
-        if(!$('#equipo').val()){
-            if(equipo==null){
-                $('#equipo-error').removeAttr('hidden');
-                valido = false;
-            }else{
-                $('#equipo-error').attr('hidden', true);
-            }
+        if(equipo==null){
+            $('#equipo-error').removeAttr('hidden');
+            valido = false;
+        }else{
+            $('#equipo-error').attr('hidden', true);
         }
 
         if(!desc || desc.trim()==="" ){
@@ -385,7 +383,7 @@
             formData.append('imagen', fileInput); 
         }
 
-
+        
 
 
         if($('#equipo').val()){
@@ -395,6 +393,9 @@
             formData.append('categoria', $('#seletipo').val());
             formData.append('equipo', $('#seleequipos').val());
         }
+
+        console.log(formData.get('equipo'));
+        
 
         if(validar(formData)){
             if(!$('#equipo').val()){

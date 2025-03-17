@@ -442,11 +442,11 @@ class ControllerHardwareReporte extends Controller
     //     $reporte = re
     // }
 
-    public function delete($id, $sucursal){
+    public function delete($id){
         $reporte = ReportesHardware::findOrFail($id);
         $reporte->delete();
         
-        return to_route('misreportes', $sucursal);
+        return response()->json(['message' => 'ticket cancelado']);
 
     }
 

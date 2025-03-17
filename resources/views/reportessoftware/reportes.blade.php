@@ -152,7 +152,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-body text-center py-9">
-                                    <h1 id="mensaje">el ticket ha sido borrado con exito!</h1>
+                                    <h1 id="mensaje">el ticket ha sido cancelado con exito!</h1>
                                 </div>
                             </div>
                         </div>

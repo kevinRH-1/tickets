@@ -233,7 +233,7 @@ class EquipoController extends Controller
 
     public function eliminar($id, $cate){
         if($cate==1){
-            $pc = pc::findOrFail($id);
+            $pc = Pc::findOrFail($id);
             $pc->activo=0;
             $pc->save();
 
@@ -261,9 +261,9 @@ class EquipoController extends Controller
         $tipo =  $request->tipo;
         $tipoequipo= $request->tipoequipo;
 
-        $querypc =  Pc::with('categoria', 'lugar', 'estado')->OrderBy('id');
-        $querylaptop =  Laptops::with('categoria', 'lugar', 'estado')->OrderBy('id');
-        $queryimpresora =  Impresoras::with('categoria', 'lugar', 'estado')->OrderBy('id');
+        $querypc =  Pc::with('categoria', 'lugar', 'estado')->where('activo',1)->OrderBy('id');
+        $querylaptop =  Laptops::with('categoria', 'lugar', 'estado')->where('activo',1)->OrderBy('id');
+        $queryimpresora =  Impresoras::with('categoria', 'lugar', 'estado')->where('activo',1)->OrderBy('id');
 
         if($sucursal != 0){
             $querypc->where('lugar_id', $sucursal);
