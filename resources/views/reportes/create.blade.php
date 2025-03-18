@@ -320,9 +320,12 @@
         let problema = form.get('problema');
         let nuevafalla = form.get('nuevafalla');
 
-        if(equipo==null){
+        // console.log(equipo)
+
+        if(equipo=='null'){
             $('#equipo-error').removeAttr('hidden');
             valido = false;
+            console.log('error equipo')
         }else{
             $('#equipo-error').attr('hidden', true);
         }
@@ -340,6 +343,9 @@
         }else{
             $('#nuevafalla-error').attr('hidden', true);
         }
+
+        // console.log('aqui');
+        
 
         return valido;
     }

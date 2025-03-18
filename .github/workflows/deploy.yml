@@ -19,10 +19,5 @@ jobs:
         script: |
           cd /var/www/html/tickets
           git pull origin main
-          composer install --no-dev --optimize-autoloader
-          php artisan migrate --force
-          php artisan config:clear
-          php artisan cache:clear
-          php artisan route:clear
           php artisan view:clear
           sudo systemctl restart apache2
