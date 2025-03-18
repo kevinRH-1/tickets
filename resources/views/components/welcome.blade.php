@@ -9,7 +9,7 @@
         <img src="../resources/imagen/Logo.png" alt="Logo" class=" hidden lg:block lg:w-[250px] lg:h-[80px] w-[50px] h-[40px] ">
       </div>
       <div class="lg:col-span-1 col-span-3">
-        <h1 class="md:mt-5 text-center text-4xl font-semibold">DASHBOARD</h1>
+        <h1 class="md:mt-5 text-center text-4xl font-semibold">DASHBOARD.</h1>
       </div>
       <div class="">
 
