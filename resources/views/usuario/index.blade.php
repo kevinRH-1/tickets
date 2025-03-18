@@ -150,11 +150,17 @@
                                                     <p id="nombre-error" class="text-red-500 text-sm hidden">El nombre es obligatorio</p>
                                                 </div>
 
-                                                <div class="col-sm-6 hidden">
+                                                <div class="col-sm-6">
+                                                    <label for="email" class="block text-sm font-medium text-gray-700">Correo</label>
+                                                    <input type="email" id="correo" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm"  readonly>
+                                                    <p id="correo-error" class="text-red-500 text-sm hidden">El formato del correo es invalido</p>
+                                                </div>
+
+                                                {{-- <div class="col-sm-6 hidden">
                                                     <label for="last-name" class="block text-sm font-medium text-gray-700">Apellido</label>
                                                     <input type="text" id="apellido" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Enter your last name" readonly>
                                                     <p id="apellido-error" class="text-red-500 text-sm hidden">El apellido es obligatorio</p>
-                                                </div>
+                                                </div> --}}
 
                                             </div>
                                         
@@ -166,11 +172,11 @@
 
                                             <div class="flex justify-around row mt-8">
                                         
-                                                <div class="col-sm-6">
+                                                {{-- <div class="col-sm-6">
                                                     <label for="email" class="block text-sm font-medium text-gray-700">Correo</label>
                                                     <input type="email" id="correo" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm"  readonly>
                                                     <p id="correo-error" class="text-red-500 text-sm hidden">El formato del correo es invalido</p>
-                                                </div>
+                                                </div> --}}
 
                                                 <input type="text" id="idusuario" name="idusuario" hidden>
                                             
@@ -179,24 +185,7 @@
                                                     <input type="text" id="numero" maxlength="11" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm"  readonly>
                                                     <p id="numero-error" class="text-red-500 text-sm hidden">formato de numero invalido</p>
                                                 </div>
-                                            </div>
-                                        
-                                            <div class="row flex justify-around mt-8">
-                                                <div class="col-sm-4 ">
-                                                    <label for="role" class="block text-sm font-medium text-gray-700 text-center">Rol</label>
-                                                    <select name="rol" id="rol"  class="mt-1 block w-full h-12 px-2  rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
-                                                        required>
-                                                        @foreach ($roles as $item)
-                                                            <option value="{{ $item->id }}">
-                                                                {{ $item->nombre }}</option>
-                                                        @endforeach
 
-                                                    </select>
-                                                    <input type="text" id="rolinput" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
-                                                    <p id="rol-error" class="text-red-500 text-sm hidden">Seleccione un rol</p>
-                                                </div>
-
-                                        
                                                 <div class="col-sm-6 ">
                                                     <label for="branch" class="block text-sm font-medium text-gray-700 text-center">Sucursal/Departamento</label>
                                                     <select name="lugar" id="lugar"  class="mt-1 block w-full h-12 px-2  rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
@@ -208,6 +197,42 @@
                                                     <input type="text" id="lugarinput" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
                                                     <p id="sucursal-error" class="text-red-500 text-sm hidden">Seleccione una sucursal o departamento</p>
                                                 </div>
+                                            </div>
+                                        
+                                            <div class="row flex justify-around mt-8">
+                                                <div class="col-sm-4  md!:w-1/4 w-3/4 mx-auto flex justify-between">
+                                                    <div id="div-rol">
+                                                        <label for="role" class="block text-sm font-medium text-gray-700 text-center">Rol</label>
+                                                        <select name="rol" id="rol"  class="mt-1 hidden w-full h-12   rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
+                                                            required>
+                                                            @foreach ($roles as $item)
+                                                                <option value="{{ $item->id }}">
+                                                                    {{ $item->nombre }}</option>
+                                                            @endforeach
+
+                                                        </select>
+                                                        <input type="text" id="rolinput" class="mt-1 block md:!w-full w-3/4 rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
+                                                        <p id="rol-error" class="text-red-500 text-sm hidden">Seleccione un rol</p>
+                                                    </div>
+                                                    <div>
+                                                        <button id="cambiarolb" class="h-[40px] w-[100px] bg-green-700 text-white rounded-md mt-4" onclick="cambiarol(event)">cambiar rol</button>
+                                                    </div>
+
+
+                                                </div>
+
+                                        
+                                                {{-- <div class="col-sm-6 ">
+                                                    <label for="branch" class="block text-sm font-medium text-gray-700 text-center">Sucursal/Departamento</label>
+                                                    <select name="lugar" id="lugar"  class="mt-1 block w-full h-12 px-2  rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
+                                                        @foreach ($sucursal as $item)
+                                                            <option value="{{ $item->id }}">
+                                                                {{ $item->nombre }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <input type="text" id="lugarinput" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
+                                                    <p id="sucursal-error" class="text-red-500 text-sm hidden">Seleccione una sucursal o departamento</p>
+                                                </div> --}}
 
 
                                             </div>
@@ -609,7 +634,14 @@
                     document.getElementById('lugarinput').removeAttribute('hidden');
                     document.getElementById('rolinput').removeAttribute('hidden');
                     document.getElementById('lugar').setAttribute('hidden', true);
-                    document.getElementById('rol').setAttribute('hidden', true);
+                    $('#div-rol #rol').addClass('hidden', true);
+                    $('#rolinput').removeClass('hidden');
+
+                    $('#confirmarcambio').removeClass('bg-blue-700');
+                    $('#confirmarcambio').addClass('bg-green-700');
+                    $('#confirmarcambio').text('cambiar rol');
+                    $('#confirmarcambio').attr('id', 'cambiarolb');
+
 
                     $("#ActualisarUsuarios #nombre-error").addClass('hidden');
                     $("#ActualisarUsuarios #apellido-error").addClass('hidden');
@@ -981,6 +1013,49 @@
             }
         });
     });
+
+
+    function cambiarol(event){
+        event.preventDefault();
+        console.log('hola');
+
+        $('#rolinput').addClass('hidden', true);
+        $('#div-rol #rol').removeClass('hidden');
+
+        $('#cambiarolb').removeClass('bg-green-700');
+        $('#cambiarolb').addClass('bg-blue-700');
+        $('#cambiarolb').text('confirmar');
+        $('#cambiarolb').attr('id', 'confirmarcambio');
+
+        $(document).off('click', '#confirmarcambio').on('click', '#confirmarcambio', function(){
+            const formData = {
+                rol: $('#div-rol #rol').val(),
+                usuario: $('#idusuario').val(),
+            }
+            console.log(formData);
+
+            $.ajax({
+                url:'/cambiarol-usuario',
+                data: formData,
+                type: 'POST',
+                headers:  {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF Token
+                },
+                success: function(response){
+                    console.log('si');
+                },
+                error: function(xhr){
+                    console.log('no');
+                }
+            })
+
+
+
+        })
+
+
+        
+    }
 
 
 </script>

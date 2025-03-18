@@ -53,6 +53,7 @@ Route::get('usuariosdatos{id}', [UserController::class, 'datos'])->name('usuario
 Route::get('filtrousuarios', [UserController::class, 'filtro'])->name('filtro.usuarios');
 Route::get('/buscarusuario', [UserController::class, 'buscar'])->name('buscar.usuario');
 Route::get('/usuariost', [UserController::class, 'usuarios'])->name('usuarios');
+Route::post('/cambiarol-usuario', [UserController::class, 'cambiarol'])->name('cambiarol.usuario');
 
 Route::get('misequipos/{id}', [EquipoController::class, 'misequipos'])->name('misequipos');
 
