@@ -283,7 +283,11 @@ class ControllerHardwareReporte extends Controller
         // ESTA PARTE BUSCA SI YA SE HA MANDADO UNA SOLUCION PARA EL REPORTE, EN CASO DE QUE SI
         // SE DA 0 PARA DENEGAR LA POSIBILIDAD DE SOLICITUD DE SOLUCION
 
-        $solucion =Mensaje::where('reporte_id', $id)->where('usuario_id','!=', 3)->where('tipo_id',2)->get();
+        $tec = [1, 2];
+
+        $solucion =Mensaje::with('usuario')->where('reporte_id', $id)->wherehas('usuario', function ($query) use ($tec){
+            $query->whereIn('roleid',$tec);
+        })->where('tipo_id', 2)->get();
         if ($solucion->isEmpty()){
             $confirmar =  0;
         }else{

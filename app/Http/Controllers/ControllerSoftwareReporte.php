@@ -155,7 +155,11 @@ class ControllerSoftwareReporte extends Controller
         //     $confirmar = 1;
         // }
 
-        $solucion =Mensaje::where ('reporte_id', $id)->where('usuario_id', 1)->where('tipo_id', 1)->get();
+        $tec = [1,2];
+
+        $solucion =Mensaje::with('usuario')->where('reporte_id', $id)->wherehas('usuario', function ($query) use ($tec){
+            $query->whereIn('roleid',$tec);
+        })->where('tipo_id', 1)->get();
         if ($solucion->isEmpty()){
             $confirmar =  0;
         }else{
