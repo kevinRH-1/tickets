@@ -284,7 +284,7 @@
                </button>
             </a>
          </li> --}}
-         <li class="">
+         <li class="md:!mb-0 mb-16">
             <form id="logoutForm" method="POST" action="{{ route('logout') }}">
                 @csrf
                 

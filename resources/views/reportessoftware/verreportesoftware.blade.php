@@ -185,18 +185,18 @@
                             @if($item->usuario->roleid == 1 || $item->usuario->roleid ==2)
                                 <!-- Mensaje alineado a la derecha -->
                                 <div class="flex justify-end">
-                                    <div class="bg-blue-100 text-gray-800 p-3 rounded-lg shadow-md md:max-w-[50%] max-w-[80%] break-words">
+                                    <div class="bg-blue-100 text-gray-800 md:!p-3 p-2 rounded-lg shadow-md md:max-w-[50%] max-w-[80%] break-words md:!text-[16px] text-[12px]">
                                         {{$item->mensaje}}
                                         @if($item->imagen)
                                             <img src="{{ asset('storage/'.$item->imagen) }}" alt="" class="mt-4">
                                         @endif
                                     </div>
                                 </div>
-                                <h3 class="flex justify-end mb-4 text-gray-400 pr-2">{{$item->usuario->descripcion}}</h3>
+                                <h3 class="flex justify-end mb-4 text-gray-400 pr-2 md:!pt-2 pt-1 md:!text-[14px] text-[10px]">{{$item->usuario->descripcion}}</h3>
                             @else
                                 <!-- Mensaje alineado a la izquierda -->
                                 <div class="flex justify-start">
-                                    <div class="bg-gray-100 text-gray-800 p-3 rounded-lg shadow-md md:max-w-[50%] max-w-[80%] break-words">
+                                    <div class="bg-gray-100 text-gray-800 md:!p-3 p-2 rounded-lg shadow-md md:max-w-[50%] max-w-[80%] break-words md:!text-[16px] text-[12px]">
                                         {{ $item->mensaje }}
                                         @if($item->imagen)
                                             <img src="{{ asset('storage/'.$item->imagen) }}" alt="" class="mt-4">
@@ -204,7 +204,7 @@
                                     </div>
                                     
                                 </div>
-                                <h3 class="flex mb-4 text-gray-400 pl-2">{{$item->usuario->descripcion}}</h3>
+                                <h3 class="flex mb-4 text-gray-400 pl-2 md:!pt-2 pt-1 md:!text-[14px] text-[10px]">{{$item->usuario->descripcion}}</h3>
                             @endif
                         @endforeach
                     </div>
@@ -243,14 +243,14 @@
                             <input type="text" value="1" name="tipo_reporte" name="tipo_reporte" hidden>
                             <input type="text" name="usuario" id="usuario" hidden value="{{Auth::user()->id}}">
                             <input type="text" name="rol" id="rol" hidden value="{{Auth::user()->roleid}}">
-                            <div class="md:col-span-1 col-span-8 pt-[8px] flex md:flex-col w-full">
+                            <div class="md:col-span-1 col-span-8 pt-[8px] flex md:flex-col md:!w-full w-[80%] mx-auto justify-between">
                                 @if($reporte[0]->status_id!=3)
                                     @if(Auth::user()->roleid ==1 || Auth::user()->roleid==2)
-                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded w-2/4 md:w-full md:!py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje" >enviar mensaje</button>
+                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded w-[35%] md:w-full md:!py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje" >enviar mensaje</button>
                                         {{-- <button class="bg-emerald-500 text-white py-2 hover:bg-emerald-700  cursor-pointer rounded mt-3" onclick="subirimagen(event)" >enviar imagen</button> --}}
                                         <input type="text" name="tecnico" id="tecnico" value="{{Auth::user()->id}}" hidden>
                                     @else
-                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded w-2/4 md:w-full md:!py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje2">enviar respuesta</button>
+                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded w-[35%] md:w-full md:!py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje2">enviar respuesta</button>
                                         {{-- <button class="bg-emerald-500 text-white py-2 hover:bg-emerald-700  cursor-pointer rounded mt-3" onclick="subirimagen(event)" >enviar imagen</button> --}}
                                         
                                         
@@ -260,7 +260,7 @@
 
                                     <form id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
                                         <input type="file" id="fileInput" name="file" accept="*" style="display: none;" onchange="showPreview(event)">
-                                        <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success md:mt-2 w-2/4 md:w-full">imagen</button>
+                                        <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success md:mt-2 w-[35%] md:w-full">imagen</button>
                                         
                                         {{-- <button type="submit">Enviar</button> --}}
                                     </form>

@@ -18,7 +18,7 @@
       <h1></h1>
 
       <!-- Título en el centro -->
-      <h1 class="text-lg font-semibold text-gray-800 text-center ml-10">
+      <h1 class="text-lg font-semibold text-gray-800 text-center md:!ml-10">
           TODOS LOS EQUIPOS
       </h1>
 
@@ -117,7 +117,7 @@
             <h1 class="pt-1 md:pt-0">impresoras</h1>
           </div>
         </div>
-        <div class=" bg-white border-0 rounded-tr-lg shadow mb-5 pt-4">
+        <div class=" bg-white border-0 rounded-tr-lg shadow mb-5 pt-3 ">
 
           <div class="d-grid gap-2 hidden md:block d-md-flex justify-content-md-end  mr-10">
             <button class="p-2 md:mb-4 mb-2 bg-emerald-500 rounded-md text-white md:w-40 mt-2 md:mt-0  ml-2 md:ml-0 hidden md:block" onclick="mostrarfiltro()">FILTRAR</button>
@@ -125,14 +125,14 @@
                 Agregar</button>
           </div>
 
-          <div class="w-full md:!hidden flex justify-end mr-4">
-            <button class="p-2 md:mb-4 mb-2 bg-emerald-500 rounded-md text-white md:w-40 w-20 mt-2 md:mt-0  ml-2 md:ml-0 mr-2" onclick="mostrarfiltro()">FILTRAR</button>
+          <div class="w-full md:!hidden flex flex-col items-end">
+            <button class="px-2  h-[30px] md:mb-4  bg-emerald-500 rounded-md text-white md:w-40 w-[100px] text-sm md:mt-0  ml-2 md:ml-0 mr-2" onclick="mostrarfiltro()">FILTRAR</button>
 
-            <button type="button" class="btn btn-primary w-16 my-2 mr-2" data-bs-toggle="modal" data-bs-target="#modalAgregarEquipo">
-                +</button>
+            <button type="button" class="bg-blue-500 text-white rounded-md w-[100px] h-[30px] text-sm mt-2 mr-2 text-center" data-bs-toggle="modal" data-bs-target="#modalAgregarEquipo">
+                Nuevo equipo</button>
           </div>
             
-            <div class=" md:!p-10 p-2 pt-4" >
+            <div class=" md:!p-10 p-2 pt-2 md:!pt-4" >
                 <p class="lead">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     
