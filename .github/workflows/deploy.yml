@@ -21,4 +21,4 @@ jobs:
           cd /var/www/html/tickets
           git pull origin main
           php artisan view:clear
-          sudo systemctl restart apache2
+          
