@@ -66,7 +66,7 @@
           </button>
         </form>
       </div>
-      <div class="modal fade mt-[20%]" id="confirmar" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+      <div class="modal fade mt-[20%] md:!mt-[1%]" id="confirmar" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content p-4">
               <h2 class="text-lg font-semibold text-center">¿Estás seguro?</h2>
