@@ -215,8 +215,8 @@ class UserController extends Controller
     }
 
     public function cambiarol(Request $request){
-        $usuario = User::where('id', $request->id)->get();
-        $usuario->roleid = $request->roleid;
+        $usuario = User::findOrFail($request->usuario);
+        $usuario->roleid = $request->rol;
         $usuario->save();
 
         return response()->json(['message', 'rol actualizado']);

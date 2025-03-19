@@ -125,7 +125,7 @@
                                     <form id="frmActualizarUsuario" method="POST">
                                         @csrf
                                         <!-- Modal -->
-                                        <div class="modal fade pt-[20%] md:pt-[1%]" id="ActualisarUsuarios" 
+                                        <div class="modal fade pt-[20%] md:pt-[1%] md:!mt-[5%]" id="ActualisarUsuarios" 
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
@@ -215,7 +215,8 @@
                                                         <p id="rol-error" class="text-red-500 text-sm hidden">Seleccione un rol</p>
                                                     </div>
                                                     <div>
-                                                        <button id="cambiarolb" class="h-[40px] w-[100px] bg-green-700 text-white rounded-md mt-4" onclick="cambiarol(event)">cambiar rol</button>
+                                                        <button id="cambiarolb" class="h-[40px] w-[100px] bg-green-700 text-white rounded-md mt-4" onclick="cambiarol(event)">Cambiar rol</button>
+                                                        <button id="cambiarolbc" class="h-[40px] w-[100px] hidden bg-blue-700 text-white rounded-md mt-4" onclick="confirmrol(event)">Confirmar</button>
                                                     </div>
 
 
@@ -637,10 +638,9 @@
                     $('#div-rol #rol').addClass('hidden', true);
                     $('#rolinput').removeClass('hidden');
 
-                    $('#confirmarcambio').removeClass('bg-blue-700');
-                    $('#confirmarcambio').addClass('bg-green-700');
-                    $('#confirmarcambio').text('cambiar rol');
-                    $('#confirmarcambio').attr('id', 'cambiarolb');
+                    $('#cambiarolb').removeClass('hidden');
+                    $('#cambiarolbc').addClass('hidden', true);
+                    
 
 
                     $("#ActualisarUsuarios #nombre-error").addClass('hidden');
@@ -1022,39 +1022,44 @@
         $('#rolinput').addClass('hidden', true);
         $('#div-rol #rol').removeClass('hidden');
 
-        $('#cambiarolb').removeClass('bg-green-700');
-        $('#cambiarolb').addClass('bg-blue-700');
-        $('#cambiarolb').text('confirmar');
-        $('#cambiarolb').attr('id', 'confirmarcambio');
+        $('#cambiarolb').addClass('hidden', true);
+        $('#cambiarolbc').removeClass('hidden');
 
-        $(document).off('click', '#confirmarcambio').on('click', '#confirmarcambio', function(){
-            const formData = {
-                rol: $('#div-rol #rol').val(),
-                usuario: $('#idusuario').val(),
+    }
+
+    function confirmrol(event){
+        event.preventDefault();
+
+        const formData = {
+            rol: $('#div-rol #rol').val(),
+            usuario: $('#idusuario').val(),
+        }
+        console.log(formData);
+
+        $.ajax({
+            url:'/cambiarol-usuario',
+            data: formData,
+            type: 'POST',
+            headers:  {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF Token
+            },
+            success: function(response){
+                $('#mensaje').text('el rol fue cambiado con exito!');
+                $("#ActualisarUsuarios").modal("hide");
+                $('#modalmensaje').modal('show')
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+            },
+            error: function(xhr){
+                $('#mensaje').text('ha ocurrido un error! intente de nuevo.');
+                $("#ActualisarUsuarios").modal("hide");
+                $('#modalmensaje').modal('show')
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
             }
-            console.log(formData);
-
-            $.ajax({
-                url:'/cambiarol-usuario',
-                data: formData,
-                type: 'POST',
-                headers:  {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF Token
-                },
-                success: function(response){
-                    console.log('si');
-                },
-                error: function(xhr){
-                    console.log('no');
-                }
-            })
-
-
-
         })
-
-
-        
     }
 
 
