@@ -490,7 +490,10 @@
                       <div class="modal-body">
                         <div id="divfiltro" class="flex w-full justify-end mb-20">
                           <label for="filtro" class="pt-[10px] mr-2">Buscar por fecha: </label>
-                          <input type="date" class="border-red-600 rounded-md">
+                          <input type="date" id="fecha1" class="border-red-600 rounded-md">
+                          <span class="text-lg px-4">_</span>
+                          <input type="date" id="fecha2" class="border-red-600 rounded-md">
+                          <button class="btn btn-success ml-4" onclick="verhistorial(event)">buscar</button>
                       </div>
 
                       <div id="divhistorial">
@@ -871,6 +874,9 @@
                 $('#modalModificarpc #actualizar').attr('onclick','modificarEquipo()');
                 $('#modalModificarpc #actualizar').removeClass('btn-success');
                 $('#modalModificarpc #actualizar').addClass('btn-primary');
+
+                $('#fecha1').val('');
+                $('#fecha2').val('');
 
                 var div = document.getElementById('modalModificarpc');
                 var parrafos = div.getElementsByTagName('p');
@@ -1433,81 +1439,110 @@
     event.preventDefault();
     $('#modalModificarpc').modal('hide');
 
-    const formData ={
-      id: $('#idact').val(),
-      categoria: $('#categoria').val(),
-    };
+    const fecha1 = $('#fecha1').val();
+    const fecha2 = $('#fecha2').val();
 
-    console.log(formData);
+    if(fecha1 == '' && fecha2 == '' ){
+        const formData ={
+          id: $('#idact').val(),
+          categoria: $('#categoria').val(),
+        };
 
-    $.ajax({
-      url:'verhistorial',
-      data: formData,
-      type:'GET',
-      headers:{
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      success: function(data){
-        console.log(data)
-        const roleId = @json(Auth::user()->roleid);
-        const div = document.getElementById('divhistorial');
-        div.innerHTML = "";
-        data.forEach(element => {
-          const url = `/reporte-detalles/${element.id}${roleId}`;
-          if(element.status_id == 1){
-            div.innerHTML += `<a href="${url}">
-                      
-                      <div class="space-y-2 mt-2 mb-2">
-                        <div class="flex justify-between bg-red-600 items-center p-4 rounded-lg shadow-md h-24 text-white border-2 border-red-800 grid grid-cols-6 gap-1 hover:bg-red-800 cursor:pointer">
-                          <h3 class="text-center grid-span-1">${element.fecha}</h3>
-                          <h3 class="text-center grid-span-1">${element.codigo}</h3>
-                          <h3 class="text-center grid-span-1">${element.usuario.name}</h3>
-                          <h3 class="text-center grid-span-1">${element.descripcion}</h3>
-                          <h3 class="text-center grid-span-1">${element.status.nombre}</h3>
-                          <h3 class="text-center grid-span-1">${element.tecnico && element.tecnico.name ? element.tecnico.name : 'Sin técnico'}</h3>
-                        </div>
-                      </div>
-                    </a>`;
-          }else if(element.status_id==2){
-            div.innerHTML += `<a href="${url}">
-                      
-                       <div class="space-y-2 mt-2 mb-2">
-                        <div class="flex justify-between bg-amber-600 items-center p-4 rounded-lg shadow-md h-24 text-white border-2 border-amber-800 grid grid-cols-6 gap-1 hover:bg-amber-800 cursor:pointer">
-                          <h3 class="text-center grid-span-1">${element.fecha}</h3>
-                          <h3 class="text-center grid-span-1">${element.codigo}</h3>
-                          <h3 class="text-center grid-span-1">${element.usuario.name}</h3>
-                          <h3 class="text-center grid-span-1">${element.descripcion}</h3>
-                          <h3 class="text-center grid-span-1">${element.status.nombre}</h3>
-                          <h3 class="text-center grid-span-1">${element.tecnico && element.tecnico.name ? element.tecnico.name : 'Sin técnico'}</h3>
-                        </div>
-                      </div>
-                    </a>`;
-          }else{
-            div.innerHTML += `<a href="${url}">
-                      
-                       <div class="space-y-2 mt-2 mb-2">
-                        <div class="flex justify-between bg-sky-600 items-center p-4 rounded-lg shadow-md h-24 text-white border-2 border-sky-800 grid grid-cols-6 gap-1 hover:bg-sky-800 cursor:pointer">
-                          <h3 class="text-center grid-span-1">${element.fecha}</h3>
-                          <h3 class="text-center grid-span-1">${element.codigo}</h3>
-                          <h3 class="text-center grid-span-1">${element.usuario.name}</h3>
-                          <h3 class="text-center grid-span-1">${element.descripcion}</h3>
-                          <h3 class="text-center grid-span-1">${element.status.nombre}</h3>
-                          <h3 class="text-center grid-span-1">${element.tecnico && element.tecnico.name ? element.tecnico.name : 'Sin técnico'}</h3>
-                        </div>
-                      </div>
-                      
-                    </a>`;
+        console.log(formData);
+
+        $.ajax({
+          url:'verhistorial',
+          data: formData,
+          type:'GET',
+          headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          success: function(data){
+            console.log(data)
+            const roleId = @json(Auth::user()->roleid);
+            const div = document.getElementById('divhistorial');
+            div.innerHTML = "";
+            data.forEach(element => {
+              const url = `/reporte-detalles/${element.id}${roleId}`;
+              if(element.status_id == 1){
+                div.innerHTML += `<a href="${url}">     
+                          <div class="space-y-2 mt-2 mb-2">
+                            <div class="flex justify-between items-center p-4 rounded-lg shadow-md h-24 text-black border-2 border-gray-200 grid grid-cols-6 gap-1 hover:bg-gray-200 cursor:pointer">
+                              <h3 class="text-center grid-span-1">${element.fecha}</h3>
+                              <h3 class="text-center grid-span-1">${element.codigo}</h3>
+                              <h3 class="text-center grid-span-1">${element.usuario.name}</h3>
+                              <h3 class="text-center grid-span-1">${element.descripcion}</h3>
+                              <h3 class="text-center grid-span-1">${element.status.nombre}</h3>
+                              <h3 class="text-center grid-span-1">${element.tecnico && element.tecnico.name ? element.tecnico.name : 'Sin técnico'}</h3>
+                            </div>
+                          </div>
+                        </a>`;
+              }
+              
+            });
+
+
+            $('#historialmodal').modal('show');
+          },
+          error: function(xhr){
+            alert('no');
           }
-          
-        });
+        })
+    }else if(fecha1 != ''||fecha2 != ''){
+      const formData ={
+          id: $('#idact').val(),
+          categoria: $('#categoria').val(),
+          fecha1: fecha1,
+          fecha2: fecha2,
+      };
+
+      $.ajax({
+          url:'mostrarhistorial',
+          data: formData,
+          type:'GET',
+          headers:{
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          success: function(data){
+            console.log(data)
+            const roleId = @json(Auth::user()->roleid);
+            const div = document.getElementById('divhistorial');
+            div.innerHTML = "";
+            data.forEach(element => {
+              const url = `/reporte-detalles/${element.id}${roleId}`;
+              if(element.status_id == 1){
+                div.innerHTML += `<a href="${url}">     
+                          <div class="space-y-2 mt-2 mb-2">
+                            <div class="flex justify-between items-center p-4 rounded-lg shadow-md h-24 text-black border-2 border-gray-200 grid grid-cols-6 gap-1 hover:bg-gray-200 cursor:pointer">
+                              <h3 class="text-center grid-span-1">${element.fecha}</h3>
+                              <h3 class="text-center grid-span-1">${element.codigo}</h3>
+                              <h3 class="text-center grid-span-1">${element.usuario.name}</h3>
+                              <h3 class="text-center grid-span-1">${element.descripcion}</h3>
+                              <h3 class="text-center grid-span-1">${element.status.nombre}</h3>
+                              <h3 class="text-center grid-span-1">${element.tecnico && element.tecnico.name ? element.tecnico.name : 'Sin técnico'}</h3>
+                            </div>
+                          </div>
+                        </a>`;
+              }
+              
+            });
 
 
-        $('#historialmodal').modal('show');
-      },
-      error: function(xhr){
-        alert('no');
-      }
-    })
+            $('#historialmodal').modal('show');
+          },
+          error: function(xhr){
+            alert('no');
+          }
+      })
+
+
+
+
+
+    }
+
+
+    
 
   }
 

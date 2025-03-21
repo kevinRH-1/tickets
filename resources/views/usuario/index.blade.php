@@ -1168,8 +1168,7 @@
                                         </div>
                                     </div>
                                     </a>`;
-                        }
-                    
+                        }                   
                     });
                 },
                 error: function(xhr){

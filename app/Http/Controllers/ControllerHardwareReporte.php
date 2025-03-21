@@ -465,8 +465,20 @@ class ControllerHardwareReporte extends Controller
     }
 
     public function historial2(Request $request){
-        $reportes = ReportesHardware::where('idequipo', $request->id)->where('categoria_id', $request->categoria)->with('usuario', 'tecnico', 'status')->orderBy('id', 'desc')->get();
+        $reportes = ReportesHardware::where('idequipo', $request->id)->where('categoria_id', $request->categoria)->with('usuario', 'tecnico', 'status');
         
+        if (!empty($request->fecha1) && empty($request->fecha2)) {
+            // Si solo fecha1 tiene valor, buscar registros creados desde fecha1 en adelante
+            $reportes->where('created_at', '>=', $request->fecha1);
+        } elseif (empty($request->fecha1) && !empty($request->fecha2)) {
+            // Si solo fecha2 tiene valor, buscar registros creados hasta fecha2
+            $reportes->where('created_at', '<=', $request->fecha2);
+        } elseif (!empty($request->fecha1) && !empty($request->fecha2)) {
+            // Si ambas fechas tienen valor, buscar entre fecha1 y fecha2
+            $reportes->whereBetween('created_at', [$request->fecha1, $request->fecha2]);
+        }
+
+        $reportes = $reportes->orderBy('id', 'desc')->get();
 
         foreach($reportes as $item){
             $item->fecha = Str::limit($item->created_at,10, '');
