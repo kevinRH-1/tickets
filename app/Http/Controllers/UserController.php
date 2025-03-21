@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ReportesHardware;
+use App\Models\ReportesSoftware;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Sucursal;
@@ -9,6 +11,7 @@ use App\Models\Roles;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
 class UserController extends Controller
 {
@@ -46,7 +49,27 @@ class UserController extends Controller
 
     public function find($id){
         $datos = User::with('sucursal', 'rol')->where('id', $id)->get();
-        $datos->makeVisible(['password']);
+        $dia = Carbon::now()->subDay();
+        $mes = Carbon::now()->subDay(30);
+
+        $reportesS = ReportesSoftware::where('usuario_id', $id)->get();
+        $reportesH = ReportesHardware::where('idusuario', $id)->get();
+
+        $reportes24h = collect();
+        $reportes24h = $reportes24h->merge($reportesS->where('created_at', '>=', $dia))
+                                   ->merge($reportesH->where('created_at', '>=', $dia));
+
+        $reportes30d = collect();
+        $reportes30d = $reportes30d->merge($reportesS->where('created_at', '>=', $mes))
+                                    ->merge($reportesH->where('created_at', '>=', $mes));
+
+
+        $datos[0]->cantidad24h = count($reportes24h);
+        $datos[0]->cantidad30d = count($reportes30d);
+        
+        
+
+
 
         return response()->json($datos);
     }
