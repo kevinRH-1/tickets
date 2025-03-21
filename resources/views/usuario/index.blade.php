@@ -669,6 +669,8 @@
                     $("#ActualisarUsuarios #lugar-error").addClass('hidden');
 
                     historial_ejec =0;
+                    $('#fecha1').val('');
+                    $('#fecha2').val('');
 
 
                         const btnActualizar = document.getElementById('confirmar');
@@ -1091,7 +1093,7 @@
         console.log(id);
         console.log($('#fecha1').val())
 
-        if(fecha1 == '' && fecha2 == '' && historial_ejec == 0){
+        if(fecha1 == '' && fecha2 == '' ){
             $.ajax({
                 url: 'historial-usuario/' + id,
                 data: id,
@@ -1174,6 +1176,8 @@
                     console.log('no')
                 }
             })
+
+            $('#historialmodal').modal('show')
 
 
 
