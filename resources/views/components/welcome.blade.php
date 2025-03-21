@@ -37,7 +37,7 @@
             <center>
 
               <p class="lead">
-              <h1 class="font-semibold text-lg">Datos del Usuario</h1>
+              <h1 class="font-semibold text-lg">Datos del usuario</h1>
               <hr class="mt-3 mb-4" style="color: red" />
               <div class="row flex justify-around">
                 <div class="col-sm-4">Correo: {{ Auth::user()->email }}</div>
