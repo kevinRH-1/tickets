@@ -266,6 +266,30 @@
                                         </div>
                                     </div>
 
+                                    <div class="modal fade" id="historialmodal" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg max-h-[600px] overflow-y-auto">
+                                          <div class="modal-content p-4">
+                                            <div class="modal-header flex justify-center">
+                                              <h1 class="modal-title fs-5 text-semibold text-4xl text-red-600" id="exampleModalLabel">Historial del usuario</h1>
+                                            </div>
+                                            <div class="modal-body">
+                                              <div id="divfiltro" class="flex w-full justify-end mb-20">
+                                                <label for="filtro" class="pt-[10px] mr-2">Buscar por fecha: </label>
+                                                <input type="date" id="fecha1" class="border-red-600 rounded-md">
+                                                <span class="text-lg px-4">_</span>
+                                                <input type="date" id="fecha2" class="border-red-600 rounded-md">
+                                                <button class="btn btn-success ml-4" onclick="verhistorial(event)">buscar</button>
+                                            </div>
+                      
+                                            <div id="divhistorial">
+                      
+                                            </div>
+                      
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
+
                                     
 
                                     <div class="modal fade mt-[20%]" id="confirmregis" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
@@ -414,6 +438,8 @@
 <script src="../resources/jquery/jquery-3.6.0.min.js"></script>
 
 <script>
+
+    let historial_ejec =0;
 
     document.addEventListener('DOMContentLoaded', function () {
         // Seleccionar la tabla
@@ -641,6 +667,8 @@
                     $("#ActualisarUsuarios #numero-error").addClass('hidden');
                     $("#ActualisarUsuarios #rol-error").addClass('hidden');
                     $("#ActualisarUsuarios #lugar-error").addClass('hidden');
+
+                    historial_ejec =0;
 
 
                         const btnActualizar = document.getElementById('confirmar');
@@ -1056,6 +1084,102 @@
 
     function verhistorial(event){
         event.preventDefault();
+
+        const id = $("#ActualisarUsuarios #idusuario").val();
+        const fecha1 = $('#fecha1').val();
+        const fecha2 = $('#fecha2').val();
+        console.log(id);
+        console.log($('#fecha1').val())
+
+        if(fecha1 == '' && fecha2 == '' && historial_ejec == 0){
+            $.ajax({
+                url: 'historial-usuario/' + id,
+                data: id,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }, 
+                success: function (data){
+                    console.log(data);
+                    const roleId = @json(Auth::user()->roleid);
+                    const div = document.getElementById('divhistorial');
+                    div.innerHTML = "";
+                    data.forEach(element => {
+                        const url = `/verreporte/${element.id}${roleId}`;
+                        if(element.status_id == 1){
+                            div.innerHTML += `<a href="${url}">
+                                    
+                                    <div class="space-y-2 mt-2 mb-2">
+                                        <div class="flex justify-between items-center p-4 rounded-lg shadow-md h-24 text-black border-2 border-black grid grid-cols-6 gap-1 hover:bg-gray-200 cursor:pointer">
+                                        <h3 class="text-center grid-span-1">${element.fecha}</h3>
+                                        <h3 class="text-center grid-span-1">${element.codigo}</h3>
+                                        <h3 class="text-center grid-span-1">${element.sistema.nombre}</h3>
+                                        <h3 class="text-center grid-span-1">${element.modulo && element.modulo.nombre ? element.modulo.nombre: 'Sin modulo'}</h3>
+                                        <h3 class="text-center grid-span-1">${element.tecnico && element.tecnico.name ? element.tecnico.name : 'Sin técnico'}</h3>
+                                        <h3 class="text-center grid-span-1">${element.status.nombre}</h3>
+                                        </div>
+                                    </div>
+                                    </a>`;
+                        }
+                    
+                    });
+                },
+                error: function(xhr){
+                    console.log('no')
+                }
+            })
+
+            $('#historialmodal').modal('show')
+            historial_ejec ++;
+        }else if(fecha1 != '' || fecha2 != ''){
+            
+            const formData = {
+                fecha1: fecha1,
+                fecha2: fecha2,
+            }
+
+            $.ajax({
+                url: 'historial-usuario2/' + id,
+                data: formData,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }, 
+                success: function (data){
+                    console.log(data);
+                    const roleId = @json(Auth::user()->roleid);
+                    const div = document.getElementById('divhistorial');
+                    div.innerHTML = "";
+                    data.forEach(element => {
+                        const url = `/verreporte/${element.id}${roleId}`;
+                        if(element.status_id == 1){
+                            div.innerHTML += `<a href="${url}">
+                                    
+                                    <div class="space-y-2 mt-2 mb-2">
+                                        <div class="flex justify-between items-center p-4 rounded-lg shadow-md h-24 text-black border-2 border-black grid grid-cols-6 gap-1 hover:bg-gray-200 cursor:pointer">
+                                        <h3 class="text-center grid-span-1">${element.fecha}</h3>
+                                        <h3 class="text-center grid-span-1">${element.codigo}</h3>
+                                        <h3 class="text-center grid-span-1">${element.sistema.nombre}</h3>
+                                        <h3 class="text-center grid-span-1">${element.modulo && element.modulo.nombre ? element.modulo.nombre: 'Sin modulo'}</h3>
+                                        <h3 class="text-center grid-span-1">${element.tecnico && element.tecnico.name ? element.tecnico.name : 'Sin técnico'}</h3>
+                                        <h3 class="text-center grid-span-1">${element.status.nombre}</h3>
+                                        </div>
+                                    </div>
+                                    </a>`;
+                        }
+                    
+                    });
+                },
+                error: function(xhr){
+                    console.log('no')
+                }
+            })
+
+
+
+        }
+
+        
     }
 
 

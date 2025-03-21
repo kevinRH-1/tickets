@@ -29,9 +29,7 @@ class ControllerHardwareReporte extends Controller
     public function indexgeneral()
     {
         $reportes = ReportesHardware::orderBy('noti_t', 'desc')->orderBy('status_id','asc')->orderBy('id', 'desc')->paginate(10);
-        // foreach($reportes as $item){
-        //     $item->created_at = substr($item->created_at, 0, 10);
-        // }
+        $dia = Carbon::now()->subDay();
 
         $sucursales = Sucursal::where('id', '!=', 1)->where('activo', 1)->orderBy('id')->get();
         $fallas = TipoFalla::orderBy('id')->get();
@@ -41,13 +39,15 @@ class ControllerHardwareReporte extends Controller
         $querygenerados = collect();
         $queryrevision = collect();
         $querysolucionados = collect();
+        $query24h = collect();
         $querygenerados = $querygenerados->merge($reportes->where('status_id', 1));
         $queryrevision = $queryrevision->merge($reportes->where('status_id', 2));
-        $querysolucionados = $querysolucionados->merge($reportes->where('status_id', 3));
-
+        $querysolucionados = $querysolucionados->merge($reportes->where('status_id', 3)->where('created_at', '>=', $dia));
+        $query24h = $query24h->merge($reportes->where('created_at', '>=', $dia));
         $generados = count($querygenerados);
         $revision = count($queryrevision);
         $solucionados = count($querysolucionados);
+        $r24h = count($query24h);
 
         // foreach($reportes as $item){
         //     $mensaje = Mensaje::where('reporte_id', $item->id)->where('tipo_id', 2)->wherehas('usuario', function($query){
@@ -61,7 +61,7 @@ class ControllerHardwareReporte extends Controller
         //     }
         // }
 
-        return view('reportes.reportesgeneral', compact('reportes', 'solucionados', 'generados', 'revision', 'sucursales', 'fallas', 'estatus'));
+        return view('reportes.reportesgeneral', compact('reportes', 'solucionados', 'generados', 'revision', 'sucursales', 'fallas', 'estatus', 'r24h'));
     }
 
     public function misreportes($id){

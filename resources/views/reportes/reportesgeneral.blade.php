@@ -28,7 +28,7 @@
               <h1>TICKETS SOLUCIONADOS ULTIMAS 24H: {{$solucionados}}  </h1>
             </div>
             <div class="md:w-56 md:h-32 bg-purple-700 md:rounded-lg p-6 md:shadow-md shadow-gray-700">
-              <h1>TICKETS TOTALES ULTIMAS 24H: x</h1>
+              <h1>TICKETS TOTALES ULTIMAS 24H: {{$r24h}}</h1>
             </div>
         </div>
     </div>
