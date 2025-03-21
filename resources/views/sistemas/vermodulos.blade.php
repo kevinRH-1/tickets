@@ -399,18 +399,18 @@
                         if(data[0].solucion){
                             $('#modalfalla #solucionfalla').val(data[0].solucion.solucion);
                             $('#modalfalla #solucion').val(1);
+                            if(data[0].solucion.checked==1){
+                                const checkbox = document.getElementById("checkusuario");
+                                checkbox.checked = true;
+                            }
+                            $('#divcheck').removeClass('hidden');
                         }else{
                             $('#modalfalla #solucionfalla').val('sin solucion');
                             $('#modalfalla #solucion').val(0);
+                            $('#divcheck').addClass('hidden', true);
+                            
                         }
                         $('#modalfalla #idfalla').val(data[0].id);
-                        if(data[0].solucion){
-                            $('#divcheck').removeClass('hidden');
-                        }else{
-                            $('#divcheck').addClass('hidden', true);
-                        }
-
-
                         $('#modalfalla').modal('show');
                         
                     },
