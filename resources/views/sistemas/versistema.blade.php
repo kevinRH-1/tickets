@@ -504,6 +504,11 @@
                     <div class="w-11/12 mx-auto mt-4">
                         <textarea type="text" id="solucionfalla" class="w-full border-1 border-gray-300 rounded-lg" readonly></textarea>
                     </div>
+                    <div id="divcheck" class="flex justify-between w-2/4 mt-4 mx-auto hidden">
+                        <label for="">Solucion para el usuario:</label>
+                        <input type="checkbox" name="checkusuario" id="checkusuario" class="rounded-md">
+    
+                    </div>
                     
                     <div class="mt-6">
                         <button id="cambiarsolucion" class="btn btn-success">cambiar solucion</button>
@@ -1093,9 +1098,15 @@
                         if(data[0].solucion){
                             $('#modalfalla #solucionfalla').val(data[0].solucion.solucion);
                             $('#modalfalla #solucion').val(1);
+                            $('#divcheck').removeClass('hidden');
+                            if(data[0].solucion.checked==1){
+                                const checkbox = document.getElementById("checkusuario");
+                                checkbox.checked = true;
+                            }
                         }else{
                             $('#modalfalla #solucionfalla').val('sin solucion');
                             $('#modalfalla #solucion').val(0);
+                            $('#divcheck').addClass('hidden', true);
                         }
                         $('#modalfalla #idfalla').val(data[0].id);
 
@@ -1125,6 +1136,7 @@
                         solucion:$('#solucionfalla').val(),
                         existesolucion: $('#solucion').val(),
                         tecnico: $('#tecnico').val(),
+                        checked: $('#checkusuario').prop('checked'),
                     };
 
                     console.log(formData);
@@ -1156,8 +1168,6 @@
                         }
                     })
                 })
-
-
             })
         })
 

@@ -122,12 +122,15 @@
                                         </form>
                                     </td>
 
+
+
+
                                     <form id="frmActualizarUsuario" method="POST">
                                         @csrf
                                         <!-- Modal -->
-                                        <div class="modal fade pt-[20%] md:pt-[1%]" id="ActualisarUsuarios" 
+                                        <div class="modal fade pt-[10%] md:pt-[1%] md:!mt-[2%]" id="ActualisarUsuarios" 
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
+                                            <div class="modal-dialog ">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h1 class="modal-title fs-5 text-center w-[98%] m-auto" id="exampleModalLabel">Datos del
@@ -135,94 +138,107 @@
                                                         <button type="button" class="btn-close btn-sm"
                                                             data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
-                                                    <div class="modal-body">
-                                            {{-- <div class="w-[98%] m-auto">
-                                                <label for="first-name" class="block text-sm font-medium text-gray-700">First Name</label>
-                                                <input type="text" id="nombreu" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Enter your first name">
-                                                <p id="nombre-error" class="text-red-500 text-sm hidden">First name is required.</p>
-                                            </div> --}}
+                                                    <div class="border-2 border-b-gray-300 justify-around py-2">
 
-                                            <div class="flex justify-around row">
+                                                        <h1 class="text-center">tickets del usuario</h1>
 
-                                                <div class="col-sm-6">
-                                                    <label for="first-name" class="block text-sm font-medium text-gray-700">Nombre</label>
-                                                    <input type="text" id="nombre" class="nombre mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Enter your first name" readonly>
-                                                    <p id="nombre-error" class="text-red-500 text-sm hidden">El nombre es obligatorio</p>
-                                                </div>
+                                                        <div class="flex justify-around mt-2">
+                                                            <label for="cantidad_30d" id="cantidad_30d"></label>
+                                                            <label for="cantidad_24h" id="cantidad_24h"></label>
+                                                        </div>
 
-                                                <div class="col-sm-6 hidden">
-                                                    <label for="last-name" class="block text-sm font-medium text-gray-700">Apellido</label>
-                                                    <input type="text" id="apellido" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Enter your last name" readonly>
-                                                    <p id="apellido-error" class="text-red-500 text-sm hidden">El apellido es obligatorio</p>
-                                                </div>
-
-                                            </div>
-                                        
-                                            {{-- <div class="w-[98%] m-auto my-4">
-                                                <label for="last-name" class="block text-sm font-medium text-gray-700">Last Name</label>
-                                                <input type="text" id="apellidou" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Enter your last name">
-                                                <p id="apellido-error" class="text-red-500 text-sm hidden">Last name is required.</p>
-                                            </div> --}}
-
-                                            <div class="flex justify-around row mt-8">
-                                        
-                                                <div class="col-sm-6">
-                                                    <label for="email" class="block text-sm font-medium text-gray-700">Correo</label>
-                                                    <input type="email" id="correo" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm"  readonly>
-                                                    <p id="correo-error" class="text-red-500 text-sm hidden">El formato del correo es invalido</p>
-                                                </div>
-
-                                                <input type="text" id="idusuario" name="idusuario" hidden>
+                                                        
+                                                    </div>
+                                                    <div class="modal-body justify-center">
+                                                        
                                             
-                                                <div class="col-sm-6">
-                                                    <label for="password" class="block text-sm font-medium text-gray-700">numero celular</label>
-                                                    <input type="text" id="numero" maxlength="11" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm"  readonly>
-                                                    <p id="numero-error" class="text-red-500 text-sm hidden">formato de numero invalido</p>
-                                                </div>
-                                            </div>
+                                                        
+                                                        {{-- <div class="flex justify-around row"> --}}
+
+                                                            <div class="col-sm-6 justify-center w-3/4 mx-auto">
+                                                                <label for="first-name" class="block text-sm font-medium text-gray-700">Nombre</label>
+                                                                <input type="text" id="nombre" class="nombre mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Enter your first name" readonly>
+                                                                <p id="nombre-error" class="text-red-500 text-sm hidden">El nombre es obligatorio</p>
+                                                            </div>
+
+                                                            <div class="col-sm-6 justify-center mt-4 w-3/4 mx-auto">
+                                                                <label for="email" class="block text-sm font-medium text-gray-700">Correo</label>
+                                                                <input type="email" id="correo" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm"  readonly>
+                                                                <p id="correo-error" class="text-red-500 text-sm hidden">El formato del correo es invalido</p>
+                                                            </div>
+
+                                                            
+
+                                                        {{-- </div> --}}
                                         
-                                            <div class="row flex justify-around mt-8">
-                                                <div class="col-sm-4 ">
-                                                    <label for="role" class="block text-sm font-medium text-gray-700 text-center">Rol</label>
-                                                    <select name="rol" id="rol"  class="mt-1 block w-full h-12 px-2  rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
-                                                        required>
-                                                        @foreach ($roles as $item)
-                                                            <option value="{{ $item->id }}">
-                                                                {{ $item->nombre }}</option>
-                                                        @endforeach
+                                            
 
-                                                    </select>
-                                                    <input type="text" id="rolinput" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
-                                                    <p id="rol-error" class="text-red-500 text-sm hidden">Seleccione un rol</p>
-                                                </div>
+                                                        {{-- <div class="flex justify-around row mt-8"> --}}
+                                                    
+                                                            
 
+                                                            <input type="text" id="idusuario" name="idusuario" hidden>
+                                                        
+                                                            <div class="col-sm-6 justify-center mt-4 w-3/4 mx-auto">
+                                                                <label for="password" class="block text-sm font-medium text-gray-700">numero celular</label>
+                                                                <input type="text" id="numero" maxlength="11" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm"  readonly>
+                                                                <p id="numero-error" class="text-red-500 text-sm hidden">formato de numero invalido</p>
+                                                            </div>
+
+                                                            <div class="col-sm-6 justify-center mt-4 w-3/4 mx-auto">
+                                                                <label for="branch" class="block text-sm font-medium text-gray-700">Sucursal/Departamento</label>
+                                                                <select name="lugar" id="lugar"  class="mt-1 block w-full h-12 px-2  rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
+                                                                    @foreach ($sucursal as $item)
+                                                                        <option value="{{ $item->id }}">
+                                                                            {{ $item->nombre }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <input type="text" id="lugarinput" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
+                                                                <p id="sucursal-error" class="text-red-500 text-sm hidden">Seleccione una sucursal o departamento</p>
+                                                            </div>
+                                                        {{-- </div> --}}
                                         
-                                                <div class="col-sm-6 ">
-                                                    <label for="branch" class="block text-sm font-medium text-gray-700 text-center">Sucursal/Departamento</label>
-                                                    <select name="lugar" id="lugar"  class="mt-1 block w-full h-12 px-2  rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
-                                                        @foreach ($sucursal as $item)
-                                                            <option value="{{ $item->id }}">
-                                                                {{ $item->nombre }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <input type="text" id="lugarinput" class="mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
-                                                    <p id="sucursal-error" class="text-red-500 text-sm hidden">Seleccione una sucursal o departamento</p>
-                                                </div>
+                                                        <div class="row flex justify-around mt-8">
+                                                            <div class="col-sm-4  md!:w-1/4 w-3/4 mx-auto flex justify-between">
+                                                                <div id="div-rol">
+                                                                    <label for="role" class="block text-sm font-medium text-gray-700 text-center">Rol</label>
+                                                                    <select name="rol" id="rol"  class="mt-1 hidden w-full h-12   rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
+                                                                        required>
+                                                                        @foreach ($roles as $item)
+                                                                            <option value="{{ $item->id }}">
+                                                                                {{ $item->nombre }}</option>
+                                                                        @endforeach
+
+                                                                    </select>
+                                                                    <input type="text" id="rolinput" class="mt-1 block md:!w-full w-3/4 rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" readonly>
+                                                                    <p id="rol-error" class="text-red-500 text-sm hidden">Seleccione un rol</p>
+                                                                </div>
+                                                                <div>
+                                                                    <button id="cambiarolb" class="h-[40px] w-[100px] bg-green-700 text-white rounded-md mt-4" onclick="cambiarol(event)">Cambiar rol</button>
+                                                                    <button id="cambiarolbc" class="h-[40px] w-[100px] hidden bg-blue-700 text-white rounded-md mt-4" onclick="confirmrol(event)">Confirmar</button>
+                                                                </div>
 
 
-                                            </div>
+                                                            </div>
+                                                            <button class="btn btn-primary mt-6 w-2/4 mx-auto" onclick="verhistorial(event)">ver historial</button>
+
+                                                        </div>
+
+                                                        <div>
+                                                            
+                                                        </div>
+                                                                </div>
+                                                                <div class="modal-footer hidden flex justify-around">
+                                                                    <button class="btn btn-success btn-sm"
+                                                                        id="reset">cambiar contraseña</button>
+                                                                    <button class="btn hidden btn-primary btn-sm"
+                                                                        id="actualizar">Actualizar</button>
+                                                                    {{-- <button class="btn btn-danger btn-sm"
+                                                                        id="borrar">Borrar</button> --}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="modal-footer hidden flex justify-around">
-                                                        <button class="btn btn-success btn-sm"
-                                                            id="reset">cambiar contraseña</button>
-                                                        <button class="btn hidden btn-primary btn-sm"
-                                                            id="actualizar">Actualizar</button>
-                                                        {{-- <button class="btn btn-danger btn-sm"
-                                                            id="borrar">Borrar</button> --}}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
 
 
 
@@ -247,6 +263,30 @@
                                                     Cancelar
                                                 </button>
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" id="historialmodal" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg max-h-[600px] overflow-y-auto">
+                                          <div class="modal-content p-4">
+                                            <div class="modal-header flex justify-center">
+                                              <h1 class="modal-title fs-5 text-semibold text-4xl text-red-600" id="exampleModalLabel">Historial del usuario</h1>
+                                            </div>
+                                            <div class="modal-body">
+                                              <div id="divfiltro" class="flex w-full justify-end mb-20">
+                                                <label for="filtro" class="pt-[10px] mr-2">Buscar por fecha: </label>
+                                                <input type="date" id="fecha1" class="border-red-600 rounded-md">
+                                                <span class="text-lg px-4">_</span>
+                                                <input type="date" id="fecha2" class="border-red-600 rounded-md">
+                                                <button class="btn btn-success ml-4" onclick="verhistorial(event)">buscar</button>
+                                            </div>
+                      
+                                            <div id="divhistorial">
+                      
+                                            </div>
+                      
+                                            </div>
+                                          </div>
                                         </div>
                                     </div>
 
@@ -398,6 +438,8 @@
 <script src="../resources/jquery/jquery-3.6.0.min.js"></script>
 
 <script>
+
+    let historial_ejec =0;
 
     document.addEventListener('DOMContentLoaded', function () {
         // Seleccionar la tabla
@@ -597,6 +639,8 @@
                     $("#ActualisarUsuarios #rol").val(datos.roleid);
                     $("#ActualisarUsuarios #rolinput").val(datos.rol.nombre);
                     $("#ActualisarUsuarios #idUsuario").val(datos.id);
+                    $("#ActualisarUsuarios #cantidad_30d").text('ultimos 30 dias: ' + datos.cantidad30d);
+                    $("#ActualisarUsuarios #cantidad_24h").text('ultimas 24 horas: '+ datos.cantidad24h);
 
                     $("#ActualisarUsuarios #nombre").attr('readonly', true);
                     // $("#ActualisarUsuarios #apellido").attr('readonly', true);
@@ -609,7 +653,13 @@
                     document.getElementById('lugarinput').removeAttribute('hidden');
                     document.getElementById('rolinput').removeAttribute('hidden');
                     document.getElementById('lugar').setAttribute('hidden', true);
-                    document.getElementById('rol').setAttribute('hidden', true);
+                    $('#div-rol #rol').addClass('hidden', true);
+                    $('#rolinput').removeClass('hidden');
+
+                    $('#cambiarolb').removeClass('hidden');
+                    $('#cambiarolbc').addClass('hidden', true);
+                    
+
 
                     $("#ActualisarUsuarios #nombre-error").addClass('hidden');
                     $("#ActualisarUsuarios #apellido-error").addClass('hidden');
@@ -617,6 +667,10 @@
                     $("#ActualisarUsuarios #numero-error").addClass('hidden');
                     $("#ActualisarUsuarios #rol-error").addClass('hidden');
                     $("#ActualisarUsuarios #lugar-error").addClass('hidden');
+
+                    historial_ejec =0;
+                    $('#fecha1').val('');
+                    $('#fecha2').val('');
 
 
                         const btnActualizar = document.getElementById('confirmar');
@@ -981,6 +1035,155 @@
             }
         });
     });
+
+
+    function cambiarol(event){
+        event.preventDefault();
+        console.log('hola');
+
+        $('#rolinput').addClass('hidden', true);
+        $('#div-rol #rol').removeClass('hidden');
+
+        $('#cambiarolb').addClass('hidden', true);
+        $('#cambiarolbc').removeClass('hidden');
+
+    }
+
+    function confirmrol(event){
+        event.preventDefault();
+
+        const formData = {
+            rol: $('#div-rol #rol').val(),
+            usuario: $('#idusuario').val(),
+        }
+        console.log(formData);
+
+        $.ajax({
+            url:'/cambiarol-usuario',
+            data: formData,
+            type: 'POST',
+            headers:  {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF Token
+            },
+            success: function(response){
+                $('#mensaje').text('el rol fue cambiado con exito!');
+                $("#ActualisarUsuarios").modal("hide");
+                $('#modalmensaje').modal('show')
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+            },
+            error: function(xhr){
+                $('#mensaje').text('ha ocurrido un error! intente de nuevo.');
+                $("#ActualisarUsuarios").modal("hide");
+                $('#modalmensaje').modal('show')
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+            }
+        })
+    }
+
+    function verhistorial(event){
+        event.preventDefault();
+
+        const id = $("#ActualisarUsuarios #idusuario").val();
+        const fecha1 = $('#fecha1').val();
+        const fecha2 = $('#fecha2').val();
+        console.log(id);
+        console.log($('#fecha1').val())
+
+        if(fecha1 == '' && fecha2 == '' ){
+            $.ajax({
+                url: 'historial-usuario/' + id,
+                data: id,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }, 
+                success: function (data){
+                    console.log(data);
+                    const roleId = @json(Auth::user()->roleid);
+                    const div = document.getElementById('divhistorial');
+                    div.innerHTML = "";
+                    data.forEach(element => {
+                        const url = `/verreporte/${element.id}${roleId}`;
+                        if(element.status_id == 1){
+                            div.innerHTML += `<a href="${url}">
+                                    
+                                    <div class="space-y-2 mt-2 mb-2">
+                                        <div class="flex justify-between items-center p-4 rounded-lg shadow-md h-24 text-black border-2 border-black grid grid-cols-6 gap-1 hover:bg-gray-200 cursor:pointer">
+                                        <h3 class="text-center grid-span-1">${element.fecha}</h3>
+                                        <h3 class="text-center grid-span-1">${element.codigo}</h3>
+                                        <h3 class="text-center grid-span-1">${element.sistema.nombre}</h3>
+                                        <h3 class="text-center grid-span-1">${element.modulo && element.modulo.nombre ? element.modulo.nombre: 'Sin modulo'}</h3>
+                                        <h3 class="text-center grid-span-1">${element.tecnico && element.tecnico.name ? element.tecnico.name : 'Sin técnico'}</h3>
+                                        <h3 class="text-center grid-span-1">${element.status.nombre}</h3>
+                                        </div>
+                                    </div>
+                                    </a>`;
+                        }
+                    
+                    });
+                },
+                error: function(xhr){
+                    console.log('no')
+                }
+            })
+
+            $('#historialmodal').modal('show')
+            historial_ejec ++;
+        }else if(fecha1 != '' || fecha2 != ''){
+            
+            const formData = {
+                fecha1: fecha1,
+                fecha2: fecha2,
+            }
+
+            $.ajax({
+                url: 'historial-usuario2/' + id,
+                data: formData,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }, 
+                success: function (data){
+                    console.log(data);
+                    const roleId = @json(Auth::user()->roleid);
+                    const div = document.getElementById('divhistorial');
+                    div.innerHTML = "";
+                    data.forEach(element => {
+                        const url = `/verreporte/${element.id}${roleId}`;
+                        if(element.status_id == 1){
+                            div.innerHTML += `<a href="${url}">
+                                    
+                                    <div class="space-y-2 mt-2 mb-2">
+                                        <div class="flex justify-between items-center p-4 rounded-lg shadow-md h-24 text-black border-2 border-black grid grid-cols-6 gap-1 hover:bg-gray-200 cursor:pointer">
+                                        <h3 class="text-center grid-span-1">${element.fecha}</h3>
+                                        <h3 class="text-center grid-span-1">${element.codigo}</h3>
+                                        <h3 class="text-center grid-span-1">${element.sistema.nombre}</h3>
+                                        <h3 class="text-center grid-span-1">${element.modulo && element.modulo.nombre ? element.modulo.nombre: 'Sin modulo'}</h3>
+                                        <h3 class="text-center grid-span-1">${element.tecnico && element.tecnico.name ? element.tecnico.name : 'Sin técnico'}</h3>
+                                        <h3 class="text-center grid-span-1">${element.status.nombre}</h3>
+                                        </div>
+                                    </div>
+                                    </a>`;
+                        }                   
+                    });
+                },
+                error: function(xhr){
+                    console.log('no')
+                }
+            })
+
+            $('#historialmodal').modal('show')
+
+
+
+        }
+
+        
+    }
 
 
 </script>
