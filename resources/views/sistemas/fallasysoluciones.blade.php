@@ -76,7 +76,7 @@
                     </svg>
                     </button>
                     <div class="">
-                        <button type="button" class="btn btn-primary mt-4 mr-2 md:!p-0" id="openmodal2">
+                        <button type="button" class="btn btn-primary mt-4 mr-2 md:!m-0" id="openmodal2">
                             + <span class="hidden md:inline">Agregar</span>
                         </button>
                     </div>
