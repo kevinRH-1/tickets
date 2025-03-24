@@ -378,7 +378,7 @@
 
                     @if(Auth::user()->roleid== 3)
                         <!-- Formulario dentro del modal -->
-                        <form id="modalFormusuario" method="GET" action="{{route('software.status', [$reporte[0]->id, Auth::user()->roleid, Auth::user()->lugar_id])}}">
+                        <form id="modalFormusuario" method="GET" action="{{ route('software1.status', ['id' => $reporte[0]->id, 'rol' => Auth::user()->roleid, 'sucursal' => Auth::user()->lugar_id]) }}">
                             @csrf
 
                             <!-- Campo de texto opcional -->
@@ -554,7 +554,7 @@
 
 
         $.ajax({
-            url:'/cambiar/estatus/'+formData.id + formData.rol + formData.numero,
+            url:'/software-cambiar/estatus/'+formData.id +'/'+ formData.rol +'/'+ formData.numero,
             data: formData,
             type:'GET',
             headers:{

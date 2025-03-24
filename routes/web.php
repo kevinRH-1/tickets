@@ -149,7 +149,7 @@ Route::get('cargarmodulos/{id}', [ControllerSoftwareReporte::class, 'modulos'])-
 Route::post('reportessoftwarestore', [ControllerSoftwareReporte::class, 'store'])->name('reportessoftware.store');
 Route::get('verreporte/{id}{roleid}', [ControllerSoftwareReporte::class, 'reporte'])->name('reporte.ver');
 Route::post('enviar/mensaje', [ControllerSoftwareReporte::class, 'mensajes'])->name('enviar.mensaje');
-Route::get('cambiar/estatus/{id}{rol}{sucursal}', [ControllerSoftwareReporte::class , 'status'])->name('cambiar.status');
+Route::get('/software-cambiar/estatus/{id}/{rol}/{sucursal}', [ControllerSoftwareReporte::class , 'status'])->name('software1.status');
 Route::post('/confirmarstatus', [ControllerSoftwareReporte::class, 'confirmarstatusr'])->name('confirmar.status');
 Route::delete('reportes/borrar/{id}', [ControllerSoftwareReporte::class, 'delete'])->name('reporte.borrar');
 Route::get('filtrosreportesS', [ControllerSoftwareReporte::class, 'filtros'])->name('filtros.software');
