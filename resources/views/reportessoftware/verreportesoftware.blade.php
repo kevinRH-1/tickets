@@ -12,6 +12,7 @@
 
         <div class="bg-white p-6 rounded-lg shadow-md w-11/12 m-auto space-y-10">
             <label for="" class="block text-gray-700 w-2/4 m-auto text-center md:text-4xl text-2xl" >DATOS DEL REPORTE</label>
+            
         </div>
         <div class="md:!mt-10 mt-4"></div>
 
@@ -146,14 +147,18 @@
                             @endif
                         @endif
                         </div>
-                    <div class="flex justify-between mt-8">
-                        <button id="confirmYes2" class="btn btn-primary text-white px-4 py-2 rounded">
-                            Sí, confirmar
-                        </button>
-                        <button id="confirmNo2" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded" onclick="$('#confirmarsolucion').modal('hide')">
-                            Cancelar
-                        </button>
-                    </div>
+                        <div class="grid grid-cols-2 gap-4 mt-8">
+                            <button id="confirmYes2" class="btn btn-primary text-white py-2 rounded" onclick="enviarconfirm()">
+                                confirmar solucion
+                            </button>
+                            <button id="" class="btn btn-danger text-white  px-4 py-2 rounded" onclick="negar(event)">
+                                Negar solucion
+                            </button>
+    
+                            <button id="confirmNo2" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded col-span-2 w-[80%] mx-auto" onclick="$('#confirmarsolucion').modal('hide')">
+                                Cancelar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -298,7 +303,7 @@
             </div>
         @endif
 
-        <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto flex justify-center">
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto flex flex-col justify-center md:grid md:grid-cols-3 md:gap-2">
         
         
             <input type="text" name="solucion" id="solucion" value="{{$confirmar}}" hidden>
@@ -308,15 +313,23 @@
 
             @else
                 @if(Auth::user()->roleid==1 && $confirmar ==1 || Auth::user()->roleid==2 && $confirmar ==1 )
+                    <div></div>
                     <button id="openModal" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mx-auto">cambiar estatus a solucionado</button>
+                    @if ($reporte[0]->solucion)
+                        <label for="solicitud" class="text-gray-400 pt-2 text-sm text-center">--Ya existe una solicitud pendiente para solucionar!--</label>
+                    @endif
                 {{-- <a href="#" id="link" name="link" ><button name="boton" id="boton" class="px-6 py-2 bg-gray-400 text-white font-semibold rounded-md cursor-not-allowed mt-4">enviar solicitud para confirmar solucion</button></a> --}}
                 @endif
                 @if(Auth::user()->roleid == 3 && $reporte[0]->solucionado_tecnico ==1)
+                    <div></div>
                     {{-- <a href="{{route('software.status', [$reporte[0]->id, Auth::user()->roleid, Auth::user()->lugar_id])}}" class=""><button class="btn btn-primary ">confirmar solucion</button></a> --}}
                     <button class="btn btn-primary" onclick="$('#confirmarsolucion').modal('show')">confirmar solucion</button>
+                    <div></div>
                 @endif
                 @if(Auth::user()->roleid ==3 && $confirmar == 1 && $reporte[0]->solucionado_tecnico !=1)
+                    <div></div>
                     <button id="openModalusuario" class="btn btn-primary " data-type="usuario">cambiar a solucionado</button>
+                    <div></div>
                 @endif
             @endif
 
@@ -720,6 +733,42 @@
         $('#fileInput').val('');
     }
 
+
+
+    function negar(event){
+        event.preventDefault();
+
+        const formData ={
+            id:  $('#reporte').val(),
+            tipo:1,
+        }
+        console.log(formData);
+
+        $.ajax({
+            url: '/negarsolucionsoftware',
+            type: 'POST',
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response){
+                $('#confirmarsolucion').modal('hide');
+                $('#modalmensaje #mensaje').text('Se ha negado la solucion del ticket');
+                $('#modalmensaje').modal('show');
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            },
+            error: function (xhr){
+                $('#confirmarsolucion').modal('hide');
+                $('#modalmensaje #mensaje').text('Ha ocurrido un error!');
+                $('#modalmensaje').modal('show');
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            }
+        })
+    }
     
 
 

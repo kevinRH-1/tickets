@@ -8,7 +8,7 @@
 
         <!-- Título en el centro -->
         <h1 class="text-lg font-semibold text-gray-800 text-center md:ml-10">
-            Gestion de tickets
+            Mis tickets || {{Auth::user()->sucursal->nombre}}
         </h1>
 
         <!-- Botón derecho -->
@@ -98,7 +98,7 @@
                                     <tr class="border-1 border-gray-200 hover:bg-gray-50">
                                 @endif
                                         <td class="md:!pl-4 p-1">
-                                            @if($item->noti_u==1)
+                                            @if($item->noti_u==1 || $item->solucion)
                                                 <i class="fa-solid fa-circle-exclamation md:fa-xl" style="color: #ff0000;"></i>
                                             @else
 

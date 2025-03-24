@@ -5,7 +5,7 @@
 <div class="w-11/12  bg-white shadow-lg rounded-lg flex items-center justify-between p-3 py-2 m-auto border-1 border-red-600">
     <h1></h1>
     <div class="flex items-center justify-between w-11/12 m-auto p-4 py-2">
-        <h1 class="md:text-xl font-bold mx-auto">Mis Tickets | {{Auth::user()->sucursal->nombre}}</h1>     
+        <h1 class="md:text-xl font-bold mx-auto">Mis Tickets | Sistemas</h1>     
     </div>
     <a href="{{route ('reportessoftware.create')}}" class="text-blue-500 hover:underline"><button class="btn btn-primary btn-sm">crear nuevo</button></a>
 </div>
@@ -76,7 +76,7 @@
                                     <tr class="border-1 border-gray-200 hover:bg-amber-50">
                                 @endif
                                     <td class="md:!pl-4 p-1">
-                                        @if($item->noti_u==1)
+                                        @if($item->noti_u==1 || $item->solucion)
                                             <i class="fa-solid fa-circle-exclamation md:fa-xl" style="color: #ff0000;"></i>
                                         @else
 

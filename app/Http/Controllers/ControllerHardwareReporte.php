@@ -336,7 +336,7 @@ class ControllerHardwareReporte extends Controller
     public function problemaysolucion(Request $request){
         $reporte = ReportesHardware::findOrFail($request->reporte);
       
-        if($request->userid == 3){
+        if($request->rol == 3){
         
             $mensaje = new Mensaje();
             $mensaje->reporte_id = $request->reporte;
@@ -576,6 +576,8 @@ class ControllerHardwareReporte extends Controller
 
 
     }
+
+    
 
 
 }

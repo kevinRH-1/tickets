@@ -30,6 +30,7 @@ use App\Models\TipoSolucion;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ReporteUsuariosExport;
 use App\Exports\ticketsSistemaExport;
+use App\Http\Controllers\SolucionTempController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -174,6 +175,10 @@ Route::get('crearticketh/{id}', [ControllerHardwareReporte::class, 'create'])->n
 Route::get('/verhistorial', [ControllerHardwareReporte::class, 'historial'])->name('historial.ver');
 Route::get('filtrosreportesH', [ControllerHardwareReporte::class, 'filtros'])->name('filtros.hardware');
 Route::get('mostrarhistorial', [ControllerHardwareReporte::class, 'historial2'])->name('historial.ver2');
+
+
+Route::post('/negarsolucion', [SolucionTempController::class, 'negar'])->name('negar.solucion');
+Route::post('negarsolucionsoftware', [SolucionTempController::class, 'negarS'])->name('negar.solucionS');
 
 
 //          MENSAJES 
