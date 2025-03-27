@@ -36,6 +36,17 @@
             </select>
           </div>
 
+          <div class="mb-4" id="selectvista">
+            <label for="select-secundario" class="block text-sm font-bold text-gray-700 mb-1">Seleccione la seccion en la cual desea hacer el reporte</label>
+            <select id="seccion" name="seccion" class="w-full border-gray-300 rounded-lg shadow p-2 focus:ring focus:ring-teal-300" onchange="actualizarOpciones3($('#sistema').val())">
+              <option value="0" selected>Sin seccion</option>
+              @foreach ($vista as $item )
+                <option value="{{$item->id}}">{{$item->nombre}}</option>
+              @endforeach
+             
+            </select>
+          </div>
+
           <div class="mb-4">
             <label for="fallaselec" class="block text-sm font-bold text-gray-700 mb-1">Tipos de problemas frecuentes, seleccione una opcion en caso de que su problema aparezca aqui: </label>
             <select id="falla" name="falla" class="w-full border-gray-300 rounded-lg shadow focus:ring p-2 focus:ring-teal-300" onchange="buscarsolucion()">
@@ -121,6 +132,8 @@
       </div>
 
       <script src="../resources/jquery/jquery-3.6.0.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+      <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
 
 
       <script>
@@ -421,6 +434,13 @@
             }
           })
         }
+
+        // $(document).ready(function() {
+        //     $('#seccion').select2({
+        //         placeholder: "Selecciona una opción",
+        //         allowClear: true
+        //     });
+        // });
         
       </script>
 

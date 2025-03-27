@@ -1,3 +1,8 @@
-<div>
-    <!-- Act only according to that maxim whereby you can, at the same time, will that it should become a universal law. - Immanuel Kant -->
-</div>
+@extends('layouts.app')
+
+@section('content')
+
+    <div class="w-full bg-white shadow-lg rounded-lg items-center  p-4 m-auto border-1 border-red-600">
+        <h1 class="text-center font-semibold text-lg">Listado de videos</h1>
+    </div>
+@endsection
