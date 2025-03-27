@@ -30,9 +30,9 @@
 
 
           <div class="mb-4 hidden" id="selectvista">
-            <label for="select-secundario" class="block text-sm font-bold text-gray-700 mb-1">Seleccione la ventana en la cual desea hacer el reporte</label>
+            <label for="select-secundario" class="block text-sm font-bold text-gray-700 mb-1">Seleccione la seccion en la cual desea hacer el reporte</label>
             <select id="vista" name="vista" class="w-full border-gray-300 rounded-lg shadow p-2 focus:ring focus:ring-teal-300" onchange="actualizarOpciones3($('#sistema').val())">
-              <option value="0" selected>Sin ventana</option>
+              <option value="0" selected>Sin seccion</option>
             </select>
           </div>
 
