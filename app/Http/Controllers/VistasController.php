@@ -25,4 +25,11 @@ class VistasController extends Controller
 
         return response()->json(['message', 'vista borrada']);
     }
+
+
+    public function cargar($id){
+        $vistas = Vistas::where('modulo_id', $id)->get();
+
+        return response()->json($vistas);
+    }
 }

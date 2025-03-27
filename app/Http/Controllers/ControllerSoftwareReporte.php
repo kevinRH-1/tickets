@@ -109,6 +109,7 @@ class ControllerSoftwareReporte extends Controller
             $reporte->sistema_id = $request->sistema;
             $reporte->modulo_id = $request->modulo;
             $reporte->falla_comun_id = $request->falla;
+            $reporte->vista_id = $request->vista;
             $reporte->descripcion = null;
             $reporte->solucionado_tecnico = 0;
             $reporte->solucionado_usuario = 0;

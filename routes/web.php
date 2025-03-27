@@ -155,6 +155,7 @@ Route::get('cambiar/estatus/{id}{rol}{sucursal}', [ControllerSoftwareReporte::cl
 Route::post('/confirmarstatus', [ControllerSoftwareReporte::class, 'confirmarstatusr'])->name('confirmar.status');
 Route::delete('reportes/borrar/{id}', [ControllerSoftwareReporte::class, 'delete'])->name('reporte.borrar');
 Route::get('filtrosreportesS', [ControllerSoftwareReporte::class, 'filtros'])->name('filtros.software');
+Route::get('cargarvista/{id}', [VistasController::Class, 'cargar'])->name('cargar.vista');
 
 
 //          REPORTES HARDWARE

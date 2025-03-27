@@ -19,6 +19,11 @@ class TipoFallaSoftwareController extends Controller
         }else{
             $falla->modulo_id = $request->modulo;
         }
+        if($request->vista==0){
+            $falla->vista_id=null;
+        }else{
+            $falla->vista_id = $request->vista;
+        }
         $falla->descripcion= $request->descripcion;
         $falla->nivel_riesgo = $request->riesgo;
         $falla->activo=1;
@@ -28,14 +33,14 @@ class TipoFallaSoftwareController extends Controller
 
     }
 
-    public function cargarfallas($id, $sistema, $vista){
+    public function cargarfallas($modulo, $sistema, $vista){
         
-        if($id == 0){
+        if($modulo == 0){
             $fallas = TipoFallaSoftware::where('sistema_id',$sistema)->where('modulo_id', null)->where('activo',1)->get();
         }else{
 
             if($vista==0){
-                $fallas = TipoFallaSoftware::where('modulo_id', $id)->where('activo',1)->get();
+                $fallas = TipoFallaSoftware::where('modulo_id', $modulo)->where('activo',1)->get();
             }else{
                 $fallas = TipoFallaSoftware::where('vista_id', $vista)->where('activo',1)->get();
             }
