@@ -45,7 +45,7 @@
 
 
                     <label for="textbox" class="block mb-2 text-sm font-medium text-gray-700">descripcion del problema:</label>
-                    <textarea id="descripcion" name="descripcion" rows="3" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    <textarea id="descripcion" name="descripcion" rows="3" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" maxlength="191"></textarea>
 
                     <label for="select" class="block mt-4 mb-2 text-sm font-medium text-gray-700">seccion del problema:</label>
                     <select id="vista" name="vista" class="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
