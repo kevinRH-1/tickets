@@ -40,7 +40,7 @@ class TipoFallaSoftwareController extends Controller
         }else{
 
             if($vista==0){
-                $fallas = TipoFallaSoftware::where('modulo_id', $modulo)->where('activo',1)->get();
+                $fallas = TipoFallaSoftware::where('modulo_id', $modulo)->where('activo',1)->where('vista_id', null)->get();
             }else{
                 $fallas = TipoFallaSoftware::where('vista_id', $vista)->where('activo',1)->get();
             }
