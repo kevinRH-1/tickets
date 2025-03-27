@@ -23,8 +23,16 @@
           <!-- Segundo Select -->
           <div class="mb-4">
             <label for="select-secundario" class="block text-sm font-bold text-gray-700 mb-1">Seleccione el modulo en el cual desea hacer el reporte</label>
-            <select id="modulo" name="modulo" class="w-full border-gray-300 rounded-lg shadow p-2 focus:ring focus:ring-teal-300" onchange="actualizarOpciones2($('#sistema').val())">
+            <select id="modulo" name="modulo" class="w-full border-gray-300 rounded-lg shadow p-2 focus:ring focus:ring-teal-300" onchange="actualizarOpciones2($('#modulo').val())">
               <option value="0" selected>Sin modulo</option>
+            </select>
+          </div>
+
+
+          <div class="mb-4 hidden" id="selectvista">
+            <label for="select-secundario" class="block text-sm font-bold text-gray-700 mb-1">Seleccione la ventana en la cual desea hacer el reporte</label>
+            <select id="vista" name="vista" class="w-full border-gray-300 rounded-lg shadow p-2 focus:ring focus:ring-teal-300" onchange="actualizarOpciones3($('#sistema').val())">
+              <option value="0" selected>Sin ventana</option>
             </select>
           </div>
 
@@ -117,14 +125,15 @@
 
       <script>
 
-        function actualizarOpciones2(sistema_id) {
+        function actualizarOpciones2(modulo1) {
           
-          const sistema = sistema_id;
-          const selectPrincipal = document.getElementById('modulo');
-          const selectSecundario = document.getElementById('falla');
-          const seleccion = selectPrincipal.value;
 
-          var ruta = 'cargarfallas/'+seleccion+'/'+sistema;
+          const sistema = $('#sistema').val();
+          const modulo = modulo1;
+          const selectSecundario = document.getElementById('vista');
+
+          var ruta = 'cargarvista/'+modulo;
+          console.log(modulo);
 
           $.ajax({
             url: ruta,
@@ -133,6 +142,51 @@
             success: function(data) {
 
                 console.log(data);
+                if(data.length>0){
+                  $('#selectvista').removeClass('hidden');
+                }else{
+                  $('#selectvista').addClass('hidden');
+                }
+
+                while (selectSecundario.options.length > 1) {
+                    selectSecundario.remove(1);
+                }
+                if (data) {
+                    data.forEach(opcion => {
+                    const nuevaOpcion = document.createElement('option');
+                    nuevaOpcion.value = opcion.id;
+                    nuevaOpcion.textContent = opcion.nombre;
+                    selectSecundario.appendChild(nuevaOpcion);
+                    });
+                }
+
+                actualizarOpciones3(sistema)
+            },
+            error: function(xhr, status, error) {
+                // Error handling
+                $('#resultado').html('<p>Error al consultar datos.</p>');
+            }
+          })
+        }
+
+
+        function actualizarOpciones3(sistema_id) {
+          
+          const sistema = sistema_id;
+          const selectPrincipal = document.getElementById('modulo');
+          const selectSecundario = document.getElementById('falla');
+          const selecvista = document.getElementById('vista');
+          const seleccion = selectPrincipal.value;
+          const vista = selecvista.value;
+          var ruta = 'cargarfallas/'+seleccion+'/'+sistema + '/'+ vista;
+
+          $.ajax({
+            url: ruta,
+            type:'GET',
+            dataType: 'json',
+            success: function(data) {
+
+                console.log('fallas',data);
 
                 while (selectSecundario.options.length > 1) {
                     selectSecundario.remove(1);
@@ -162,6 +216,7 @@
           const selectPrincipal = document.getElementById('sistema');
           const selectSecundario = document.getElementById('modulo');
           const seleccion = selectPrincipal.value;
+          const modulo = selectSecundario.value;
           $('#primeraopc').attr('disabled', true);
 
           var ruta = 'cargarmodulos/'+seleccion;
@@ -185,8 +240,8 @@
                     selectSecundario.appendChild(nuevaOpcion);
                     });
                 }
-
-                actualizarOpciones2(seleccion);
+                actualizarOpciones2(0);
+                actualizarOpciones3(seleccion);
             },
             error: function(xhr, status, error) {
                 // Error handling
@@ -238,6 +293,7 @@
           formData.append('falla', $('#falla').val());
           formData.append('problema', $('#desc').val());
           formData.append('tipo_reporte', $('#tipo_reporte').val());
+          formData.append('vista', $('#vista').val())
 
           // Agregar la imagen si se seleccionó
           let fileInput = $('#fileInput')[0].files[0]; // Obtener el primer archivo seleccionado

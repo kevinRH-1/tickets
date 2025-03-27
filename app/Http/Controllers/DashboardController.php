@@ -7,6 +7,7 @@ use App\Models\equipos\Laptops;
 use App\Models\equipos\Pc;
 use App\Models\ReportesHardware;
 use App\Models\ReportesSoftware;
+use App\Models\Videos;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -67,6 +68,8 @@ class DashboardController extends Controller
         
         $cantidadFiltrados = $equiposFiltrados->count();
 
-        return view('components.welcome', compact('cantidaddia', 'cantidadmes', 'cantidadsinrevisar', 'cantidadtecnico', 'ticketprogreso', 'usuariototal', 'equipostotales', 'cantidadFiltrados'));
+        $videos = Videos::where('anuncio', 1)->get();
+
+        return view('components.welcome', compact('cantidaddia', 'cantidadmes', 'cantidadsinrevisar', 'cantidadtecnico', 'ticketprogreso', 'usuariototal', 'equipostotales', 'cantidadFiltrados', 'videos'));
     }
 }

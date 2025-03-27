@@ -238,8 +238,8 @@
          </li>
         @endif
         @if(Auth::user()->roleid===1)
-         <li>
-            {{-- <button type="button" class="flex items-center w-full px-2 py-3 text-base  transition duration-75  group  text-white hover:bg-gray-700" id="menu" data-type="ayu">
+         {{-- <li>
+            <button type="button" class="flex items-center w-full px-2 py-3 text-base  transition duration-75  group  text-white hover:bg-gray-700" id="menu" data-type="ayu">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
                      <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                   </svg>
@@ -251,23 +251,34 @@
             </button>
             <ul id="submenuayu" class="hidden overflow-hidden max-h-0 transition-[max-height] bg-gray-900 duration-500 ease-in-out">
                   <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
-                     <a href="{{route ('manual.administrador')}}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Manual de Administrador</a>
+                     <a href="{{ asset('storage/pdf/Guia_administrador_soporte-cvc.pdf') }}" target="_blank" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Manual de Administrador</a>
                   </li>  
                   <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
                     <a href="{{route ('manual.usuario')}}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Manual de Usuario</a>
                  </li> 
-            </ul> --}}
-         </li>
+            </ul>
+         </li> --}}
         @endif
-          {{-- <li>
-             <a href="#" class="flex items-center p-2   text-white  hover:bg-gray-700 group">
-                <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover: dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
-                   <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z"/>
-                </svg>
-                <span class="flex-1 ms-3 whitespace-nowrap">Reportes</span>
-                <span class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">Pro</span>
-             </a>
-          </li> --}}
+        {{-- <li>
+            <button type="button" class="flex items-center w-full px-2 py-3 text-base  transition duration-75  group  text-white hover:bg-gray-700" id="menu" data-type="vid">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
+                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                  </svg>
+               
+                  <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Videos</span>
+                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                     <path stroke="red" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                  </svg>
+            </button>
+            <ul id="submenuvid" class="hidden overflow-hidden max-h-0 transition-[max-height] bg-gray-900 duration-500 ease-in-out">
+                  <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
+                     <a href="{{route ('subir.videos')}}"  class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">Subir video</a>
+                  </li>  
+                  <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
+                  <a href="{{route ('manual.usuario')}}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">index</a>
+               </li> 
+            </ul>
+         </li> --}}
           
 
          

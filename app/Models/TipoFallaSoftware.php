@@ -23,4 +23,8 @@ class TipoFallaSoftware extends Model
     public function solucion(){
         return $this->hasOne(solucionFalla::class, 'falla_id', 'id');
     }
+
+    public function vista(){
+        return $this->belongsTo(Vistas::class, 'vista_id', 'id');
+    }
 }

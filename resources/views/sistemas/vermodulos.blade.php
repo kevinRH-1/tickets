@@ -47,6 +47,15 @@
                     <label for="textbox" class="block mb-2 text-sm font-medium text-gray-700">descripcion del problema:</label>
                     <textarea id="descripcion" name="descripcion" rows="3" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
 
+                    <label for="select" class="block mt-4 mb-2 text-sm font-medium text-gray-700">ventana del problema:</label>
+                    <select id="vista" name="vista" class="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="0">Sin ventana</option>
+                       @forEach($vistas as $item)
+                            
+                            <option value="{{$item->id}}">{{$item->nombre}}</option>
+
+                       @endforeach
+                    </select>
 
                     <!-- Select -->
                     <label for="select" class="block mt-4 mb-2 text-sm font-medium text-gray-700">nivel de importancia:</label>
@@ -91,7 +100,7 @@
                                 <th class="p-4 text-center hidden md:table-cell">SUCURSAL</th>
                                 <th class="p-4 text-center hidden md:table-cell">USUARIO</th>
                                 {{-- <th class="p-4 text-center">SISTEMA</th> --}}
-                                <th class="p-4 text-center hidden md:table-cell">MODULO</th>
+                                <th class="p-4 text-center hidden md:table-cell">ventana</th>
                                 <th class="p-4 text-center hidden md:table-cell">PROBLEMA</th>
                                 <th class="p-4 text-center hidden md:table-cell">IMPORTANCIA</th>
                                 <th class="p-2 text-center hidden md:table-cell">ESTATUS</th>
@@ -159,7 +168,7 @@
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->usuario->sucursal->nombre}}</td>
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->usuario->descripcion}}</td>
                                         {{-- <td class="p-4 text-center">{{$item->sistema->nombre}}</td> --}}
-                                        <td class="p-4 text-center hidden md:table-cell">{{$item->modulo?->nombre?? 'sin modulo'}}</td>
+                                        <td class="p-4 text-center hidden md:table-cell">{{$item->vista?->nombre?? 'sin ventana'}}</td>
                                         <td class="p-4 text-center hidden md:table-cell">{{ \Illuminate\Support\Str::limit($item->falla?->descripcion ?? $item->mensajes[0]->mensaje, 40, '...') }}</td>
                                         <td class="p-4 text-center {{$color}} hidden md:table-cell">{{$item->falla?->importancia?->descripcion?? 'sin informacion'}}</td>
                                         <td class="p-2 text-center {{$color_status}} hidden md:table-cell">{{$item->status->nombre}}</td>
@@ -200,6 +209,124 @@
     <div class="container-fluid">
         <div class="card border-0 shadow my-5">
             <div class="card-body p-4">
+                <button class="mb-4 w-full m-auto text-red-600 font-semibold text-lg flex items-center justify-center" id="vertablav">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                      </svg>
+                      -- VENTANAS DEL MODULO --  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                  </svg>
+                  </button>
+                
+
+                <div class="m-auto max-w-7xl bg-white shadow-md rounded-lg overflow-x-auto" id="tablav">
+                    <button id="openModalv" class="px-4 py-2 mb-4 text-white bg-blue-600 rounded hover:bg-blue-700">
+            
+                        <span class="md:hidden">+</span>
+                        <span class="hidden md:inline"> Agregar ventana</span>
+                    </button>
+                    <table class="table-auto w-full border-collapse border-none border-gray-200 rounded-t-lg">
+                        <thead class="bg-gray-800 text-white rounded-t-lg">
+                            <tr>
+                                <th class="p-4 text-center md:rounded-tl-lg hidden md:table-cell">NOMBRE</th>
+                                <th class="p-2 text-center md:hidden">DATOS</th>
+                                <th class="p-4 text-center hidden md:table-cell">FALLAS</th>
+                                <th class="p-4 text-center hidden md:table-cell">TICKETS</th>
+                                <th class="p-4 text-center hidden md:table-cell">TICKETS ACTIVOS</th>
+                                <th class="md:!p-4 p-2 text-center">ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @forEach($vistas as $item)
+                                <!-- Fila 1 -->                   
+                                    <tr class="border-1 border-gray-200 hover:bg-gray-50">
+                                        <td class="p-4 text-center hidden  md:table-cell" nombre="nombre">{{$item->nombre}}</td>
+                                        <td hidden id="id">{{$item->id}}</td>
+
+                                        {{-- <td class="p-1 text-left font-semibold md:hidden">
+                                            <h1 class="mt-2 ml-4 font-bold text-lg">{{$item->descripcion}}</h1>
+                                            <p class="mt-4 ml-4">{{$item->importancia?->descripcion?? 'sin nivel de riesgo'}}</p>
+                                        </td> --}}
+
+                                        <td class="p-4 text-center hidden md:table-cell">{{$item->cant_fallas}}</td>
+                                        <td class="p-4 text-center hidden md:table-cell">{{$item->cant_reportes}}</td>
+                                        <td class="p-4 text-center hidden md:table-cell">{{$item->cant_reportes_act}}</td>
+                                        <td class="md:!p-4 p-2 pt-4 text-center flex md:justify-around justify-between">
+                                            {{-- <button class="btn btn-success w-10 h-10" id="btnconsulta"><i class="fa-solid fa-eye"></i></button> --}}
+                                            <button class="btn btn-danger btn-sm w-10 h-10" id="borrarv"><i class="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="mt-4 p-2 ">
+                        {{ $vistas->links() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalvista" class="fixed inset-0 z-50 hidden bg-gray-800 bg-opacity-50">
+        <div class="relative mx-auto mt-20 bg-white rounded shadow-lg w-96">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b">
+                <h2 class="text-lg font-semibold">Nueva ventana</h2>
+                <button id="closeModalv" class="text-gray-500 hover:text-gray-700">
+                    &times;
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="p-4">
+                <!-- Textbox -->
+                <form action="" method="POST">
+                    @csrf
+
+
+                    {{-- <input type="text" name="sistema" id="sistema" hidden value="{{$modulo[0]->sistema->id}}"> --}}
+                    {{-- <input type="text" name="modulo" id="modulo" hidden value="{{$modulo[0]->id}}"> --}}
+
+
+                    <label for="textbox" class="block mb-2 text-sm font-medium text-gray-700">nombre de la ventana:</label>
+                    <input id="nombre-vista" name="nombre-vista" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <p id="error-nombre-vista" class="text-red-500 text-sm " hidden>Este campo es obligatorio!</p>
+
+                    <!-- Select -->
+                    {{-- <label for="select" class="block mt-4 mb-2 text-sm font-medium text-gray-700">nivel de importancia:</label>
+                    <select id="riesgo" name="riesgo" class="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                       @forEach($riesgos as $item)
+                            <option value="{{$item->id}}">{{$item->descripcion}}</option>
+
+                       @endforeach
+                    </select> --}}
+                    <br>
+
+                    <div class="flex px-4 pt-8 border-t justify-between">
+                        <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" onclick="guardarvista(event)">
+                            Guardar
+                        </button>
+                        <button id="closeModal2v" class="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700">
+                            Cerrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="container-fluid">
+        <div class="card border-0 shadow my-5">
+            <div class="card-body p-4">
                 <button class="mb-4 w-full m-auto text-red-600 font-semibold text-lg flex items-center justify-center" id="vertablaf">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
@@ -220,6 +347,7 @@
                         <thead class="bg-gray-800 text-white rounded-t-lg">
                             <tr>
                                 <th class="p-4 text-center md:rounded-tl-lg hidden md:table-cell">MODULO</th>
+                                <th class="p-4 text-center hidden md:table-cell">VENTANA</th>
                                 <th class="p-2 text-center md:hidden">DATOS</th>
                                 <th class="p-4 text-center hidden md:table-cell">DESCRIPCION</th>
                                 <th class="p-4 text-center hidden md:table-cell">NIVEL DE RIESGO</th>
@@ -233,7 +361,7 @@
                                     <tr class="border-1 border-gray-200 hover:bg-gray-50">
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->modulo?->nombre?? 'sin modulo'}}</td>
                                         <td hidden id="id">{{$item->id}}</td>
-
+                                        <td class="p-4 text-center hidden md:table-cell">{{$item->vista?->nombre?? 'sin ventana'}}</td>
                                         <td class="p-1 text-left font-semibold md:hidden">
                                             <h1 class="mt-2 ml-4 font-bold text-lg">{{$item->descripcion}}</h1>
                                             <p class="mt-4 ml-4">{{$item->importancia?->descripcion?? 'sin nivel de riesgo'}}</p>
@@ -284,6 +412,9 @@
         </div>
     </div>
 
+
+    
+
     <div class="modal fade mt-[20%]" id="confirmarborrar" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content p-4">
@@ -314,6 +445,11 @@
         const closeModal = document.getElementById('closeModal');
         const closeModal2 = document.getElementById('closeModal2');
         const modal = document.getElementById('modal');
+
+        const openModalv = document.getElementById('openModalv');
+        const closeModalv = document.getElementById('closeModalv');
+        const closeModalv2 = document.getElementById('closeModal2v');
+        const modalv = document.getElementById('modalvista');
 
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -356,6 +492,47 @@
             });
         });
 
+        document.addEventListener('DOMContentLoaded', () => {
+            const togglevButton = document.getElementById('vertablav');
+            const tablavDiv = document.getElementById('tablav');
+
+            // Asegurarte de que el div comience visible
+            tablavDiv.classList.add('visible');
+
+            togglevButton.addEventListener('click', () => {
+                if (tablavDiv.classList.contains('visible')) {
+                    tablavDiv.classList.remove('visible');
+                    tablavDiv.classList.add('hidden');
+                } else {
+                    tablavDiv.classList.remove('hidden');
+                    tablavDiv.classList.add('visible');
+                }
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttonv = document.getElementById('vertablav');
+
+            buttonv.addEventListener('click', () => {
+            if (buttonv.textContent.includes('-- VENTANAS DEL MODULO --')) {
+                buttonv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="h-6 w-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                </svg>-- VENTANAS DEL MODULO --  
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="h-6 w-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                </svg>`;
+            } else {
+                buttonv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="h-6 w-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                </svg>-- VENTANAS DEL MODULO --  
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="h-6 w-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                </svg>`;
+            }
+            });
+        });
+
 
 
         // Mostrar el modal
@@ -372,6 +549,28 @@
             event.preventDefault();
             modal.classList.add('hidden');
         });
+
+
+
+
+
+
+        openModalv.addEventListener('click', () => {
+            modalv.classList.remove('hidden');
+        });
+
+        // Cerrar el modal
+        closeModalv.addEventListener('click', () => {
+            modalv.classList.add('hidden');
+        });
+
+        closeModalv2.addEventListener('click', () => {
+            event.preventDefault();
+            modalv.classList.add('hidden');
+        });
+
+
+
         function volverPaginaAnterior() {
             window.history.back();
         }   
@@ -514,6 +713,103 @@
             })
 
             $(document).on('click', '#confirmNob', function(){
+                $('#confirmarborrar').modal('hide');
+            })
+
+        })
+
+
+
+
+
+
+        function guardarvista(event){
+            event.preventDefault();
+
+            const formData ={
+                nombre:$('#nombre-vista').val(),
+                modulo:$('#modulo').val(),
+
+            };
+
+            console.log(formData);
+
+            if(!formData||formData.nombre.trim()===''){
+                $('#error-nombre-vista').removeAttr('hidden');
+            }else{
+                $('#error-nombre-vista').attr('hidden', true);
+
+                $.ajax({
+                    url: '/create-vista',
+                    data: formData,
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response){
+                        $('#mensaje').text('ventana registrada con exito!')
+                        $('#modalvista').addClass('hidden')
+                        $('#modalmensaje').modal('show');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2500);
+                    },
+                    error: function(xhr){
+                        $('#mensaje').text('Ha ocurrido un error!')
+                        $('#modalvista').addClass('hidden')
+                        $('#modalmensaje').modal('show');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2500);
+                    }
+                })
+
+
+
+
+            }
+        }
+
+
+        $(document).on('click', '#borrarv', function(){
+            var id = $(this).closest('tr').find('td[id]').text();
+            var nombre = $(this).closest('tr').find('td[nombre]').text();
+            console.log(id);
+
+            $('#confirmarborrar #bnombre').text(nombre)
+            $('#confirmarborrar').modal('show');
+
+            $('#confirmarborrar #confirmYesb').attr('id', 'confirmYesb2');
+            $('#confirmarborrar #confirmNob').attr('id', 'confirmNob2');
+            
+            $(document).off('click', '#confirmYesb2').on('click', '#confirmYesb2', function(){
+                $.ajax({
+                    url: '/borrarvista/' +id,
+                    type:'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF Token
+                    },
+                    success: function(response){
+                        $('#mensaje').text('la ventana ha sido borrada con exito!')
+                        $('#confirmarborrar').modal('hide')
+                        $('#modalmensaje').modal('show');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2500);
+
+                    },
+                    error: function(xhr){
+                        $('#mensaje').text('ha ocurrido un error al borrar la ventana')
+                        $('#confirmarborrar').modal('hide')
+                        $('#modalmensaje').modal('show');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2500);
+                    }
+                })
+            })
+
+            $(document).on('click', '#confirmNob2', function(){
                 $('#confirmarborrar').modal('hide');
             })
 

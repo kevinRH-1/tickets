@@ -31,6 +31,22 @@
           <h1>Mis Tickets: {{ $cantidadtecnico }}</h1>
         </div>
       </div>
+
+      @if ($videos->isEmpty())
+
+      @else
+        <div id="anuncio" class="bg-white rounded-md mt-8 justify-center align-middle text-center">
+          <div class="">titulo</div>
+          <div class="">
+            {{-- <a href="https://www.youtube.com/watch?v=XPg5txu_DkA" target="_blank">
+              <img src="https://img.youtube.com/vi/3_g2un5M350/hqdefault.jpg" alt=""> --}}
+            </a>
+          </div>
+        </div>
+      @endif
+
+      
+
       <div class="grid grid-cols-7 mt-2">
         <div class="card border-0 shadow mt-5 mb-2 md:col-span-4 col-span-7">
           <div class="card-body px-5 py-4">
