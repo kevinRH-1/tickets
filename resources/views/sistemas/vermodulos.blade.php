@@ -290,7 +290,7 @@
 
 
                     <label for="textbox" class="block mb-2 text-sm font-medium text-gray-700">nombre de la seccion:</label>
-                    <input id="nombre-vista" name="nombre-vista" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <input id="nombre-vista" name="nombre-vista" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" maxlength="191">
                     <p id="error-nombre-vista" class="text-red-500 text-sm " hidden>Este campo es obligatorio!</p>
 
                     <!-- Select -->
