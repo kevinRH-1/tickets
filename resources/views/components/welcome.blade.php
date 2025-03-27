@@ -32,14 +32,20 @@
         </div>
       </div>
 
-      <div id="anuncio" class="bg-white rounded-md mt-8 justify-center align-middle text-center">
-        <div class="">titulo</div>
-        <div class="">
-          <a href="https://www.youtube.com/watch?v=XPg5txu_DkA" target="_blank">
-            <img src="https://img.youtube.com/vi/XPg5txu_DkA/hqdefault.jpg" alt="">
-          </a>
+      @if ($videos->isEmpty())
+
+      @else
+        <div id="anuncio" class="bg-white rounded-md mt-8 justify-center align-middle text-center">
+          <div class="">titulo</div>
+          <div class="">
+            {{-- <a href="https://www.youtube.com/watch?v=XPg5txu_DkA" target="_blank">
+              <img src="https://img.youtube.com/vi/3_g2un5M350/hqdefault.jpg" alt=""> --}}
+            </a>
+          </div>
         </div>
-      </div>
+      @endif
+
+      
 
       <div class="grid grid-cols-7 mt-2">
         <div class="card border-0 shadow mt-5 mb-2 md:col-span-4 col-span-7">

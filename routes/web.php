@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriasEquipoController;
+use App\Http\Controllers\VistasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ControllerHardwareReporte;
@@ -31,6 +32,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ReporteUsuariosExport;
 use App\Exports\ticketsSistemaExport;
 use App\Http\Controllers\SolucionTempController;
+use App\Http\Controllers\VideosController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -200,12 +202,14 @@ Route::get('sistemadatos/{id}', [SistemasController::class, 'sistemadatos'])->na
 Route::delete('sistema/delete/{id}', [SistemasController::class, 'delete'])->name('sistema.delete');
 Route::post('sistema/act/{id}', [SistemasController::class, 'update'])->name('sistema.actualizar');
 Route::get('filtrossistema', [SistemasController::class, 'filtroreportes'])->name('filtrosistema.reportes');
+Route::post('create-vista', [VistasController::class, 'create'])->name('create.vista');
+Route::delete('/borrarvista/{id}', [VistasController::class, 'delete'])->name('delete.vista');
 
 
 
 Route::post('fallasoftwarestore', [TipoFallaSoftwareController::class, 'store'])->name('fallasoftware.store');
 Route::post('fallastore', [TipoFaLLaController::class, 'store'])->name('falla.store');
-Route::get('cargarfallas/{id}/{sistema}', [TipoFallaSoftwareController::class, 'cargarfallas'])->name('fallas.cargar');
+Route::get('cargarfallas/{id}/{sistema}/{vista}', [TipoFallaSoftwareController::class, 'cargarfallas'])->name('fallas.cargar');
 Route::post('actfalla', [TipoFaLLaController::class, 'update'])->name('falla.act');
 Route::get('versolucion/{id}', [TipoFallaSoftwareController::class, 'solucion'])->name('solucion.fallaS');
 Route::post('actsolucionfalla', [TipoFallaSoftwareController::class, 'actsolucion'])->name('act.solucionfalla');
@@ -217,6 +221,18 @@ Route::post('solucionstore', [TipoSolucionController::class, 'store'])->name('so
 Route::delete('borrarsolucion/{id}', [TipoSolucionController::class, 'delete'])->name('borrar.solucion');
 Route::post('actsolucion', [TipoSolucionController::class, 'update'])->name('solucion.act');
 Route::get('buscarsolucion/{falla}', [TipoFallaSoftwareController::class, 'buscarsolucion'])->name('buscar.solucion');
+
+
+
+
+
+// VIDEOS
+
+Route::get('subir-videos', [VideosController::class, 'subir'])->name('subir.videos');
+Route::post('create-video', [VideosController::class, 'create'])->name('crear.video');
+
+
+
 
 //EXCEL
 

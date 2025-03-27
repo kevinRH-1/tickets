@@ -7,6 +7,7 @@ use App\Models\Modulos;
 use App\Models\ReportesSoftware;
 use App\Models\Sistemas;
 use App\Models\TipoFallaSoftware;
+use App\Models\Vistas;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -64,10 +65,22 @@ class SistemasController extends Controller
         $fallas = TipoFallaSoftware::where('modulo_id', $id)->where('activo', 1)->paginate(10);
         $riesgos = Importancias::orderBy('id')->get();
         $nivel = Importancias::orderBy('id')->get();
+        $vistas = Vistas::where('modulo_id', $id)->where('activo',1)->orderBy('id')->paginate(10);
+
+
+        foreach($vistas as $item){
+            $reportes_vista = ReportesSoftware::where('vista_id', $item->id)->count();
+            $fallas_vista = TipoFallaSoftware::where('vista_id', $item->id)->count();
+            $reportes_vista_act = ReportesSoftware::where('vista_id', $item->id)->where('status_id', '!=', 3)->count();
+
+            $item->cant_reportes = $reportes_vista;
+            $item->cant_fallas = $fallas_vista;
+            $item->cant_reportes_act = $reportes_vista_act;
+        }
         
 
 
-        return view('sistemas.vermodulos', compact('modulo', 'reportes', 'fallas', 'riesgos', 'nivel'));
+        return view('sistemas.vermodulos', compact('modulo', 'reportes', 'fallas', 'riesgos', 'nivel', 'vistas'));
     }
 
     public function store(Request $request){

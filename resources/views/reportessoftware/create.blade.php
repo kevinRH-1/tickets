@@ -28,6 +28,14 @@
             </select>
           </div>
 
+
+          <div class="mb-4" id="selectvista" hidden>
+            <label for="select-secundario" class="block text-sm font-bold text-gray-700 mb-1">Seleccione el modulo en el cual desea hacer el reporte</label>
+            <select id="modulo" name="modulo" class="w-full border-gray-300 rounded-lg shadow p-2 focus:ring focus:ring-teal-300" onchange="actualizarOpciones2($('#sistema').val())">
+              <option value="0" selected>Sin modulo</option>
+            </select>
+          </div>
+
           <div class="mb-4">
             <label for="fallaselec" class="block text-sm font-bold text-gray-700 mb-1">Tipos de problemas frecuentes, seleccione una opcion en caso de que su problema aparezca aqui: </label>
             <select id="falla" name="falla" class="w-full border-gray-300 rounded-lg shadow focus:ring p-2 focus:ring-teal-300" onchange="buscarsolucion()">

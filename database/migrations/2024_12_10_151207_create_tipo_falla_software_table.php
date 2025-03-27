@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('sistema_id');
             $table->integer('modulo_id')->nullable();
+            $table->integer('vista_id')->nullable();
             $table->string('descripcion')->nullable();
             $table->integer('nivel_riesgo');
             $table->integer('activo')->nullable();

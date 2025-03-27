@@ -28,12 +28,18 @@ class TipoFallaSoftwareController extends Controller
 
     }
 
-    public function cargarfallas($id, $sistema){
+    public function cargarfallas($id, $sistema, $vista){
         
         if($id == 0){
             $fallas = TipoFallaSoftware::where('sistema_id',$sistema)->where('modulo_id', null)->where('activo',1)->get();
         }else{
-            $fallas = TipoFallaSoftware::where('modulo_id', $id)->where('activo',1)->get();
+
+            if($vista==0){
+                $fallas = TipoFallaSoftware::where('modulo_id', $id)->where('activo',1)->get();
+            }else{
+                $fallas = TipoFallaSoftware::where('vista_id', $vista)->where('activo',1)->get();
+            }
+
         }
 
         return response()->json($fallas);
