@@ -85,7 +85,7 @@ class SistemasController extends Controller
 
     public function store(Request $request){
         $sistema = new Sistemas();
-        $sistema->codigo = $request->codigo;
+        // $sistema->codigo = $request->codigo;
         $sistema->nombre = $request->nombre;
         $sistema->activo =1;
         $sistema->save();

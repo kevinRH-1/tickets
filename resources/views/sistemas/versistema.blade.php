@@ -143,9 +143,9 @@
                     
 
 
-                    <label for="textbox" class="block mb-2 text-sm font-medium text-gray-700">codigo:</label>
+                    {{-- <label for="textbox" class="block mb-2 text-sm font-medium text-gray-700">codigo:</label>
                     <input type="text" maxlength="20" name="codigo" id="codigo" class="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <p id="codigo-error" class="text-red-500 text-sm " hidden>Este campo es obligatorio!</p>
+                    <p id="codigo-error" class="text-red-500 text-sm " hidden>Este campo es obligatorio!</p> --}}
 
                     <label for="textbox" class="block mb-2 text-sm font-medium text-gray-700">nombre:</label>
                     <input type="text" maxlength="30" name="nombre" id="nombre" class="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -193,9 +193,9 @@
                         
 
 
-                        <label for="textbox" class="block mb-2 text-sm font-medium text-gray-700">codigo:</label>
+                        {{-- <label for="textbox" class="block mb-2 text-sm font-medium text-gray-700">codigo:</label>
                         <input type="text" maxlength="20" name="codigo" id="codigo" class="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <p id="codigo-error" class="text-red-500 text-sm " hidden>Este campo es obligatorio!</p>
+                        <p id="codigo-error" class="text-red-500 text-sm " hidden>Este campo es obligatorio!</p> --}}
 
                         <label for="textbox" class="block mb-2 text-sm font-medium text-gray-700">nombre:</label>
                         <input type="text" maxlength="30" name="nombre" id="nombre" class="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -783,7 +783,7 @@
                 },
                 success: function(data){   
                     $('#modalact #nombre').val(data.nombre);
-                    $('#modalact #codigo').val(data.codigo);
+                    // $('#modalact #codigo').val(data.codigo);
                     $('#modalact #id').val(data.id);
                     $('#modalact').modal('show');
                                             
@@ -803,7 +803,7 @@
             $('#confirmar2 #confirmYes4').attr('id', 'confirmYes2');
             formData = { 
                 nombre: $('#modalact #nombre').val(),
-                codigo: $('#modalact #codigo').val(),
+                // codigo: $('#modalact #codigo').val(),
                 id: $('#modalact #id').val(),
             }
 
@@ -917,12 +917,12 @@
                 $("#nombre-error").attr('hidden', true);
             }
 
-            if (!form.codigo || form.codigo.trim() === "") {
-                $("#codigo-error").removeAttr('hidden');
-                esValido = false;
-            }else{
-                $("#codigo-error").attr('hidden', true);
-            }
+            // if (!form.codigo || form.codigo.trim() === "") {
+            //     $("#codigo-error").removeAttr('hidden');
+            //     esValido = false;
+            // }else{
+            //     $("#codigo-error").attr('hidden', true);
+            // }
 
             return esValido
 
@@ -939,12 +939,12 @@
                 $("#modalact #nombre-error").attr('hidden', true);
             }
 
-            if (!form.codigo || form.codigo.trim() === "") {
-                $("#modalact #codigo-error").removeAttr('hidden');
-                esValido = false;
-            }else{
-                $("#modalact #codigo-error").attr('hidden', true);
-            }
+            // if (!form.codigo || form.codigo.trim() === "") {
+            //     $("#modalact #codigo-error").removeAttr('hidden');
+            //     esValido = false;
+            // }else{
+            //     $("#modalact #codigo-error").attr('hidden', true);
+            // }
 
             return esValido
 
@@ -953,7 +953,7 @@
         function nuevomodulo(event){
             event.preventDefault();
             const formData= {
-                codigo: $('#codigo').val(),
+                // codigo: $('#codigo').val(),
                 nombre:$('#nombre').val(),
                 sistema_id:$('#sistema').val(),
             };
