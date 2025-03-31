@@ -8,6 +8,7 @@ use App\Models\ReportesSoftware;
 use App\Models\Modulos;
 use App\Models\solucionFalla;
 use App\Models\TipoFalla;
+use App\Models\Vistas;
 
 class TipoFallaSoftwareController extends Controller
 {
@@ -35,14 +36,23 @@ class TipoFallaSoftwareController extends Controller
 
     public function cargarfallas($modulo, $sistema, $vista){
         
-        if($modulo == 0){
-            $fallas = TipoFallaSoftware::where('sistema_id',$sistema)->where('modulo_id', null)->where('activo',1)->get();
+        if($modulo == 0  && $vista==0){
+            $fallas = TipoFallaSoftware::where('sistema_id', $sistema)->where('activo',1)->get();
         }else{
 
             if($vista==0){
                 $fallas = TipoFallaSoftware::where('modulo_id', $modulo)->where('activo',1)->get();
             }else{
                 $fallas = TipoFallaSoftware::where('vista_id', $vista)->where('activo',1)->get();
+                $vista = Vistas::findOrFail($vista);
+                $modulo = $vista->modulo->id;
+                $sistema = $vista->modulo->sistema->id;
+
+                return response()->json([
+                    'fallas' => $fallas,
+                    'modulo' => $modulo,
+                    'sistema'=> $sistema,
+                ]);
             }
 
         }
@@ -92,8 +102,25 @@ class TipoFallaSoftwareController extends Controller
     }
 
 
-    public function buscarsolucion($falla){
-        $solucion  = solucionFalla::where('falla_id', $falla)->get();
+    public function buscarsolucion($fallaid){
+        $falla = TipoFallaSoftware::findOrFail($fallaid);
+        $solucion  = solucionFalla::where('falla_id', $fallaid)->get();
+
+        if($falla->vista_id != null){
+            $vista = $falla->vista->id;
+            $modulo = $falla->vista->modulo->id;
+            return response()->json([
+                'vista'=> $vista,
+                'modulo'=>$modulo,
+                'solucion'=>$solucion,
+            ]);
+        }else if($falla->modulo_id!=null){
+            $modulo = $falla->modulo->id;
+            return response()->json([
+                'modulo'=>$modulo,
+                'solucion'=>$solucion,
+            ]);
+        }
 
         return response()->json($solucion);
     }

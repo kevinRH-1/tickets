@@ -29,20 +29,20 @@
           </div>
 
 
-          <div class="mb-4 hidden" id="selectvista">
+          {{-- <div class="mb-4 hidden" id="selectvista">
             <label for="select-secundario" class="block text-sm font-bold text-gray-700 mb-1">Seleccione la ventana en la cual desea hacer el reporte</label>
             <select id="vista" name="vista" class="w-full border-gray-300 rounded-lg shadow p-2 focus:ring focus:ring-teal-300" onchange="actualizarOpciones3($('#sistema').val())">
               <option value="0" selected>Sin ventana</option>
             </select>
-          </div>
+          </div> --}}
 
           <div class="mb-4" id="selectvista">
-            <label for="select-secundario" class="block text-sm font-bold text-gray-700 mb-1">Seleccione la seccion en la cual desea hacer el reporte</label>
-            <select id="seccion" name="seccion" class="w-full border-gray-300 rounded-lg shadow p-2 focus:ring focus:ring-teal-300" onchange="actualizarOpciones3($('#sistema').val())">
-              <option value="0" selected>Sin seccion</option>
-              @foreach ($vista as $item )
+            <label for="select-secundario" class="block text-sm font-bold text-gray-700 mb-1">Seleccione el lugar en el cual desea hacer el reporte</label>
+            <select id="vista" name="vista" class="w-full border-gray-300 rounded-lg shadow p-2 focus:ring focus:ring-teal-300" onchange="actualizarOpciones3($('#sistema').val())">
+              <option value="0" selected>Sin lugar</option>
+              {{-- @foreach ($vista as $item )
                 <option value="{{$item->id}}">{{$item->nombre}}</option>
-              @endforeach
+              @endforeach --}}
              
             </select>
           </div>
@@ -145,8 +145,8 @@
           const modulo = modulo1;
           const selectSecundario = document.getElementById('vista');
 
-          var ruta = 'cargarvista/'+modulo;
-          console.log(modulo);
+          var ruta = 'cargarvista/'+modulo +'/'+sistema;
+          // console.log(modulo);
 
           $.ajax({
             url: ruta,
@@ -155,11 +155,11 @@
             success: function(data) {
 
                 console.log(data);
-                if(data.length>0){
-                  $('#selectvista').removeClass('hidden');
-                }else{
-                  $('#selectvista').addClass('hidden');
-                }
+                // if(data.length>0){
+                //   $('#selectvista').removeClass('hidden');
+                // }else{
+                //   $('#selectvista').addClass('hidden');
+                // }
 
                 while (selectSecundario.options.length > 1) {
                     selectSecundario.remove(1);
@@ -184,6 +184,8 @@
 
 
         function actualizarOpciones3(sistema_id) {
+
+          
           
           const sistema = sistema_id;
           const selectPrincipal = document.getElementById('modulo');
@@ -204,7 +206,19 @@
                 while (selectSecundario.options.length > 1) {
                     selectSecundario.remove(1);
                 }
-                if (data) {
+                if (data?.fallas) {
+                    data.fallas.forEach(opcion => {
+                    const nuevaOpcion = document.createElement('option');
+                    nuevaOpcion.value = opcion.id;
+                    nuevaOpcion.textContent = opcion.descripcion;
+                    selectSecundario.appendChild(nuevaOpcion);
+                    });
+
+                    if($('#vista').val()!=0){
+                      $('#sistema').val(data.sistema);
+                      $('#modulo').val(data.modulo);
+                    }
+                }else{
                     data.forEach(opcion => {
                     const nuevaOpcion = document.createElement('option');
                     nuevaOpcion.value = opcion.id;
@@ -240,7 +254,7 @@
             dataType: 'json',
             success: function(data) {
 
-                console.log(data);
+                // console.log(data);
 
                 while (selectSecundario.options.length > 1) {
                     selectSecundario.remove(1);
@@ -358,7 +372,7 @@
               $('#confirmar').modal('hide');
             });
           } else {
-            console.log('Formulario no válido');
+            // console.log('Formulario no válido');
           }
         }
 
@@ -410,29 +424,58 @@
           const falla = $('#falla').val();
           console.log(falla);
 
-          $.ajax({
-            url: '/buscarsolucion/'+falla,
-            type:'GET',
-            headers:{
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(data){
-              console.log(data);
-              if(data[0]){
-                if(data[0].checked == 1){
-                  $('#tip_solucion').text( 'posible solucion a dicho problema: '+  data[0].solucion);
-                  $('#tip_solucion').removeClass('hidden');
+
+          if(falla!=0){
+            $.ajax({
+              url: '/buscarsolucion/'+falla,
+              type:'GET',
+              headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function(data){
+                // console.log(data);
+                if(data?.solucion && data?.solucion[0]){
+                  if(data.solucion[0].checked == 1){
+                    $('#tip_solucion').text( 'posible solucion a dicho problema: '+  data.solucion[0].solucion);
+                    $('#tip_solucion').removeClass('hidden');
+                  }else{
+                    $('#tip_solucion').addClass('hidden');
+                  }
+                }else if(data[0]){
+                  if(data[0].checked == 1){
+                    $('#tip_solucion').text( 'posible solucion a dicho problema: '+  data[0].solucion);
+                    $('#tip_solucion').removeClass('hidden');
+                  }else{
+                    $('#tip_solucion').addClass('hidden');
+                  }
+                
                 }else{
                   $('#tip_solucion').addClass('hidden');
                 }
-              }else{
-                $('#tip_solucion').addClass('hidden');
+
+                if(data?.vista){
+                  $('#vista').val(data.vista)
+                  $('#modulo').val(data.modulo)
+                }else if(data?.modulo){
+                  $('#modulo').val(data.modulo);
+                }else{
+                  $('#vista').val(0)
+                  $('#modulo').val(0)
+                }
+
+
+
+
+              },
+              error: function(xhr){
+                console.log('error');
               }
-            },
-            error: function(xhr){
-              console.log('error');
-            }
-          })
+            })
+          }else{
+            $('#tip_solucion').addClass('hidden');
+          }
+
+            
         }
 
         // $(document).ready(function() {

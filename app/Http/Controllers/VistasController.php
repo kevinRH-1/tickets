@@ -27,8 +27,15 @@ class VistasController extends Controller
     }
 
 
-    public function cargar($id){
-        $vistas = Vistas::where('modulo_id', $id)->get();
+    public function cargar($id, $sistema)
+    {
+        if ($id == 0) {
+            $vistas = Vistas::whereHas('modulo', function ($query) use ($sistema) {
+                $query->where('sistema_id', $sistema)->with('modulo');
+            })->get();
+        } else {
+            $vistas = Vistas::with('modulo')->where('modulo_id', $id)->get();
+        }
 
         return response()->json($vistas);
     }
