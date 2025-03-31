@@ -11,4 +11,8 @@ class Modulos extends Model
     public function sistema(){
         return $this->belongsTo(Sistemas::class, 'sistema_id', 'id');
     }
+
+    public function vista(){
+        return $this->hasMany(Vistas::class, 'modulo_id', 'id');
+    }
 }

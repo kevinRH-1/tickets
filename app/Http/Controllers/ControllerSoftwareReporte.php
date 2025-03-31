@@ -21,7 +21,7 @@ use App\Models\Importancias;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ticketsSistemaExport;
-
+use App\Models\Vistas;
 
 class ControllerSoftwareReporte extends Controller
 {
@@ -87,9 +87,10 @@ class ControllerSoftwareReporte extends Controller
 
         $sistemas = Sistemas::orderBy('id')->where('activo',1)->get();
         $modulos = Modulos::orderBy('id')->where('activo',1)->get();
+        $vista = Vistas::orderBy('id')->where('activo', 1)->get();
 
 
-        return view('reportessoftware/create', compact('sistemas'));
+        return view('reportessoftware/create', compact('sistemas', 'modulos', 'vista'));
     }
 
     public function modulos($id){
