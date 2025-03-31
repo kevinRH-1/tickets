@@ -458,6 +458,7 @@
                   $('#modulo').val(data.modulo)
                 }else if(data?.modulo){
                   $('#modulo').val(data.modulo);
+                  $('#vista').val(0);
                 }else{
                   $('#vista').val(0)
                   $('#modulo').val(0)
