@@ -10,7 +10,7 @@ class ModulosController extends Controller
 {
     public function store(Request $request){
         $modulo = new Modulos();
-        $modulo->codigo = $request->codigo;
+        // $modulo->codigo = $request->codigo;
         $modulo->nombre = $request->nombre;
         $modulo->sistema_id = $request->sistema_id;
         $modulo->activo=1;

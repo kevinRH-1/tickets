@@ -86,8 +86,7 @@
                                         <p class="pt-1">{{$item->tecnico?->descripcion?? 'sin tecnico'}}</p>
                                         <div class="flex pt-1">
                                             <p class=" {{$color_status}}">{{$item->status->nombre}}</p>
-                                            <p class="mx-1">|</p>
-                                            <p class=" {{$color}}">{{$item->falla?->importancia?->descripcion?? 'sin informacion'}}</p>
+                                            
                                         </div>
                                     </td>
                                     <td class="p-4 text-center hidden md:table-cell">{{ substr($item->created_at, 0, 10) }} <br> {{ substr($item->created_at, 11, 20) }}</td>

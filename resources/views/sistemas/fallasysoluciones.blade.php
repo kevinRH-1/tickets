@@ -463,6 +463,7 @@
                         $('#confirmar #texto').text('esta accion actualizara los datos de esta falla!')
 
                         $(document).off('click', '#confirmYes').on('click', '#confirmYes', function(){
+                            $('confirmYes').attr('disabled', true);
                             $.ajax({
                                 url: 'actfalla',
                                 data: formData,
@@ -527,6 +528,7 @@
                         $('#confirmar').modal('show');
 
                         $(document).off('click', '#confirmYes').on('click', '#confirmYes', function(){
+                            $('#confirmYes').attr('disabled', true);
                             $.ajax({
                                 url: 'actsolucion',
                                 data:formData,
@@ -625,6 +627,7 @@
                 $('#confirmar #confirmNo2').attr('id', 'confirmNo');
                 
                 $(document).off('click','#confirmYes').on('click', '#confirmYes', function(){
+                    $('#confirmYes').attr('disabled', true);
                     console.log('aqui');
                     $.ajax({
                         url:'fallastore',
@@ -688,6 +691,7 @@
                 $('#confirmar #confirmNo').attr('id', 'confirmNo2');
 
                 $(document).off('click', '#confirmYes2').on('click', '#confirmYes2', function(){
+                    $('#confirmYes2').attr('disabled', true);
                     $.ajax({
                         url:'solucionstore',
                         data:formData,

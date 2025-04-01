@@ -186,12 +186,12 @@
           <h1 class="text-center ">Ver Reportes</h1>
           <hr class="mt-3" style="color: red">
           <div class="text-center mt-4 ">
-            <a href=""><button class="my-2 w-3/4 btn btn-danger">mis tickets tickets de sistemas del dia</button></a>
+            {{-- <a href=""><button class="my-2 w-3/4 btn btn-danger">mis tickets tickets de sistemas del dia</button></a> --}}
             
-            <button class="my-2 w-3/4 btn btn-danger">mis tickets tickets de sistemas del mes</button>
+            {{-- <button class="my-2 w-3/4 btn btn-danger">mis tickets tickets de sistemas del mes</button>
             <button class="my-2 w-3/4 btn btn-danger">mis tickets tickets de hardware del mes</button>
             <button class="my-2 w-3/4 btn btn-danger">tickets tickets de sistemas del dia</button>
-            <button class="my-2 w-3/4 btn btn-danger">tickets tickets de sistemas del mes</button>
+            <button class="my-2 w-3/4 btn btn-danger">tickets tickets de sistemas del mes</button> --}}
           </div>
         </div>
       </div>

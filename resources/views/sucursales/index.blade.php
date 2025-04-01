@@ -52,8 +52,8 @@
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->reportes}}</td>
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->usuarios}}</td>
                                         <td class="text-center md:p-4 pt-4 flex justify-around">
-                                            <button id="btnConsulta" class="bi btn btn-warning btn-sm w-10 h-10" data-type="pc"><i class="bi bi-pencil-square"></i></button>
-                                            <button class="btn btn-danger hidden btn-sm w-10 h-10" id="borrarf"><i class="bi bi-trash"></i></button>
+                                            {{-- <button id="btnConsulta" class="bi btn btn-warning btn-sm w-10 h-10" data-type="pc"><i class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-danger hidden btn-sm w-10 h-10" id="borrarf"><i class="bi bi-trash"></i></button> --}}
                                         </td>
                                     </tr>
                             @endforeach
