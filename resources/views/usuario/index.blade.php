@@ -1108,7 +1108,13 @@
                     div.innerHTML = "";
                     data.forEach(element => {
                         const url = `/verreporte/${element.id}${roleId}`;
-                        
+                        if(element.status_id==1){
+                            color = 'text-red-500'
+                        }else if(element.status_id==1){
+                             color = 'text-yellow-500'
+                        }else{
+                             color = 'text-blue-500'
+                        }
                             div.innerHTML += `<a href="${url}">
                                     
                                     <div class="space-y-2 mt-2 mb-2">
@@ -1118,7 +1124,7 @@
                                         <h3 class="text-center grid-span-1">${element.sistema.nombre}</h3>
                                         <h3 class="text-center grid-span-1">${element.modulo && element.modulo.nombre ? element.modulo.nombre: 'Sin modulo'}</h3>
                                         <h3 class="text-center grid-span-1">${element.tecnico && element.tecnico.name ? element.tecnico.name : 'Sin técnico'}</h3>
-                                        <h3 class="text-center grid-span-1">${element.status.nombre}</h3>
+                                        <h3 class="text-center ${color} grid-span-1">${element.status.nombre}</h3>
                                         </div>
                                     </div>
                                     </a>`;
@@ -1154,7 +1160,13 @@
                     div.innerHTML = "";
                     data.forEach(element => {
                         const url = `/verreporte/${element.id}${roleId}`;
-                        
+                            if(element.status_id==1){
+                                color = 'text-red-500'
+                            }else if(element.status_id==1){
+                                color = 'text-yellow-500'
+                            }else{
+                                color = 'text-blue-500'
+                            }
                             div.innerHTML += `<a href="${url}">
                                     
                                     <div class="space-y-2 mt-2 mb-2">
@@ -1164,7 +1176,7 @@
                                         <h3 class="text-center grid-span-1">${element.sistema.nombre}</h3>
                                         <h3 class="text-center grid-span-1">${element.modulo && element.modulo.nombre ? element.modulo.nombre: 'Sin modulo'}</h3>
                                         <h3 class="text-center grid-span-1">${element.tecnico && element.tecnico.name ? element.tecnico.name : 'Sin técnico'}</h3>
-                                        <h3 class="text-center grid-span-1">${element.status.nombre}</h3>
+                                        <h3 class="text-center ${color} grid-span-1">${element.status.nombre}</h3>
                                         </div>
                                     </div>
                                     </a>`;
