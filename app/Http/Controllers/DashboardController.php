@@ -7,6 +7,7 @@ use App\Models\equipos\Laptops;
 use App\Models\equipos\Pc;
 use App\Models\ReportesHardware;
 use App\Models\ReportesSoftware;
+use App\Models\Sucursal;
 use App\Models\Videos;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,7 @@ class DashboardController extends Controller
         $cantidadmes = count($RHm) + count($RSm);
 
         $sinrevisarh = ReportesHardware::where('status_id', 1)->get();
-        $sinrevisars = ReportesHardware::where('status_id', 1)->get();
+        $sinrevisars = ReportesSoftware::where('status_id', 1)->get();
 
         $cantidadsinrevisar = count($sinrevisarh) + count($sinrevisars);
         
@@ -70,6 +71,77 @@ class DashboardController extends Controller
 
         $videos = Videos::where('anuncio', 1)->get();
 
-        return view('components.welcome', compact('cantidaddia', 'cantidadmes', 'cantidadsinrevisar', 'cantidadtecnico', 'ticketprogreso', 'usuariototal', 'equipostotales', 'cantidadFiltrados', 'videos'));
+
+        $sucursales = Sucursal::where('activo', 1)->get();
+
+        return view('components.welcome', compact('sucursales','cantidaddia', 'cantidadmes', 'cantidadsinrevisar', 'cantidadtecnico', 'ticketprogreso', 'usuariototal', 'equipostotales', 'cantidadFiltrados', 'videos'));
     }
+
+
+    public function graficos($tiempo){
+
+        if($tiempo ==0){
+            $reportes = ReportesSoftware::with('usuario.sucursal')
+                ->get()
+                ->groupBy('usuario.sucursal.nombre') // Asumiendo que el campo en la tabla sucursales se llama "nombre"
+                ->map(function ($items, $sucursal) {
+                    return count($items);
+                });
+
+            return response()->json($reportes);
+        }elseif($tiempo==1){
+            $tiempo2 = Carbon::now()->subDay();
+        }elseif($tiempo==2){
+            $tiempo2 = Carbon::now()->subDay(7);
+        }else{
+            $tiempo2 = Carbon::now()->subDay(30);
+        }
+       
+        $reportes = ReportesSoftware::with('usuario.sucursal')->where('created_at', '>=', $tiempo2)
+                ->get()
+                ->groupBy('usuario.sucursal.nombre') // Asumiendo que el campo en la tabla sucursales se llama "nombre"
+                ->map(function ($items, $sucursal) {
+                    return count($items);
+                });
+
+            return response()->json($reportes);
+        
+        
+    }
+
+    public function graficosestado($tiempo){
+
+        if($tiempo==0){
+            $reportes = ReportesSoftware::with('status')
+                ->get()
+                ->groupBy('status.nombre') // Asumiendo que el campo en la tabla sucursales se llama "nombre"
+                ->map(function ($items, $status) {
+                    return count($items);
+                });
+
+            return response()->json($reportes);
+        }elseif($tiempo==1){
+            $tiempo2 = Carbon::now()->subDay();
+        }elseif($tiempo==2){
+            $tiempo2 = Carbon::now()->subDay(7);
+        }else{
+            $tiempo2 = Carbon::now()->subDay(30);
+        }
+
+
+       $reportes = ReportesSoftware::with('status')->where('created_at', '>=', $tiempo2)
+            ->get()
+            ->groupBy('status.nombre') // Asumiendo que el campo en la tabla sucursales se llama "nombre"
+            ->map(function ($items, $status) {
+                return count($items);
+            });
+
+        return response()->json($reportes);
+        
+        
+    }
+
+
+
+
 }

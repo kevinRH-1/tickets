@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('nombre');
             $table->integer('activo')->default(1);
             $table->integer('anuncio')->default(0)->nullable();
+            $table->text('descripcion')->nullable();
+            $table->integer('rol')->default(1);
             $table->timestamps();
         });
     }

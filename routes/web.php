@@ -42,6 +42,11 @@ Route::get('banner', function () {
     return view('dashboard');
 })->name('inicio');
 
+Route::get('/reportes-por-sucursal/{tiempo}', [DashboardController::class, 'graficos']);
+Route::get('/reportes-por-estado/{tiempo}', [DashboardController::class, 'graficosestado']);
+
+
+
 // Route::get('/auth', function () {
 //     return view('auth.register');
 // });
