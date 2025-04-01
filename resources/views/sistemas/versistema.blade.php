@@ -818,7 +818,7 @@
 
                 $(document).off('click', '#confirmYes4');
 
-                $(document).on('click', '#confirmYes4', function(){
+                $(document).off('click', '#confirmYes4').on('click', '#confirmYes4', function(){
                     $.ajax({
                         url: '/modulo/act/'+ formData.id,
                         type: 'POST',
@@ -869,7 +869,7 @@
 
             $(document).off('click', '#confirmYes');
 
-            $(document).on('click', '#confirmYes', function() {
+            $(document).off('click', '#confirmYes').on('click', '#confirmYes', function() {
                 console.log(inputId);
                 if (inputId) {
                     $.ajax({
@@ -971,7 +971,8 @@
 
                 $(document).off('click', '#confirmYes2');
 
-                $(document).on('click', '#confirmYes2', function(){
+                $(document).off('click', '#confirmYes2').on('click', '#confirmYes2', function(){
+                    $('#confirmYes2').attr('disabled', true);
                     $.ajax({
                         url: '/modulostore',
                         type: 'POST',
@@ -995,6 +996,7 @@
                             setTimeout(() => {
                                 $('#modalmensaje').modal('hide');
                             }, 3000);
+                            $('#confirmYes2').removeAttr('disabled');
                         }
                         
 
@@ -1035,7 +1037,7 @@
 
                 $(document).off('click', '#confirmYes3');
 
-                $(document).on('click', '#confirmYes3', function(){
+                $(document).off('click', '#confirmYes3').on('click', '#confirmYes3', function(){
                     const button = $(this);
                     button.prop('disabled', true);
                     $.ajax({

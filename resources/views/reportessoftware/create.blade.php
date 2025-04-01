@@ -334,7 +334,7 @@
             $('#confirmar #problemat').text(problematext);
             $('#confirmar').modal('show');
 
-            $(document).on('click', '#confirmYes', function () {
+            $(document).off('click', '#confirmYes').on('click', '#confirmYes', function () {
               const button = $(this);
               button.prop('disabled', true);
               

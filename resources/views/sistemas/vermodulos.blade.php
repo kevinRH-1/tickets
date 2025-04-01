@@ -36,7 +36,7 @@
             <!-- Body -->
             <div class="p-4">
                 <!-- Textbox -->
-                <form action="{{route('fallasoftware.store')}}" method="POST">
+                <form action="#" method="POST">
                     @csrf
 
 
@@ -46,6 +46,7 @@
 
                     <label for="textbox" class="block mb-2 text-sm font-medium text-gray-700">descripcion del problema:</label>
                     <textarea id="descripcion" name="descripcion" rows="3" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" maxlength="191"></textarea>
+                    <p id="descripcion-error" class="text-red-500 text-sm " hidden>Este campo es obligatorio!</p>
 
                     <label for="select" class="block mt-4 mb-2 text-sm font-medium text-gray-700">seccion del problema:</label>
                     <select id="vista" name="vista" class="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -68,7 +69,7 @@
                     <br>
 
                     <div class="flex px-4 pt-8 border-t justify-between">
-                        <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
+                        <button type="submit" id="btnguardar" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" onclick="nuevoproblema(event)">
                             Guardar
                         </button>
                         <button id="closeModal2" class="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700">
@@ -193,6 +194,27 @@
         </div>
     </div>
 
+    <div class="modal fade mt-[20%]" id="confirmar2" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content p-4">
+              <h2 id="tituloconfirmar" class="text-lg font-semibold text-center w-full p-2 rounded-lg">¿Estás seguro?</h2>
+              <p class="text-sm text-gray-600 text-center mt-3" id="texto">Esta acción registrara un nuevo modulo para este sistema.</p>
+              <div class="mt-4 w-[99%] m-auto text-center">
+                  <label for="bnombre" id="bnombre" class="text-center "></label>
+                  <br>
+              </div>
+              <div class="flex justify-between mt-8">
+                  <button id="confirmYes2" class="btn btn-primary text-white px-4 py-2 rounded">
+                      Sí, registrar
+                  </button>
+                  <button id="confirmNo2" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded">
+                      Cancelar
+                  </button>
+              </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade mt-[20%] h-[200px]" id="modalmensaje" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -304,7 +326,7 @@
                     <br>
 
                     <div class="flex px-4 pt-8 border-t justify-between">
-                        <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" onclick="guardarvista(event)">
+                        <button type="submit" id="btnguardarv" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" onclick="guardarvista(event)">
                             Guardar
                         </button>
                         <button id="closeModal2v" class="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700">
@@ -725,6 +747,7 @@
 
         function guardarvista(event){
             event.preventDefault();
+            $('#btnguardarv').attr('disabled', true);
 
             const formData ={
                 nombre:$('#nombre-vista').val(),
@@ -814,6 +837,72 @@
             })
 
         })
+
+        function nuevoproblema(event){
+            event.preventDefault();
+            const formData= {
+                vista: $('#vista').val(),
+                descripcion:$('#descripcion').val(),
+                riesgo:$('#riesgo').val(),
+                sistema:$('#sistema').val(),
+                modulo:$('#modulo').val(),
+            };
+
+            console.log(formData);
+
+            if (!formData.descripcion || formData.descripcion.trim() === "") {
+                $("#descripcion-error").removeAttr('hidden');
+                console.log('no');
+            }else{
+                $("#descripcion-error").attr('hidden', true);
+                console.log('si');
+                $('#confirmar2 #bnombre').text(formData.descripcion);
+                $('#confirmar2 #confirmYes2').attr('id', 'confirmYes3');
+                $('#confirmar2 #texto').text('Esta accion registrara un nuevo problema');
+                const modal = document.getElementById('modal');
+                modal.classList.add('hidden');
+                $('#confirmar2').modal('show');
+
+                $(document).off('click', '#confirmYes3');
+
+                $(document).off('click', '#confirmYes3').on('click', '#confirmYes3', function(){
+                    const button = $(this);
+                    button.prop('disabled', true);
+                    $.ajax({
+                        url: '/fallasoftwarestore',
+                        type: 'POST',
+                        data: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF Token
+                        },
+                        success: function(response){
+                            $('#confirmar2').modal('hide')
+                            $('#mensaje').text('problema registrado con exito!');
+                            $('#modalmensaje').modal('show');
+                            setTimeout(() => {
+                                location.reload();
+                            }, 3000);
+                            
+                        },
+                        error: function(xhr) {
+                            $('#confirmar2').modal('hide')
+                            $('#mensaje').text('ha ocurrido un error, intentelo de nuevo!');
+                            $('#modalmensaje').modal('show');
+                            setTimeout(() => {
+                                $('#modalmensaje').modal('hide');
+                            }, 3000);
+                        }
+                        
+
+                    })
+                })
+
+                $(document).on('click', '#confirmNo2', function() {
+                    $('#confirmar2').modal('hide');
+                });
+                
+            }
+        }
 
 
     </script>
