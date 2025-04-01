@@ -1110,7 +1110,7 @@
                         const url = `/verreporte/${element.id}${roleId}`;
                         if(element.status_id==1){
                             color = 'text-red-500'
-                        }else if(element.status_id==1){
+                        }else if(element.status_id==2){
                              color = 'text-yellow-500'
                         }else{
                              color = 'text-blue-500'
@@ -1162,7 +1162,7 @@
                         const url = `/verreporte/${element.id}${roleId}`;
                             if(element.status_id==1){
                                 color = 'text-red-500'
-                            }else if(element.status_id==1){
+                            }else if(element.status_id==2){
                                 color = 'text-yellow-500'
                             }else{
                                 color = 'text-blue-500'

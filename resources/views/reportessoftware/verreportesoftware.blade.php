@@ -16,33 +16,43 @@
         </div>
         <div class="md:!mt-10 mt-4"></div>
 
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto flex justify-center md:grid md:grid-cols-4 md:gap-2">
+            <div>
+                <h1 class="text-lg font-bold">ESTADO: </h1>
+                <h1>{{$reporte[0]->status->nombre}}</h1>
+            </div>
+            <div class="col-span-3">
+                <p class="text-lg w-[80%]">{{$reporte[0]->status->descripcion}}</p>
+            </div>
+        </div>
+
         <!-- Sección 1: Datos del Equipo -->
         <div class="grid grid-cols-4 gap-2">
             <div class="bg-white md:!p-10 p-2 !pt-6 rounded-lg shadow-md  w-11/12 m-auto md:mt-4 md:col-span-3 col-span-4">
                 <div class=" text-left border-b-2 border-gray-300 md:!pb-5 pb-3">
                     <label for="" class="block md:w-2/4 m-auto text-center text-2xl md:!mb-2 mb-4 text-red-600" >DATOS DEL TICKET</label>
                     <div class="w-4/5 md:m-auto">
-                        <label for="" class="inline text-gray-700 w-3/4 m-auto text-2xl font-bold" >Codigo de ticket: </label>
+                        <label for="" class="inline text-gray-700 w-3/4 m-auto text-2xl font-bold" >CODIGO DEL TICKET: </label>
                         <input type="text" name="codigo" id="codigo" value="{{ $reporte[0]->codigo }}" class="text-2xl md:w-2/4 p-0 border-none bg-transparent rounded-md pointer-events-none focus:outline-none" readonly>
                     </div>
                     <div class="mt-4 grid md:grid-cols-2 grid-cols-1 md:gap-2">
                         <div class="col-span-1">
-                            <label for="" class="text-gray-700 w-2/4 text-lg font-bold hidden md:!inline" >sistema: </label>
-                            <input type="text" name="codigo" id="codigo" value="{{ $reporte[0]->sistema->nombre }}" class=" h-7 text-lg px-1 border-none bg-transparent rounded-md pointer-events-none focus:outline-none" readonly>
+                            <label for="" class="text-gray-700 w-2/4 text-lg font-bold hidden md:!inline" >SISTEMA: </label>
+                            <input type="text" name="codigo" id="codigo" value="{{ $reporte[0]->sistema->nombre }}" class=" h-7 text-lg text-gray-600 px-1 border-none bg-transparent rounded-md pointer-events-none focus:outline-none" readonly>
                         </div>
                         <div class="col-span-1">
-                            <label for="" class="text-gray-700 mt-4 w-2/4 text-lg font-bold hidden md:!inline">modulo: </label>
-                            <input type="text" name="codigo" id="codigo" value="{{ $reporte[0]->modulo?->nombre?? 'sin modulo' }}" class=" h-7 text-lg m-auto px-1 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
+                            <label for="" class="text-gray-700 mt-4 w-2/4 text-lg font-bold hidden md:!inline">MODULO: </label>
+                            <input type="text" name="codigo" id="codigo" value="{{ $reporte[0]->modulo?->nombre?? 'sin modulo' }}" class=" h-7 text-gray-600 text-lg m-auto px-1 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                         </div>
                         <div class="col-span-1">
-                            <label for="" class=" text-gray-700 mt-4 w-2/4 text-lg font-bold hidden md:!inline">problema: </label>
-                            <label type="text" name="codigo" id="codigo"  class=" h-7 md:mt-0 mt-2 text-lg m-auto px-1 border-none bg-transparent rounded-md pointer-events-none focus:outline-none ">{{ $reporte[0]->falla?->descripcion?? 'sin informacion' }}</label>
+                            <label for="" class=" text-gray-700 mt-4 w-2/4 text-lg font-bold hidden md:!inline">PROBLEMA: </label>
+                            <label type="text" name="codigo" id="codigo"  class=" h-7 md:mt-0 mt-2 text-lg m-auto px-1 border-none bg-transparent text-gray-600 rounded-md pointer-events-none focus:outline-none ">{{ $reporte[0]->falla?->descripcion?? 'sin informacion' }}</label>
                         </div>
                        
                             
                         <div class="col-span-1 md:!mt-[14px] mt-2">
                             @if(Auth::user()->roleid!=3)
-                                <label for="" class=" text-gray-700 mt-6 w-2/4 text-lg font-bold hidden md:!inline">importancia: </label>
+                                <label for="" class=" text-gray-700 mt-6 w-2/4 text-lg font-bold hidden md:!inline">IMPORTANCIA: </label>
                             
                                 @if($reporte[0]?->falla?->nivel_riesgo == 1)
                                     <input type="text" name="codigo" id="codigo" value="{{ $reporte[0]->falla?->importancia?->descripcion?? 'sin informacion' }}" class=" h-7 text-lg m-auto px-1 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
@@ -88,14 +98,14 @@
         <!-- Sección 3: Datos del Reporte -->
             <div class="bg-white p-6 rounded-lg shadow-md md:col-span-1 col-span-4 w-11/12 mx-auto">
                 <label for="" class="block  md:w-2/4 m-auto text-center text-2xl md:!mb-5 mb-3  text-red-600" >MAS DATOS</label>
-                <label for="hora_generacion" class="block text-gray-700 text-xl mb-2">tiempo de generación:</label>
-                <label for="hora_generacion" class="inline  text-sky-600">dia: </label>
+                <label for="hora_generacion" class="block text-gray-700 text-xl mb-2">TIEMPO DE GENERACION:</label>
+                <label for="hora_generacion" class="inline  text-sky-600">DIA: </label>
                 <input type="text" name="generado" id="generado" value="{{ substr($reporte[0]->created_at, 0, 10) }}" class="w-2/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                 <br>
-                <label for="hora_generacion" class="inline  text-sky-600">hora: </label>
+                <label for="hora_generacion" class="inline  text-sky-600">HORA: </label>
                 <input type="text" name="generado" id="generado" value="{{ substr($reporte[0]->created_at, 11, 20) }}" class="w-2/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                 <div class=""></div>
-                <div class="flex md:flex-col">
+                {{-- <div class="flex md:flex-col">
                     <label for="estado" class="inline text-gray-700 text-2xl mt-2 pl-2">Estado: </label>
                     @if($reporte[0]->status_id == 3)
                         <input type="text" name="verestado" id="verestado" readonly value="{{$reporte[0]->status->nombre}}" class=" text-lg py-2 border-none bg-transparent rounded-md text-blue-700">
@@ -106,21 +116,21 @@
                     @if($reporte[0]->status_id == 1)
                         <input type="text" name="verestado" id="verestado" readonly value="{{$reporte[0]->status->nombre}}" class=" text-lg py-2 border-none bg-transparent rounded-md text-orange-700">
                     @endif
-                </div>
-                <label for="hora_generacion" class="block text-gray-700 text-xl mb-2 mt-3">tiempo de solucion:</label>
-                <label for="hora_generacion" class="inline  text-sky-600">dia: </label>
+                </div> --}}
+                <label for="hora_generacion" class="block text-gray-700 text-xl mb-2 mt-3">TIEMPO DE SOLUCION:</label>
+                <label for="hora_generacion" class="inline  text-sky-600">DIA: </label>
                 @if($reporte[0]?->tiempo_solucion)
                     <input type="text" name="solucion" id="solucion" value="{{ substr($reporte[0]?->tiempo_solucion, 0, 10)}}" class="w-2/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                     <br>
-                    <label for="hora_generacion" class="inline  text-sky-600">hora: </label>
+                    <label for="hora_generacion" class="inline  text-sky-600">HORA: </label>
                     <input type="text" name="solucion" id="solucion" value="{{ substr($reporte[0]?->tiempo_solucion , 11, 20)}}" class="w-2/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                     <br>
-                    <label for="hora_generacion" class="inline  text-sky-600">tiempo transcurrido: </label>
+                    <label for="hora_generacion" class="inline  text-sky-600">TIEMPO TRANSCURRIDO: </label>
                     <input type="text" name="solucion" id="solucion" value="{{$tiempo}} horas" class="w-3/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                 @else
                     <input type="text" name="solucion" id="solucion" value="sin solucionar" class="w-3/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                     <br>
-                    <label for="hora_generacion" class="inline  text-sky-600">hora: </label>
+                    <label for="hora_generacion" class="inline  text-sky-600">HORA: </label>
                     <input type="text" name="solucion" id="solucion" value="sin solucionar" class="w-3/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                 @endif
             </div>
@@ -315,6 +325,7 @@
                 @if(Auth::user()->roleid==1 && $confirmar ==1 || Auth::user()->roleid==2 && $confirmar ==1 )
                     <div></div>
                     <button id="openModal" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mx-auto">cambiar estatus a solucionado</button>
+                    <button id="" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 mx-auto">cambiar estatus a Espera</button>
                     @if ($reporte[0]->solucion)
                         <label for="solicitud" class="text-gray-400 pt-2 text-sm text-center">--Ya existe una solicitud pendiente para solucionar!--</label>
                     @endif
