@@ -1108,7 +1108,7 @@
                     div.innerHTML = "";
                     data.forEach(element => {
                         const url = `/verreporte/${element.id}${roleId}`;
-                        if(element.status_id == 1){
+                        
                             div.innerHTML += `<a href="${url}">
                                     
                                     <div class="space-y-2 mt-2 mb-2">
@@ -1122,7 +1122,7 @@
                                         </div>
                                     </div>
                                     </a>`;
-                        }
+                        
                     
                     });
                 },
@@ -1154,7 +1154,7 @@
                     div.innerHTML = "";
                     data.forEach(element => {
                         const url = `/verreporte/${element.id}${roleId}`;
-                        if(element.status_id == 1){
+                        
                             div.innerHTML += `<a href="${url}">
                                     
                                     <div class="space-y-2 mt-2 mb-2">
@@ -1168,7 +1168,7 @@
                                         </div>
                                     </div>
                                     </a>`;
-                        }                   
+                                         
                     });
                 },
                 error: function(xhr){
