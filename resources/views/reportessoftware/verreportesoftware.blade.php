@@ -29,7 +29,7 @@
         <!-- Sección 1: Datos del Equipo -->
         <div class="grid grid-cols-4 gap-2">
             <div class="bg-white md:!p-10 p-2 !pt-6 rounded-lg shadow-md  w-11/12 m-auto md:mt-4 md:col-span-3 col-span-4">
-                <div class=" text-left border-b-2 border-gray-300 md:!pb-5 pb-3">
+                <div class=" text-left border-b-2 border-gray-300 md:!pb-5 md!:mb-0 pb-8">
                     <label for="" class="block md:w-2/4 m-auto text-center text-2xl md:!mb-2 mb-4 text-red-600" >DATOS DEL TICKET</label>
                     <div class="w-4/5 md:m-auto">
                         <label for="" class="inline text-gray-700 w-3/4 m-auto text-2xl font-bold" >CODIGO DEL TICKET: </label>
@@ -44,7 +44,7 @@
                             <label for="" class="text-gray-700 mt-4 w-2/4 text-lg font-bold hidden md:!inline">MODULO: </label>
                             <input type="text" name="codigo" id="codigo" value="{{ $reporte[0]->modulo?->nombre?? 'sin modulo' }}" class=" h-7 text-gray-600 text-lg m-auto px-1 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                         </div>
-                        <div class="col-span-1">
+                        <div class="col-span-2">
                             <label for="" class=" text-gray-700 mt-4 w-2/4 text-lg font-bold hidden md:!inline">PROBLEMA: </label>
                             <label type="text" name="codigo" id="codigo"  class=" h-7 md:mt-0 mt-2 text-lg m-auto px-1 border-none bg-transparent text-gray-600 rounded-md pointer-events-none focus:outline-none ">{{ $reporte[0]->falla?->descripcion?? 'sin informacion' }}</label>
                         </div>
@@ -187,6 +187,28 @@
             </div>
         </div>
 
+
+        <div class="modal fade pt-[10%]" id="modalestatus" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="flex">
+                        <div class="w-[90%] mt-4">
+                            <h1 class="text-lg text-black font-semibold text-center">Cambiar estado del reporte</h1>
+                        </div>
+                        <button type="button" class="btn-close btn-sm mt-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center py-9">
+                        <select name="selecstatus" id="selecstatus" class="block px-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mb-4">
+                            @foreach ($estados as $item )
+                                <option value="{{$item->id}}">{{$item->nombre}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button class="btn btn-primary w-2/4 mx-auto mb-8" onclick="estatus()">Cambiar</button>
+                </div>
+            </div>
+        </div>
+
         <div class="bg-white md:p-6 py-6 rounded-lg shadow-md md:w-11/12 mx-auto">
             <div class="text-center">
                 <button id="toggle-mensajes" class=" text-blue-600 border-none rounded text-2xl bg-transparent" onclick="vermensajes()"><--ver mensajes--></button>
@@ -324,8 +346,8 @@
             @else
                 @if(Auth::user()->roleid==1 && $confirmar ==1 || Auth::user()->roleid==2 && $confirmar ==1 )
                     <div></div>
-                    <button id="openModal" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mx-auto">cambiar estatus a solucionado</button>
-                    <button id="" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 mx-auto">cambiar estatus a Espera</button>
+                    {{-- <button id="openModal" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mx-auto">Enviar solucion</button> --}}
+                    <button id="" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 mx-auto" onclick="$('#modalestatus').modal('show')">Cambiar estatus</button>
                     @if ($reporte[0]->solucion)
                         <label for="solicitud" class="text-gray-400 pt-2 text-sm text-center">--Ya existe una solicitud pendiente para solucionar!--</label>
                     @endif
@@ -334,7 +356,7 @@
                 @if(Auth::user()->roleid == 3 && $reporte[0]->solucionado_tecnico ==1)
                     <div></div>
                     {{-- <a href="{{route('software.status', [$reporte[0]->id, Auth::user()->roleid, Auth::user()->lugar_id])}}" class=""><button class="btn btn-primary ">confirmar solucion</button></a> --}}
-                    <button class="btn btn-primary" onclick="$('#confirmarsolucion').modal('show')">confirmar solucion</button>
+                    <button class="btn btn-primary" onclick="$('#confirmarsolucion').modal('show')">Confirmar solucion</button>
                     <div></div>
                 @endif
                 @if(Auth::user()->roleid ==3 && $confirmar == 1 && $reporte[0]->solucionado_tecnico !=1)
@@ -379,6 +401,42 @@
                         </div>
                     </form>
                     
+                </div>
+            </div>
+
+            <div class="modal fade pt-[10%]" id="modalsolucion" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content p-4">
+                        <h2 class="text-xl font-semibold mb-4">Selecciona la forma en la que fue solucionado el problema</h2>
+
+                    <!-- Formulario dentro del modal -->
+                        <form id="modalForm" method="GET" action="{{route('software.status', [$reporte[0]->id, Auth::user()->roleid, 0])}}">
+                            @csrf
+                            {{-- <label for="options" class="block text-sm font-medium text-gray-700 mb-2">Opciones</label> --}}
+                            <select id="options" name="options" class="block px-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mb-4">
+                                @foreach ($soluciones as $item)
+                                    <option value="{{$item->id}}">{{$item->descripcion}}</option>
+                                @endforeach
+                                {{-- <option value="otra">Otra</option> --}}
+                            </select>
+                            <input type="text" id="id" hidden value="{{$reporte[0]->id}}">
+                            <input type="text" id="rol" hidden value="{{Auth::user()->roleid}}">
+                            <input type="text" id="numero" value="0" hidden>
+                            <input type="text" id="tecnico" name="tecnico" hidden value="{{Auth::user()->id}}">
+
+                            <!-- Campo de texto opcional -->
+                            <div id="extraField" >
+                                <label for="extraInput" class="block text-sm font-medium text-gray-700 mb-2">Escribe el metodo de la solucion</label>
+                                <textarea id="extraInput" name="extraInput" rows="3" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-1"></textarea>
+                            </div>
+
+                            <!-- Botones -->
+                            <div class="mt-6 flex justify-end gap-4">
+                                <button type="button" id="closeModal" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400" onclick="$('#modalsolucion').modal('hide')">Cancelar</button>
+                                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="enviarsolucion(event)">Enviar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -779,6 +837,48 @@
                 }, 2000);
             }
         })
+    }
+
+
+    function estatus(){
+        const estado= $('#selecstatus').val();
+        console.log(estado);
+
+        if(estado==3){
+            
+            $('#modalestatus').modal('hide');
+            $('#modalsolucion').modal('show');
+        }else{
+            const formData = {
+                estado: estado,
+                reporte: $('#reporte').val(),
+            }
+
+            $.ajax({
+                url: '/cambiar-status-reporte',
+                data: formData,
+                type: 'POST',
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response){
+                    $('#modalmensaje #mensaje').text('estado del reporte cambiado!')
+                    $('#modalestatus').modal('hide');
+                    $('#modalmensaje').modal('show');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                },
+                error: function(xhr){
+                    $('#modalmensaje #mensaje').text('Ha ocurrido un error al cambiar el estado!')
+                    $('#modalestatus').modal('hide');
+                    $('#modalmensaje').modal('show');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                }
+            })
+        }
     }
     
 

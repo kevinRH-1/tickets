@@ -188,9 +188,11 @@ class ControllerSoftwareReporte extends Controller
         }
 
         $reporte[0]->save();
+
+        $estados = statusReporte::where('id', '!=', 1)->where('id', '!=', 5)->orderBy('id')->get();
         
 
-        return view('reportessoftware.verreportesoftware', compact('reporte', 'mensajes', 'confirmar', 'soluciones', 'tiempo'));
+        return view('reportessoftware.verreportesoftware', compact('reporte', 'estados', 'mensajes', 'confirmar', 'soluciones', 'tiempo'));
     }
 
     public function mensajes(Request $request){
@@ -246,7 +248,7 @@ class ControllerSoftwareReporte extends Controller
 
         // cambia status del reporte y asigna un tecnico al reporte (ultimo que ha respondido)
 
-            $reporte->status_id= 2;
+            //$reporte->status_id= 2;
             $reporte->tecnico_id = $request->tecnicomensaje;
             $reporte->noti_u=1;
             $reporte->save();
@@ -267,12 +269,22 @@ class ControllerSoftwareReporte extends Controller
     }
 
 
+    public function cambiar_status(Request $request){
+        $reporte = ReportesSoftware::findOrFail($request->reporte);
+        $reporte->status_id = $request->estado;
+        $reporte->save();
+
+        return response()->json(['message', 'estatus cambiado']);
+    }
+
+
     public function status($id, $rol, $lugar, Request $request){
         $reporte = ReportesSoftware::findOrFail($id);
         
         if($rol ==1 || $rol ==2){
             $reporte->solucionado_tecnico = 1;
             $reporte->tecnico_id = $request->tecnico;
+            $reporte->status_id = 5;
             $reporte->save();
             $borraranterior = SolucionTemp::where('reporte_id', $id)->get();
             foreach($borraranterior as $borrar){

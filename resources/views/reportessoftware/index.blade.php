@@ -114,8 +114,8 @@
                                 <th class="p-4 text-center hidden md:table-cell">USUARIO</th>
                                 <th class="p-4 text-center hidden md:table-cell">TECNICO</th>
                                 <th class="p-4 text-center hidden md:table-cell">SISTEMA</th>
-                                <th class="p-4 text-center hidden md:table-cell">MODULO</th>
-                                <th class="p-4 text-center hidden md:table-cell">PROBLEMA</th>
+                                {{-- <th class="p-4 text-center hidden md:table-cell">MODULO</th> --}}
+                                {{-- <th class="p-4 text-center hidden md:table-cell">PROBLEMA</th> --}}
                                 <th class="p-2 text-center hidden md:table-cell">NIVEL DE IMPORTANCIA</th>
                                 <th class="p-2 text-center hidden md:table-cell">ESTADO</th>
                                 <th class="p-2 md:text-center text-left">VER</th>
@@ -141,8 +141,10 @@
                                 @php
                                 $colores_status = [
                                     1 => 'text-red-500',
-                                    2 => 'text-amber-500',
-                                    3 => 'text-sky-500',
+                                    3 => 'text-amber-500',
+                                    5 => 'text-sky-500',
+                                    2 => 'text-orange-700',
+                                    4 => 'text-green-700',
                                 ];
                                 $nivel_status = $item->status_id;
                                 $color_status = $colores_status[$nivel_status] ?? ''; // Si no hay coincidencia, no se asigna color
@@ -154,9 +156,13 @@
                                 <!-- Fila 1 -->
                                 @if($item->status_id==1)
                                     <tr class="border-1 border-red-500 hover:bg-red-50">
-                                @elseif($item->status_id==2)
-                                    <tr class="border-1 border-amber-500 hover:bg-amber-50">
                                 @elseif($item->status_id==3)
+                                    <tr class="border-1 border-amber-500 hover:bg-amber-50">
+                                @elseif($item->status_id==2)
+                                    <tr class="border-1 border-orange-700 hover:bg-orange-50">
+                                @elseif($item->status_id==4)
+                                    <tr class="border-1 border-green-700 hover:bg-green-100">
+                                @elseif($item->status_id==5)
                                     <tr class="border-1 border-sky-500 hover:bg-sky-50">
                                 @else
                                     <tr class="border-1 border-gray-200 hover:bg-gray-50">
@@ -182,8 +188,8 @@
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->usuario->descripcion}}</td>
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->tecnico?->descripcion?? 'sin tecnico'}}</td>
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->sistema->nombre}}</td>
-                                        <td class="p-4 text-center hidden md:table-cell">{{$item->modulo?->nombre?? 'sin modulo'}}</td>
-                                        <td class="p-4 text-center hidden md:table-cell">{{ \Illuminate\Support\Str::limit($item->falla?->descripcion ?? $item->mensajes[0]->mensaje, 40, '...') }}</td>
+                                        {{-- <td class="p-4 text-center hidden md:table-cell">{{$item->modulo?->nombre?? 'sin modulo'}}</td> --}}
+                                        {{-- <td class="p-4 text-center hidden md:table-cell">{{ \Illuminate\Support\Str::limit($item->falla?->descripcion ?? $item->mensajes[0]->mensaje, 40, '...') }}</td> --}}
                                         <td class="p-4 text-center {{$color}} hidden md:table-cell">{{$item->falla?->importancia?->descripcion?? 'sin informacion'}}</td>
                                         <td class="p-2 text-center {{$color_status}} hidden md:table-cell">{{$item->status->nombre}}</td>
                                         <td class="p-2 md:text-center text-left">

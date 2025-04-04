@@ -33,6 +33,7 @@ use App\Exports\ReporteUsuariosExport;
 use App\Exports\ticketsSistemaExport;
 use App\Http\Controllers\SolucionTempController;
 use App\Http\Controllers\VideosController;
+use App\Models\ReportesSoftware;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -161,6 +162,7 @@ Route::post('/confirmarstatus', [ControllerSoftwareReporte::class, 'confirmarsta
 Route::delete('reportes/borrar/{id}', [ControllerSoftwareReporte::class, 'delete'])->name('reporte.borrar');
 Route::get('filtrosreportesS', [ControllerSoftwareReporte::class, 'filtros'])->name('filtros.software');
 Route::get('cargarvista/{id}/{sistema}', [VistasController::class, 'cargar'])->name('cargar.vista');
+Route::post('cambiar-status-reporte', [ControllerSoftwareReporte::class, 'cambiar_status'])->name('cambiar.status');
 
 
 //          REPORTES HARDWARE

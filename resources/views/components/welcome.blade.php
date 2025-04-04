@@ -65,18 +65,56 @@
       @endif
 
       <div class="md:flex md:justify-between mt-5 text-white grid grid-cols-2">
-        <div class="md:w-60 md:h-36 bg-emerald-500 md:rounded-lg p-4">
-          <h1>Ticktes ultimas 24h: {{ $cantidaddia }}</h1>
-        </div>
-        <div class="md:w-60 md:h-36 bg-purple-700 md:rounded-lg p-4">
-          <h1>Tickets ultimo mes: {{ $cantidadmes }}</h1>
-        </div>
-        <div class="md:w-60 md:h-36 bg-amber-500 md:rounded-lg p-4">
-          <h1>Tickets sin revisar: {{ $cantidadsinrevisar }}</h1>
-        </div>
-        <div class="md:w-60 md:h-36 bg-sky-600 md:rounded-lg p-4">
-          <h1>Mis Tickets: {{ $cantidadtecnico }}</h1>
-        </div>
+        <a href="{{route('reportessoftware.general')}}">
+          <div class="md:w-60 md:h-36 bg-emerald-500 md:rounded-lg p-4">
+            <h1 class="text-lg font-semibold">Ticktes de sistemas en 24H: {{ $cantidaddia }}</h1>
+            <div class="w-full relative">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-20 absolute top-[-20px] right-0">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+            </div>
+          
+          </div>
+        </a>
+        <a href="{{route('reportessoftware.general')}}">
+          <div class="md:w-60 md:h-36 bg-purple-700 md:rounded-lg p-4">
+            
+            <h1 class="text-lg font-semibold">Tickets de sistema en la semana: {{ $cantidadmes }}</h1>
+            <div class="relative w-full">  
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20 absolute top-[-20px] right-0">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+              </svg>
+            </div>
+            
+          </div>
+        </a>
+        <a href="{{route('reportessoftware.general')}}">
+          <div class="md:w-60 md:h-36 bg-amber-500 md:rounded-lg p-4">
+            
+            <h1 class="text-lg font-semibold">Tickets en estado generado: {{ $cantidadsinrevisar }}</h1>
+            <div class="relative w-full">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20 absolute top-[-14px] right-0">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
+              </svg>
+            </div>
+          
+          </div>
+        </a>
+        <a href="{{route('reportessoftware.general')}}">
+          <div class="md:w-60 md:h-36 bg-sky-600 md:rounded-lg p-4">
+            <h1 class="text-lg font-semibold">Tickets en revision: {{ $cantidadtecnico }}</h1>
+            <div class="relative w-full">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20 absolute top-2 right-0">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="yellow" class="size-12 absolute top-1 right-14">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+
+            </div>
+          </div>
+        </a>
       </div>
 
       <div id="" class=" rounded-md mt-8 justify-center align-middle text-center grid grid-cols-2">
@@ -424,9 +462,11 @@
                 console.log(data);
 
                 const colors = {
-                    "generado": "red",
-                    "en revision": "green",
-                    "solucionado": "blue",
+                    "Generado": "red",
+                    "Revision": "green",
+                    "Solucionado": "blue",
+                    "Espera de mas informacion": "gray",
+                    "Por Confirmar Solucion": "purple",
                 };
 
                 // Mapear los colores según el nombre de la sucursal
