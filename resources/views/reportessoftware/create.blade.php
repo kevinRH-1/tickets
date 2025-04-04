@@ -353,7 +353,7 @@
                   $('#modalmensaje').modal('show');
                   $('#modalmensaje #check').removeAttr('hidden');
                   setTimeout(() => {
-                    window.location.href = '{{ route('misreportessoftware', ['id' => Auth::user()->sucursal]) }}';
+                    window.location.href = '{{ route('misreportessoftware', ['id' => Auth::user()->id]) }}';
                   }, 2000);
                 },
                 error: function (xhr) {

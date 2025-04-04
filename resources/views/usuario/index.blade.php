@@ -140,7 +140,7 @@
                                                     </div>
                                                     <div class="border-2 border-b-gray-300 justify-around py-2">
 
-                                                        <h1 class="text-center">tickets del usuario</h1>
+                                                        <h1 class="text-center" id="datostitulo">tickets del usuario</h1>
 
                                                         <div class="flex justify-around mt-2">
                                                             <label for="cantidad_30d" id="cantidad_30d"></label>
@@ -270,7 +270,7 @@
                                         <div class="modal-dialog modal-lg max-h-[600px] overflow-y-auto">
                                           <div class="modal-content p-4">
                                             <div class="modal-header flex justify-center">
-                                              <h1 class="modal-title fs-5 text-semibold text-4xl text-red-600" id="exampleModalLabel">Historial del usuario</h1>
+                                              <h1 class="modal-title fs-5 text-semibold text-4xl text-red-600" id="titulohistorial">Historial del usuario</h1>
                                             </div>
                                             <div class="modal-body">
                                               <div id="divfiltro" class="flex w-full justify-end mb-20">
@@ -666,7 +666,27 @@
                     $("#ActualisarUsuarios #correo-error").addClass('hidden');
                     $("#ActualisarUsuarios #numero-error").addClass('hidden');
                     $("#ActualisarUsuarios #rol-error").addClass('hidden');
-                    $("#ActualisarUsuarios #lugar-error").addClass('hidden');
+                    $("#ActualisarUsuarios #lugar-error").addClass('hidden');   
+                    if(datos.roleid==1){
+                        $('#ActualisarUsuarios #cambiarolb').attr('hidden', true);
+                        $('#ActualisarUsuarios #rolinput').addClass('min-w-[349px]', true);
+                        $('#ActualisarUsuarios #datostitulo').text('Tickets en los que ha participado: ')
+                    }else if(datos.roleid==2){
+                        if(@json(Auth::user()->roleid)==2){
+                            $('#ActualisarUsuarios #cambiarolb').attr('hidden', true);
+                            $('#ActualisarUsuarios #rolinput').addClass('min-w-[349px]', true);
+                            $('#ActualisarUsuarios #datostitulo').text('Tickets en los que ha participado: ')
+                        }else{
+                            $('#ActualisarUsuarios #rolinput').removeClass('min-w-[349px]');
+                            $('#ActualisarUsuarios #cambiarolb').removeAttr('hidden');
+                            $('#ActualisarUsuarios #datostitulo').text('Tickets en los que ha participado: ')
+                        }
+                    }else{
+
+                    
+                        $('#ActualisarUsuarios #datostitulo').text('Tickets del usuario: ')
+                    }
+
 
                     historial_ejec =0;
                     $('#fecha1').val('');

@@ -20,16 +20,41 @@
     <div name="divcantidades" class="flex justify-center items-center mt-7">
         <div class="md:flex md:space-x-4 md:justify-between md:w-11/12 m-auto grid grid-cols-2 text-white">
             <div class="md:w-56 md:h-32 bg-emerald-500 md:rounded-lg p-6 md:shadow-md shadow-gray-700">
-              <h1>TICKETS GENERADOS: {{$generados}} </h1>
+              <h1 class="text-lg font-semibold relative z-10">TICKETS GENERADOS: {{$generados}} </h1>
+              <div class="relative hidden md:block w-full ">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#008a54" class="size-28 absolute top-[-70px] left-28">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
+                </svg>
+              </div>
             </div>
             <div class="md:w-56 md:h-32 bg-sky-600 md:rounded-lg p-6 md:shadow-md shadow-gray-700">
-              <h1>TICKETS EN REVISION: {{$revision}} </h1>
+              <h1 class="text-lg font-semibold relative z-10">TICKETS EN REVISION: {{$revision}} </h1>
+              <div class="relative w-full hidden md:block">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#005a8a" class="size-28 absolute top-[-60] left-28">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#005a8a" class="size-14 absolute top-[-79px] left-24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                </svg>
+  
+              </div>
             </div>
-            <div class="md:w-56 md:h-32 bg-amber-500 md:rounded-lg p-6 md:shadow-md shadow-gray-700">
-              <h1>TICKETS SOLUCIONADOS ULTIMAS 24H: {{$solucionados24}}  </h1>
+            <div class="md:w-56 md:h-32 bg-amber-500 md:rounded-lg p-4 md:shadow-md shadow-gray-700">
+              <h1 class="text-lg font-semibold z-10 relative">TICKETS SOLUCIONADOS ULTIMAS 24H: {{$solucionados24}}</h1>
+              <div class="w-full relative hidden md:block">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#be7000" class="size-28 absolute top-[-100px] left-32">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              </div>
             </div>
             <div class="md:w-56 md:h-32 bg-purple-700 md:rounded-lg p-6 md:shadow-md shadow-gray-700">
-              <h1>TICKETS TOTALES ULTIMAS 24H: {{$totales24}}</h1>
+              <h1 class="text-lg font-semibold z-10 relative">TICKETS TOTALES ULTIMAS 24H: {{$totales24}}</h1>
+              <div class="w-full relative hidden md:block">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#470085" class="size-28 absolute top-[-72px] left-32">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              </div>
             </div>
         </div>
     </div>

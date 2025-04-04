@@ -55,11 +55,8 @@ class ControllerSoftwareReporte extends Controller
         return view('reportessoftware.index', compact('reportes', 'generados', 'revision', 'solucionados24', 'totales24', 'sucursales', 'sistemas', 'estatus', 'nivel'));
     }
 
-    public function reportes($sucursal){
-        $reportes = ReportesSoftware::with('usuario', 'modulo', 'sistema', 'status')
-            ->whereHas('usuario.sucursal', function ($query) use ($sucursal) {
-                $query->where('id', $sucursal);
-            })
+    public function reportes($id){
+        $reportes = ReportesSoftware::with('usuario', 'modulo', 'sistema', 'status')->where('usuario_id', $id)
             ->orderBy('noti_u', 'desc')->orderBy('status_id')->orderBy('id', 'desc')->paginate(10);
 
 
@@ -310,7 +307,7 @@ class ControllerSoftwareReporte extends Controller
             // $soluciontemp[0]->delete();
             $reporte->solucionado_usuario =1;
             $reporte->solucionado_tecnico =1;
-            $reporte->status_id =3;
+            $reporte->status_id =5;
             $reporte->tiempo_solucion = date("Y-m-d H:i:s");
             $reporte->save();
 
@@ -330,7 +327,7 @@ class ControllerSoftwareReporte extends Controller
         $solucion->save();
         $temp[0]->delete();
         $reporte->solucionado_usuario =1;
-        $reporte->status_id =3;
+        $reporte->status_id =5;
         $reporte->tiempo_solucion = date("Y-m-d H:i:s");
         $reporte->save();
 

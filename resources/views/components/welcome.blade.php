@@ -68,7 +68,7 @@
         <a href="{{route('reportessoftware.general')}}">
           <div class="md:w-60 md:h-36 bg-emerald-500 md:rounded-lg p-4">
             <h1 class="text-lg font-semibold">Ticktes de sistemas en 24H: {{ $cantidaddia }}</h1>
-            <div class="w-full relative">
+            <div class="w-full relative hidden md:block">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-20 absolute top-[-20px] right-0">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
               </svg>
@@ -80,7 +80,7 @@
           <div class="md:w-60 md:h-36 bg-purple-700 md:rounded-lg p-4">
             
             <h1 class="text-lg font-semibold">Tickets de sistema en la semana: {{ $cantidadmes }}</h1>
-            <div class="relative w-full">  
+            <div class="relative w-full hidden md:block">  
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20 absolute top-[-20px] right-0">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
               </svg>
@@ -92,7 +92,7 @@
           <div class="md:w-60 md:h-36 bg-amber-500 md:rounded-lg p-4">
             
             <h1 class="text-lg font-semibold">Tickets en estado generado: {{ $cantidadsinrevisar }}</h1>
-            <div class="relative w-full">
+            <div class="relative w-full hidden md:block">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20 absolute top-[-14px] right-0">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
               </svg>
@@ -101,9 +101,9 @@
           </div>
         </a>
         <a href="{{route('reportessoftware.general')}}">
-          <div class="md:w-60 md:h-36 bg-sky-600 md:rounded-lg p-4">
-            <h1 class="text-lg font-semibold">Tickets en revision: {{ $cantidadtecnico }}</h1>
-            <div class="relative w-full">
+          <div class="md:w-60 md:h-36 bg-sky-600 md:rounded-lg p-4 min-h-[132px] ">
+            <h1 class="text-lg font-semibold">Tickets en proceso: {{ $cantidadrevision }}</h1>
+            <div class="relative w-full hidden md:block">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20 absolute top-2 right-0">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
               </svg>
@@ -236,18 +236,53 @@
     @endif
     @if (Auth::user()->roleid === 3)
       <div class="md:flex md:justify-between mt-5 text-white grid grid-cols-2">
-        <div class="md:w-60 md:h-36 bg-emerald-500 md:rounded-lg p-4">
-          <h1>Mis Tickets en progreso: {{ $ticketprogreso }}</h1>
-        </div>
-        <div class="md:w-60 md:h-36 bg-purple-700 md:rounded-lg p-4">
-          <h1>Mis Tickets totales: {{ $usuariototal }}</h1>
-        </div>
-        <div class="md:w-60 md:h-36 bg-amber-500 md:rounded-lg p-4">
-          <h1>Mis Equipos: {{ $equipostotales }}</h1>
-        </div>
-        <div class="md:w-60 md:h-36 bg-sky-600 md:rounded-lg p-4">
-          <h1>Mis equipos con Fallas: {{ $cantidadFiltrados }}</h1>
-        </div>
+        <a href="{{route ('misreportessoftware', [Auth::user()->id])}}">
+          <div class="md:w-60 md:h-36 bg-emerald-500 md:rounded-lg p-4">
+            <h1 class="text-lg font-semibold relative z-10">Mis Tickets en progreso: {{ $ticketprogreso }}</h1>
+            <div class="relative w-full hidden md:block">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20 absolute top-[-10px] right-0">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="yellow" class="size-12 absolute top-[-10px] right-14">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+            </div>
+          </div>
+        </a>
+        <a href="{{route ('misreportessoftware', [Auth::user()->id])}}">
+          <div class="md:w-60 md:h-36 bg-purple-700 md:rounded-lg p-4">
+            <h1 class="text-lg font-semibold relative z-10">Mis Tickets totales: {{ $usuariototal }}</h1>
+            <div class="relative w-full hidden md:block">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20 absolute top-4 right-0">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
+              </svg>
+            </div>
+          </div>
+        </a>
+        <a href="{{route('misequipos', ['id' => Auth::user()->sucursal])}}">
+          <div class="md:w-60 md:h-36 bg-amber-500 md:rounded-lg p-4">
+            <h1 class="text-lg font-semibold relative z-10">Mis Equipos: {{ $equipostotales }}</h1>
+            <div class="relative w-full hidden md:block">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20 absolute top-4 right-0">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+              </svg>            
+            </div>
+          </div>
+        </a>
+        <a href="{{route('misequipos', ['id' => Auth::user()->sucursal])}}">
+          <div class="md:w-60 md:h-36 bg-sky-600 md:rounded-lg p-4">
+            <h1 class="text-lg font-semibold relative z-10">Mis equipos con Fallas: {{ $cantidadFiltrados }}</h1>
+            <div class="relative w-full hidden md:block">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20 absolute top-[-14px] right-0">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-9 absolute top-0 right-[22px]">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+              </svg>
+            </div>
+          </div>
+        </a>
       </div>
 
 

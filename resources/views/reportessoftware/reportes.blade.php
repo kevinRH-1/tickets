@@ -24,7 +24,7 @@
                                 <th class="py-4 text-center md:hidden">DATOS</th>
                                 <th class="py-4 text-center  hidden md:table-cell">FECHA DE CREACIÓN</th>
                                 {{-- <th class="p-4 text-left">CÓDIGO</th> --}}
-                                <th class="p-4 text-center hidden md:table-cell">USUARIO</th>
+                                <th class="p-4 text-center hidden ">USUARIO</th>
                                 <th class="p-4 text-center hidden md:table-cell">TECNICO</th>
                                 <th class="p-4 text-center hidden md:table-cell">SISTEMA</th>
                                 <th class="p-4 text-center hidden md:table-cell">MODULO</th>
@@ -52,12 +52,25 @@
 
                             @php
                                 $colores_status = [
-                                    1 => 'text-red-500',
-                                    2 => 'text-amber-500',
-                                    3 => 'text-sky-500',
+                                    1 => 'red-500',
+                                    3 => 'amber-500',
+                                    5 => 'sky-500',
+                                    2 => 'orange-700',
+                                    4 => 'green-700',
                                 ];
                                 $nivel_status = $item->status_id;
-                                $color_status = $colores_status[$nivel_status] ?? ''; // Si no hay coincidencia, no se asigna color
+                                $color_status = $colores_status[$nivel_status] ?? '';
+                                
+                                
+                                
+                                $colores_status2 = [
+                                    1 => 'red-50',
+                                    3 => 'amber-50',
+                                    5 => 'sky-50',
+                                    2 => 'orange-50',
+                                    4 => 'green-50',
+                                ];
+                                $color_status2 = $colores_status2[$nivel_status] ?? '';
                             @endphp
 
 
@@ -66,15 +79,9 @@
 
 
                                 <!-- Fila 1 -->
-                                @if($item->status_id==1)
-                                    <tr class="border-1 border-red-500 hover:bg-red-50">
-                                @elseif($item->status_id==2)
-                                    <tr class="border-1 border-amber-500 hover:bg-amber-50">
-                                @elseif($item->status_id==3)
-                                    <tr class="border-1 border-sky-500 hover:bg-sky-50">
-                                @else
-                                    <tr class="border-1 border-gray-200 hover:bg-amber-50">
-                                @endif
+                               
+                                    <tr class="border-1 border-{{$color_status}} hover:bg-{{$color_status2}}">
+                                
                                     <td class="md:!pl-4 p-1">
                                         @if($item->noti_u==1 || $item->solucion)
                                             <i class="fa-solid fa-circle-exclamation md:fa-xl" style="color: #ff0000;"></i>
@@ -91,12 +98,12 @@
                                     </td>
                                     <td class="p-4 text-center hidden md:table-cell">{{ substr($item->created_at, 0, 10) }} <br> {{ substr($item->created_at, 11, 20) }}</td>
                                     {{-- <td class="p-4">{{$item->codigo}}</td> --}}
-                                    <td class="p-4 text-center hidden md:table-cell" nombre='nombre'>{{$item->usuario->descripcion}}</td>
+                                    <td class="p-4 text-center hidden" nombre='nombre'>{{$item->usuario->descripcion}}</td>
                                     <td class="p-4 text-center hidden md:table-cell" nombre='nombre'>{{$item->tecnico?->descripcion?? 'sin tecnico'}}</td>
                                     <td class="p-4 text-center hidden md:table-cell" sistema='sistema'>{{$item->sistema->nombre}}</td>
                                     <td class="p-4 text-center hidden md:table-cell">{{$item->modulo?->nombre?? 'sin modulo'}}</td>
                                     <td class="p-4 text-center hidden md:table-cell" problema='problema'>{{ \Illuminate\Support\Str::limit($item->falla?->descripcion ?? $item->mensajes[0]->mensaje, 50, '...') }}</td>
-                                    <td class="p-2 text-center {{$color_status}} hidden md:table-cell">{{$item->status->nombre}}</td>  
+                                    <td class="p-2 text-center text-{{$color_status}} hidden md:table-cell">{{$item->status->nombre}}</td>  
                                     <td hidden id='id'>{{$item->id}}</td>
                                     @if($item->status_id==1)
                                         <td class="p-4 text-left flex md:justify-between md:flex-row flex-col">
@@ -116,7 +123,6 @@
                                             </button>
                                         @endif
                                     </td>
-                                    
                                     
                                 </tr>
                             @endforeach

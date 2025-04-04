@@ -8,6 +8,30 @@
         }
     </style>
 
+    @php
+        $colores = [
+            1 => 'text-emerald-500',
+            2 => 'text-amber-500',
+            3 => 'text-red-500',
+            4 => 'text-red-800',
+        ];
+        $nivel = $reporte[0]->falla?->nivel_riesgo;
+        $color = $colores[$nivel] ?? ''; // Si no hay coincidencia, no se asigna color
+    @endphp
+
+
+    @php
+        $colores_status = [
+        1 => 'red-500',
+        3 => 'amber-500',
+        5 => 'sky-500',
+        2 => 'orange-700',
+        4 => 'green-700',
+        ];
+        $nivel_status = $reporte[0]->status_id;
+        $color_status = $colores_status[$nivel_status] ?? ''; // Si no hay coincidencia, no se asigna color
+    @endphp
+
     <div class="space-y-6 pb-6 md:!pt-6 pt-0" >
 
         <div class="bg-white p-6 rounded-lg shadow-md w-11/12 m-auto space-y-10">
@@ -16,15 +40,39 @@
         </div>
         <div class="md:!mt-10 mt-4"></div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto flex justify-center md:grid md:grid-cols-4 md:gap-2">
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto border-2 border-{{$color_status}} flex justify-center md:grid md:grid-cols-4 md:gap-2">
             <div>
-                <h1 class="text-lg font-bold">ESTADO: </h1>
-                <h1>{{$reporte[0]->status->nombre}}</h1>
+                <h1 class="text-lg font-bold ">ESTADO: </h1>
+                <h1 class="text-{{$color_status}} text-lg font-bold">{{$reporte[0]->status->nombre}}</h1>
             </div>
             <div class="col-span-3">
                 <p class="text-lg w-[80%]">{{$reporte[0]->status->descripcion}}</p>
             </div>
         </div>
+
+        @if($reporte[0]?->falla?->solucio)
+            @if(Auth::user()->roleid==3)
+                @if($reporte[0]->falla->solucion->checked==1)
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto border-2 border-yellow-500 flex justify-center md:grid md:grid-cols-4 md:gap-2">
+                        <div>
+                            <h1 class="text-lg font-semibold text-yellow-500">TIP QUE PODRIA FUNCIONAR: </h1>
+                        </div>
+                        <div class="col-span-3">
+                            <p class="text-lg w-[80%]">{{$reporte[0]->falla->solucion->solucion}}</p>
+                        </div>
+                    </div>
+                @endif
+            @else
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto flex border-2 border-yellow-500 justify-center md:grid md:grid-cols-4 md:gap-2">
+                    <div>
+                        <h1 class="text-lg font-semibold">PODRIA FUNCIONAR: </h1>
+                    </div>
+                    <div class="col-span-3">
+                        <p class="text-lg w-[80%]">{{$reporte[0]->falla->solucion->solucion}}</p>
+                    </div>
+                </div>
+            @endif
+        @endif
 
         <!-- Sección 1: Datos del Equipo -->
         <div class="grid grid-cols-4 gap-2">
@@ -137,7 +185,7 @@
         
         </div>
 
-        @if($reporte[0]?->solucionado_tecnico && $reporte[0]->status_id !=3)
+        @if($reporte[0]?->solucionado_tecnico && $reporte[0]->status_id !=5)
 
             <div class="modal fade pt-40" id="confirmarsolucion" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
                 <div class="modal-dialog">
@@ -251,7 +299,7 @@
                         <br>
                         <label for="" class=" w-full border-t-2 border-gray-200"></label>
                         <div class="grid grid-cols-8 gap-2">
-                            @if($reporte[0]->status_id != 3)
+                            @if($reporte[0]->status_id != 5)
                                 @if(Auth::user()->roleid==1 || Auth::user()->roleid==2)
                                     
                                     <div class="md:col-span-7 col-span-8">
@@ -281,7 +329,7 @@
                             <input type="text" name="usuario" id="usuario" hidden value="{{Auth::user()->id}}">
                             <input type="text" name="rol" id="rol" hidden value="{{Auth::user()->roleid}}">
                             <div class="md:col-span-1 col-span-8 pt-[8px] flex md:flex-col md:!w-full w-[80%] mx-auto justify-between">
-                                @if($reporte[0]->status_id!=3)
+                                @if($reporte[0]->status_id!=5)
                                     @if(Auth::user()->roleid ==1 || Auth::user()->roleid==2)
                                         <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded w-[35%] md:w-full md:!py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje" >enviar mensaje</button>
                                         {{-- <button class="bg-emerald-500 text-white py-2 hover:bg-emerald-700  cursor-pointer rounded mt-3" onclick="subirimagen(event)" >enviar imagen</button> --}}
@@ -326,7 +374,7 @@
         {{-- <i class="fa-regular fa-circle-check" style="color: #63E6BE;"></i> --}}
 
 
-        @if($reporte[0]->status_id==3 && Auth::user()->roleid!=3)
+        @if($reporte[0]->status_id==5 && Auth::user()->roleid!=3)
             <div class="bg-white p-6 w-11/12 rounded-lg items-center shadow-md mx-auto">
                 <h1 class="text-center font-semibold text-lg text-blue-500">Informacion sobre la solucion:</h1>
                 <div class="md:w-3/4 mx-auto border-1 border-gray-300 md:!p-4 p-1 rounded-lg mt-4">
@@ -341,7 +389,7 @@
             <input type="text" name="solucion" id="solucion" value="{{$confirmar}}" hidden>
 
 
-            @if($reporte[0]->status_id==3)
+            @if($reporte[0]->status_id==5)
 
             @else
                 @if(Auth::user()->roleid==1 && $confirmar ==1 || Auth::user()->roleid==2 && $confirmar ==1 )
@@ -844,7 +892,7 @@
         const estado= $('#selecstatus').val();
         console.log(estado);
 
-        if(estado==3){
+        if(estado==4){
             
             $('#modalestatus').modal('hide');
             $('#modalsolucion').modal('show');

@@ -29,39 +29,14 @@
             </button>
         </div> --}}
         <div class="flex items-center">
-            <div class="flex items-center ms-3">
-              <div>
-                {{-- <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                  <span class="sr-only">Open user menu</span>
-                  <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
-                </button> --}}
-              </div>
-              <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
-                <div class="px-4 py-3" role="none">
-                  <p class="text-sm  text-white" role="none">
-                    Neil Sims
-                  </p>
-                  <p class="text-sm font-medium  truncate dark:text-gray-300" role="none">
-                    neil.sims@flowbite.com
-                  </p>
-                </div>
-                <ul class="py-1" role="none">
-                  <li>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700  dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
-                  </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700  dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-                  </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700  dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
-                  </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700  dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
-                  </li>
-                </ul>
-              </div>
+            <div class="flex items-center">
+               <div class="w-auto">
+                  <h1 class="text-white hidden md:!block whitespace-nowrap overflow-hidden text-ellipsis">
+                    {{ \Illuminate\Support\Str::limit(Auth::user()->descripcion, 30, '...') }}
+                  </h1>
+               </div>            
             </div>
-          </div>
+         </div>
       </div>
     </div>
   </nav>
@@ -159,7 +134,7 @@
                     <a href="{{ route('misreportes', ['id' => Auth::user()->sucursal]) }}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Tickets de Equipos</a>
                  </li>
                  <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
-                    <a href="{{route ('misreportessoftware', [Auth::user()->sucursal])}}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Tickets de Sistemas</a>
+                    <a href="{{route ('misreportessoftware', [Auth::user()->id])}}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Tickets de Sistemas</a>
                  </li>
                  
            </ul>
@@ -284,6 +259,11 @@
          
           
        </ul>
+
+       <h1 class="text-white md:hidden mb-4">{{ \Illuminate\Support\Str::limit(Auth::user()->descripcion, 30, '...') }}</h1>
+
+
+
        <ul>
          {{-- <li class="">
             <a href="{{route ('usuarios.datos', [Auth::user()->id])}}">

@@ -25,23 +25,23 @@ class DashboardController extends Controller
         $RH =  ReportesHardware::where('created_at', '>=', $dia)->get();
         $RS =  ReportesSoftware::where('created_at', '>=', $dia)->get();
 
-        $cantidaddia = count($RH) + count($RS);
+        $cantidaddia =  count($RS);
 
-        $mes = Carbon::now()->subDay(30); // Hace 30 dias
+        $mes = Carbon::now()->subDay(7); // Hace 30 dias
         $RHm =  ReportesHardware::where('created_at', '>=', $mes)->get();
         $RSm =  ReportesSoftware::where('created_at', '>=', $mes)->get();
         
-        $cantidadmes = count($RHm) + count($RSm);
+        $cantidadmes = count($RSm);
 
         $sinrevisarh = ReportesHardware::where('status_id', 1)->get();
         $sinrevisars = ReportesSoftware::where('status_id', 1)->get();
 
-        $cantidadsinrevisar = count($sinrevisarh) + count($sinrevisars);
+        $cantidadsinrevisar = count($sinrevisars);
         
-        $ticketstecnicoS = ReportesSoftware::where('tecnico_id',$id)->get();
-        $ticketstecnicoH = ReportesHardware::where('idtecnico',$id)->get();
+        $ticketsrevision = ReportesSoftware::where('status_id','!=', 1)->where('status_id', '!=', 5)->get();
+        // $ticketstecnicoH = ReportesHardware::where('idtecnico',$id)->get();
 
-        $cantidadtecnico = count($ticketstecnicoH) + count($ticketstecnicoS);
+        $cantidadrevision = count($ticketsrevision);
 
         $ticketsusuarioprogresoh = ReportesHardware::where('idusuario', Auth::user()->id)->where('status_id', '!=', 3)->get();
         $ticketsusuarioprogresos = ReportesSoftware::where('usuario_id', Auth::user()->id)->where('status_id', '!=', 3)->get();
@@ -74,7 +74,7 @@ class DashboardController extends Controller
 
         $sucursales = Sucursal::where('activo', 1)->get();
 
-        return view('components.welcome', compact('sucursales','cantidaddia', 'cantidadmes', 'cantidadsinrevisar', 'cantidadtecnico', 'ticketprogreso', 'usuariototal', 'equipostotales', 'cantidadFiltrados', 'videos'));
+        return view('components.welcome', compact('sucursales','cantidaddia', 'cantidadmes', 'cantidadsinrevisar', 'cantidadrevision', 'ticketprogreso', 'usuariototal', 'equipostotales', 'cantidadFiltrados', 'videos'));
     }
 
 

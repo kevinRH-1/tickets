@@ -364,7 +364,7 @@ class ControllerHardwareReporte extends Controller
             }
             $mensaje->save();
 
-            $reporte->status_id= 2;
+            // $reporte->status_id= 2;
             $reporte->idtecnico = $request->tecnicomensaje;
             $reporte->noti_u=1;
             $reporte->save();
@@ -413,7 +413,7 @@ class ControllerHardwareReporte extends Controller
             // $soluciontemp[0]->delete();
             $reporte->solucionado_usuario =1;
             $reporte->solucionado_tecnico=1;
-            $reporte->status_id =3;
+            $reporte->status_id =5;
             $reporte->tiempo_solucion = date("Y-m-d H:i:s");
             $reporte->save();
 
@@ -434,7 +434,7 @@ class ControllerHardwareReporte extends Controller
         $solucion->save();
         $temp[0]->delete();
         $reporte->solucionado_usuario =1;
-        $reporte->status_id =3;
+        $reporte->status_id =5;
         $reporte->tiempo_solucion = date("Y-m-d H:i:s");
         $reporte->save();
 

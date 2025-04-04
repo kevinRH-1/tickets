@@ -50,29 +50,50 @@ class UserController extends Controller
 
     public function find($id){
         $datos = User::with('sucursal', 'rol')->where('id', $id)->get();
-        $dia = Carbon::now()->subDay();
-        $mes = Carbon::now()->subDay(30);
-
-        $reportesS = ReportesSoftware::where('usuario_id', $id)->get();
-        $reportesH = ReportesHardware::where('idusuario', $id)->get();
-
-        $reportes24h = collect();
-        $reportes24h = $reportes24h->merge($reportesS->where('created_at', '>=', $dia))
-                                   ->merge($reportesH->where('created_at', '>=', $dia));
-
-        $reportes30d = collect();
-        $reportes30d = $reportes30d->merge($reportesS->where('created_at', '>=', $mes))
-                                    ->merge($reportesH->where('created_at', '>=', $mes));
 
 
-        $datos[0]->cantidad24h = count($reportes24h);
-        $datos[0]->cantidad30d = count($reportes30d);
-        
-        
+        if($datos[0]->roleid==3){
+            $dia = Carbon::now()->subDay();
+            $mes = Carbon::now()->subDay(30);
+
+            $reportesS = ReportesSoftware::where('usuario_id', $id)->get();
+            $reportesH = ReportesHardware::where('idusuario', $id)->get();
+
+            $reportes24h = collect();
+            $reportes24h = $reportes24h->merge($reportesS->where('created_at', '>=', $dia))
+                                    ->merge($reportesH->where('created_at', '>=', $dia));
+
+            $reportes30d = collect();
+            $reportes30d = $reportes30d->merge($reportesS->where('created_at', '>=', $mes))
+                                        ->merge($reportesH->where('created_at', '>=', $mes));
 
 
+            $datos[0]->cantidad24h = count($reportes24h);
+            $datos[0]->cantidad30d = count($reportes30d);
 
-        return response()->json($datos);
+            return response()->json($datos);
+        }else{
+
+            $dia = Carbon::now()->subDay();
+            $mes = Carbon::now()->subDay(30);
+
+            $reportesS = ReportesSoftware::where('tecnico_id', $id)->get();
+            $reportesH = ReportesHardware::where('idtecnico', $id)->get();
+
+            $reportes24h = collect();
+            $reportes24h = $reportes24h->merge($reportesS->where('created_at', '>=', $dia))
+                                    ->merge($reportesH->where('created_at', '>=', $dia));
+
+            $reportes30d = collect();
+            $reportes30d = $reportes30d->merge($reportesS->where('created_at', '>=', $mes))
+                                        ->merge($reportesH->where('created_at', '>=', $mes));
+
+
+            $datos[0]->cantidad24h = count($reportes24h);
+            $datos[0]->cantidad30d = count($reportes30d);
+
+            return response()->json($datos);
+        }
     }
 
     public function update(Request $request, $id){
@@ -247,37 +268,76 @@ class UserController extends Controller
     }
 
     public function historial($id){
-        $reportes = ReportesSoftware::with('usuario', 'tecnico', 'status', 'sistema', 'modulo')->where('usuario_id', $id)->get();
 
-        foreach($reportes as $item){
-            $item->fecha = Str::limit($item->created_at,10, '');
-        }
-        
-        return response()->json($reportes);
+        $usuario = User::findOrFail($id);
+
+        if($usuario->roleid==3){
+            $reportes = ReportesSoftware::with('usuario', 'tecnico', 'status', 'sistema', 'modulo')->where('usuario_id', $id)->get();
+
+            foreach($reportes as $item){
+                $item->fecha = Str::limit($item->created_at,10, '');
+            }
+            
+            return response()->json($reportes);
+        }else{
+            $reportes = ReportesSoftware::with('usuario', 'tecnico', 'status', 'sistema', 'modulo')->where('tecnico_id', $id)->get();
+
+            foreach($reportes as $item){
+                $item->fecha = Str::limit($item->created_at,10, '');
+            }
+            
+            return response()->json($reportes);
+        } 
     }
 
     public function historial2($id, Request $request){
-        $reportes = ReportesSoftware::with('usuario', 'tecnico', 'status', 'sistema', 'modulo')
-            ->where('usuario_id', $id);
+        $usuario = User::findOrFail($id);
+        if($usuario->roleid==3){
+            $reportes = ReportesSoftware::with('usuario', 'tecnico', 'status', 'sistema', 'modulo')
+                ->where('usuario_id', $id);
 
-        if (!empty($request->fecha1) && empty($request->fecha2)) {
-            // Si solo fecha1 tiene valor, buscar registros creados desde fecha1 en adelante
-            $reportes->where('created_at', '>=', $request->fecha1);
-        } elseif (empty($request->fecha1) && !empty($request->fecha2)) {
-            // Si solo fecha2 tiene valor, buscar registros creados hasta fecha2
-            $reportes->where('created_at', '<=', $request->fecha2);
-        } elseif (!empty($request->fecha1) && !empty($request->fecha2)) {
-            // Si ambas fechas tienen valor, buscar entre fecha1 y fecha2
-            $reportes->whereBetween('created_at', [$request->fecha1, $request->fecha2]);
+            if (!empty($request->fecha1) && empty($request->fecha2)) {
+                // Si solo fecha1 tiene valor, buscar registros creados desde fecha1 en adelante
+                $reportes->where('created_at', '>=', $request->fecha1);
+            } elseif (empty($request->fecha1) && !empty($request->fecha2)) {
+                // Si solo fecha2 tiene valor, buscar registros creados hasta fecha2
+                $reportes->where('created_at', '<=', $request->fecha2);
+            } elseif (!empty($request->fecha1) && !empty($request->fecha2)) {
+                // Si ambas fechas tienen valor, buscar entre fecha1 y fecha2
+                $reportes->whereBetween('created_at', [$request->fecha1, $request->fecha2]);
+            }
+
+            $reportes = $reportes->get();
+
+            foreach($reportes as $item){
+                $item->fecha = Str::limit($item->created_at,10, '');
+            }
+            
+            return response()->json($reportes);
+        }else{
+            $reportes = ReportesSoftware::with('usuario', 'tecnico', 'status', 'sistema', 'modulo')
+                ->where('tecnico_id', $id);
+
+            if (!empty($request->fecha1) && empty($request->fecha2)) {
+                // Si solo fecha1 tiene valor, buscar registros creados desde fecha1 en adelante
+                $reportes->where('created_at', '>=', $request->fecha1);
+            } elseif (empty($request->fecha1) && !empty($request->fecha2)) {
+                // Si solo fecha2 tiene valor, buscar registros creados hasta fecha2
+                $reportes->where('created_at', '<=', $request->fecha2);
+            } elseif (!empty($request->fecha1) && !empty($request->fecha2)) {
+                // Si ambas fechas tienen valor, buscar entre fecha1 y fecha2
+                $reportes->whereBetween('created_at', [$request->fecha1, $request->fecha2]);
+            }
+
+            $reportes = $reportes->get();
+
+            foreach($reportes as $item){
+                $item->fecha = Str::limit($item->created_at,10, '');
+            }
+            
+            return response()->json($reportes);
         }
-
-        $reportes = $reportes->get();
-
-        foreach($reportes as $item){
-            $item->fecha = Str::limit($item->created_at,10, '');
-        }
-        
-        return response()->json($reportes);
+           
     }
 
 
