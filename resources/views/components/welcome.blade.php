@@ -129,7 +129,7 @@
             </select>
           </div>
           <div class="flex justify-around">
-            <div class="w-[38%] mt-2">
+            <div class="w-[40%]">
               {{-- <h2>Gráfico de Pastel Dinámico</h2> --}}
               <canvas id="graficosucursal" width="50" height="50"></canvas>
             </div>
