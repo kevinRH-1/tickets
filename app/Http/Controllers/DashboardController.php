@@ -51,6 +51,11 @@ class DashboardController extends Controller
         $usuariototalh = ReportesHardware::where('idusuario', Auth::user()->id)->get();
         $usuariototals = ReportesSoftware::where('usuario_id', Auth::user()->id)->get();
 
+        $progresousuarios = ReportesHardware::where('idusuario', Auth::user()->id)->where('status_id', '!=', 5)->get();
+        $progresousuarioh = ReportesSoftware::where('usuario_id', Auth::user()->id)->where('status_id', '!=', 5)->get();
+
+        $progresousuariototal = count($progresousuarios) + count($progresousuarioh);
+
         $usuariototal = count($usuariototalh) + count($usuariototals);
 
         $pc = Pc::where('lugar_id', Auth::user()->lugar_id)->where('activo',1)->get();
@@ -74,7 +79,7 @@ class DashboardController extends Controller
 
         $sucursales = Sucursal::where('activo', 1)->get();
 
-        return view('components.welcome', compact('sucursales','cantidaddia', 'cantidadmes', 'cantidadsinrevisar', 'cantidadrevision', 'ticketprogreso', 'usuariototal', 'equipostotales', 'cantidadFiltrados', 'videos'));
+        return view('components.welcome', compact('sucursales','cantidaddia', 'cantidadmes', 'cantidadsinrevisar', 'cantidadrevision', 'ticketprogreso', 'progresousuariototal', 'usuariototal', 'equipostotales', 'cantidadFiltrados', 'videos'));
     }
 
 

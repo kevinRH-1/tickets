@@ -92,7 +92,7 @@
                                     <td class="text-left p-1 pt-2 md:!pt-1  md:hidden" datos="datos"><h1 class="text-lg font-semibold">{{ \Illuminate\Support\Str::limit($item->codigo, 35, '...')}}</h1><p class="pt-2">{{$item->usuario->descripcion}} || {{$item->usuario->sucursal->nombre}}</p>
                                         <p class="pt-1">{{$item->tecnico?->descripcion?? 'sin tecnico'}}</p>
                                         <div class="flex pt-1">
-                                            <p class=" {{$color_status}}">{{$item->status->nombre}}</p>
+                                            <p class=" text-{{$color_status}}">{{$item->status->nombre}}</p>
                                             
                                         </div>
                                     </td>

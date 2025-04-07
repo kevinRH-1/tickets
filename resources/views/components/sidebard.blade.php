@@ -32,7 +32,8 @@
             <div class="flex items-center">
                <div class="w-auto">
                   <h1 class="text-white hidden md:!block whitespace-nowrap overflow-hidden text-ellipsis">
-                    {{ \Illuminate\Support\Str::limit(Auth::user()->descripcion, 30, '...') }}
+                    <span>{{ \Illuminate\Support\Str::limit(Auth::user()->descripcion, 30, '...') }}</span>
+                    <span>|| {{Auth::user()->rol->nombre}}</span>
                   </h1>
                </div>            
             </div>
@@ -130,9 +131,9 @@
                  </svg>
            </button>
            <ul id="submenutic" class="hidden overflow-hidden max-h-0 transition-[max-height] bg-gray-900 duration-500 ease-in-out">
-                 <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
+                 {{-- <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
                     <a href="{{ route('misreportes', ['id' => Auth::user()->sucursal]) }}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Tickets de Equipos</a>
-                 </li>
+                 </li> --}}
                  <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
                     <a href="{{route ('misreportessoftware', [Auth::user()->id])}}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Tickets de Sistemas</a>
                  </li>
@@ -155,9 +156,9 @@
                  <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
                     <a href="{{route('reportessoftware.general')}}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Tickets de Sistemas</a>
                  </li>
-                 <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
+                 {{-- <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
                     <a href="{{route('reportes.general')}}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Tickets de Equipos</a>
-                 </li>
+                 </li> --}}
                  
            </ul>
         </li>

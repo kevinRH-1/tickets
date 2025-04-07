@@ -145,7 +145,7 @@ class ControllerSoftwareReporte extends Controller
 
     public function reporte($id, $roleid){
         $reporte = ReportesSoftware::with('tecnico')->where('id', $id)->get();
-        $mensajes = Mensaje::where('reporte_id', $id)->where('tipo_id', 1)->get();
+        $mensajes = Mensaje::where('reporte_id', $id)->where('tipo_id', 1)->orderBy('id')->get();
 
         // // $solucion =Mensaje::where('reporte_id', $id)->where('usuario_id','!=', 1)->where('tipo_reporte',1)->get();
         // if ($mensajes->isEmpty()){
@@ -245,7 +245,9 @@ class ControllerSoftwareReporte extends Controller
 
         // cambia status del reporte y asigna un tecnico al reporte (ultimo que ha respondido)
 
-            //$reporte->status_id= 2;
+            if($reporte->status_id==1){
+                $reporte->status_id=3;
+            }
             $reporte->tecnico_id = $request->tecnicomensaje;
             $reporte->noti_u=1;
             $reporte->save();
@@ -266,11 +268,21 @@ class ControllerSoftwareReporte extends Controller
     }
 
 
-    public function cambiar_status(Request $request){
-        $reporte = ReportesSoftware::findOrFail($request->reporte);
-        $reporte->status_id = $request->estado;
+    public function cambiar_status($id, $estado){
+        $reporte = ReportesSoftware::findOrFail($id);
+        $reporte->status_id = $estado;
+        if($estado==3){
+            $reporte->tiempo_revision = date("Y-m-d H:i:s");
+        }else{
+            if($reporte->tiempo_revision!=null){
+                $fecha = Carbon::now();
+                $tiempo_revision = Carbon::parse($reporte->tiempo_revision);
+                $diferenciaEnMinutos = $tiempo_revision->diffInMinutes($fecha);
+                $diferenciaEnHoras = $diferenciaEnMinutos / 60; // Convierte a horas
+                $reporte->tiempo = $reporte->tiempo+  number_format($diferenciaEnHoras, 2);
+            } 
+        }
         $reporte->save();
-
         return response()->json(['message', 'estatus cambiado']);
     }
 
@@ -281,8 +293,9 @@ class ControllerSoftwareReporte extends Controller
         if($rol ==1 || $rol ==2){
             $reporte->solucionado_tecnico = 1;
             $reporte->tecnico_id = $request->tecnico;
-            $reporte->status_id = 5;
+            // $reporte->status_id = 4;
             $reporte->save();
+            $this->cambiar_status($id, $request->estado);
             $borraranterior = SolucionTemp::where('reporte_id', $id)->get();
             foreach($borraranterior as $borrar){
                 $borrar->delete();
@@ -307,11 +320,11 @@ class ControllerSoftwareReporte extends Controller
             // $soluciontemp[0]->delete();
             $reporte->solucionado_usuario =1;
             $reporte->solucionado_tecnico =1;
-            $reporte->status_id =5;
+            $this->cambiar_status($id, 5);
             $reporte->tiempo_solucion = date("Y-m-d H:i:s");
             $reporte->save();
 
-            return to_route('misreportessoftware', $lugar);
+            return to_route('misreportessoftware', $request->usuario);
         }
     }
 
@@ -367,7 +380,7 @@ class ControllerSoftwareReporte extends Controller
         $check = $request->check;
     
         // Construir la consulta base con las relaciones necesarias
-        $query = ReportesSoftware::with('usuario.sucursal', 'modulo', 'sistema', 'status', 'falla', 'mensajes')->OrderBy('noti_t', 'desc');
+        $query = ReportesSoftware::with('usuario.sucursal', 'modulo', 'sistema', 'status', 'falla', 'mensajes')->orderBy('noti_t', 'desc')->orderBy('status_id')->orderBy('id', 'desc');
     
         // Aplicar filtros según las variables
         if ($fecha1 != '') {

@@ -127,8 +127,10 @@
                             @php
                                 $colores_status = [
                                     1 => 'text-red-500',
-                                    2 => 'text-amber-500',
-                                    3 => 'text-sky-500',
+                                    3 => 'text-amber-500',
+                                    5 => 'text-sky-500',
+                                    2 => 'text-orange-700',
+                                    4 => 'text-green-700',
                                 ];
                                 $nivel_status = $item->status_id;
                                 $color_status = $colores_status[$nivel_status] ?? ''; // Si no hay coincidencia, no se asigna color
@@ -139,9 +141,13 @@
                                 <!-- Fila 1 -->
                                 @if($item->status_id==1)
                                     <tr class="border-1 border-red-500 hover:bg-red-50">
-                                @elseif($item->status_id==2)
-                                    <tr class="border-1 border-amber-500 hover:bg-amber-50">
                                 @elseif($item->status_id==3)
+                                    <tr class="border-1 border-amber-500 hover:bg-amber-50">
+                                @elseif($item->status_id==2)
+                                    <tr class="border-1 border-orange-700 hover:bg-orange-50">
+                                @elseif($item->status_id==4)
+                                    <tr class="border-1 border-green-700 hover:bg-green-100">
+                                @elseif($item->status_id==5)
                                     <tr class="border-1 border-sky-500 hover:bg-sky-50">
                                 @else
                                     <tr class="border-1 border-gray-200 hover:bg-gray-50">
@@ -235,7 +241,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
                       </svg>
-                      -- SECCIONES DEL MODULO --  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
+                      -- PANTALLAS DEL MODULO --  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
                   </svg>
                   </button>
@@ -537,17 +543,17 @@
             const buttonv = document.getElementById('vertablav');
 
             buttonv.addEventListener('click', () => {
-            if (buttonv.textContent.includes('-- SECCIONES DEL MODULO --')) {
+            if (buttonv.textContent.includes('-- PANTALLAS DEL MODULO --')) {
                 buttonv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="h-6 w-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
-                </svg>-- SECCIONES DEL MODULO --  
+                </svg>-- PANTALLAS DEL MODULO --  
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="h-6 w-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
                 </svg>`;
             } else {
                 buttonv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="h-6 w-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
-                </svg>-- SECCIONES DEL MODULO --  
+                </svg>-- PANTALLAS DEL MODULO --  
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="h-6 w-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
                 </svg>`;

@@ -40,17 +40,17 @@
         </div>
         <div class="md:!mt-10 mt-4"></div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto border-2 border-{{$color_status}} flex justify-center md:grid md:grid-cols-4 md:gap-2">
-            <div>
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto border-2 border-{{$color_status}} flex flex-col justify-center md:grid md:grid-cols-4 md:gap-2">
+            <div class="flex md:flex-col">
                 <h1 class="text-lg font-bold ">ESTADO: </h1>
-                <h1 class="text-{{$color_status}} text-lg font-bold">{{$reporte[0]->status->nombre}}</h1>
+                <h1 class="text-{{$color_status}} text-lg ml-1 md:!ml-0 font-bold">{{$reporte[0]->status->nombre}}</h1>
             </div>
             <div class="col-span-3">
-                <p class="text-lg w-[80%]">{{$reporte[0]->status->descripcion}}</p>
+                <p class="text-lg md:!w-[80%] w-full">{{$reporte[0]->status->descripcion}}</p>
             </div>
         </div>
 
-        @if($reporte[0]?->falla?->solucio)
+        @if($reporte[0]?->falla?->solucion)
             @if(Auth::user()->roleid==3)
                 @if($reporte[0]->falla->solucion->checked==1)
                     <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto border-2 border-yellow-500 flex justify-center md:grid md:grid-cols-4 md:gap-2">
@@ -121,22 +121,22 @@
 
                     <label for="" class="block  md:w-2/4 m-auto text-center text-2xl mb-2  text-red-600" >DATOS DEL USUARIO</label>
                     <div class="w-full m-auto md:flex">
-                        <label for="sucursal" class="inline text-gray-700 w-1/4 m-auto  font-bold text-2xl" >Sucursal: </label>
-                        <label name="codigo" id="codigo"  class="w-full text-2xl m-auto p-2 pl-0 ">{{ $reporte[0]->usuario->sucursal->nombre }}</label>
+                        <label for="sucursal" class=" text-gray-700 w-1/4 m-auto hidden md:!inline  font-bold text-2xl" >Sucursal: </label>
+                        <label name="codigo" id="codigo"  class="w-full md:!text-2xl text-lg m-auto p-2 pl-0 ">{{ $reporte[0]->usuario->sucursal->nombre }}</label>
                     </div>
                     <div class="text-left md:!mt-4 mt-2 grid md:grid-cols-2 grid-cols-1">
                         <div class="col-span-1">
                             <label for="correo" class=" text-gray-700 mt-4 w-2/4 text-lg font-bold m-auto hidden md:!inline">Correo: </label>
-                            <label name="codigo" id="codigo"  class="h-7 md:text-lg text-xl m-auto p-2 ">{{ $reporte[0]->usuario->email }}</label>
+                            <label name="codigo" id="codigo"  class="h-7 md:text-lg break-words m-auto p-2 ">{{ $reporte[0]->usuario->email }}</label>
                         </div>
                         <div class="col-span-1"></div>
                         <div class="col-span-1">
                             <label for="usuario" class=" text-gray-700 mt-4 w-2/4 text-lg font-bold m-auto hidden md:!inline">Usuario: </label>
-                            <label name="codigo" id="codigo"  class="h-7 md:text-lg text-xl m-auto p-2 ">{{ $reporte[0]->usuario->descripcion }}</label>
+                            <label name="codigo" id="codigo"  class="h-7 md:text-lg  m-auto p-2 ">{{ $reporte[0]->usuario->descripcion }}</label>
                         </div>
                         <div class="col-span-1">
                             <label for="telefono" class=" text-gray-700 mt-4 w-2/4 text-lg font-bold m-auto hidden md:!inline">Teléfono: </label>
-                            <label name="codigo" id="codigo"  class="h-7 md:text-lg text-xl m-auto p-2 ">{{ $reporte[0]->usuario->number }}</label>
+                            <label name="codigo" id="codigo"  class="h-7 md:text-lg  m-auto p-2 ">{{ $reporte[0]->usuario->number }}</label>
                         </div>
                     </div>
                 </div>
@@ -173,8 +173,14 @@
                     <label for="hora_generacion" class="inline  text-sky-600">HORA: </label>
                     <input type="text" name="solucion" id="solucion" value="{{ substr($reporte[0]?->tiempo_solucion , 11, 20)}}" class="w-2/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                     <br>
-                    <label for="hora_generacion" class="inline  text-sky-600">TIEMPO TRANSCURRIDO: </label>
-                    <input type="text" name="solucion" id="solucion" value="{{$tiempo}} horas" class="w-3/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
+                    <label for="hora_generacion" class="inline  text-sky-600">TIEMPO DE REVISION: </label>
+                    <input type="text" name="solucion" id="solucion" value="<?php      
+                        $tiempo_decimal = $reporte[0]->tiempo;
+                        $horas = floor($tiempo_decimal);
+                        $minutos = round(($tiempo_decimal - $horas) * 60);
+
+                        echo sprintf("%02d horas con %02d minutos", $horas, $minutos);
+                    ?>" class="w-full p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                 @else
                     <input type="text" name="solucion" id="solucion" value="sin solucionar" class="w-3/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                     <br>
@@ -261,9 +267,9 @@
             <div class="text-center">
                 <button id="toggle-mensajes" class=" text-blue-600 border-none rounded text-2xl bg-transparent" onclick="vermensajes()"><--ver mensajes--></button>
             </div>
-            <div id="contenedor-mensajes" class="hidden mt-5">
-                <div class="bg-white w-4/4  mt-20 border rounded md:!m-4 m-1 space-y-4">
-                    <div class="max-h-[800px] overflow-y-scroll border-y-1 border-red-500 md:!m-4 m-2" id="contenedorscroll">  
+            <div id="contenedor-mensajes" class="hidden mt-5 justify-center flex">
+                <div class="bg-white md:!w-3/4 w-11/12 mx-auto  mt-20 border rounded md:!m-4 m-1 space-y-4">
+                    <div class="max-h-[600px]  overflow-y-scroll border-y-1 border-red-500 md:!m-4 m-2" id="contenedorscroll">  
                         @foreach($mensajes as $item)
 
                             
@@ -277,7 +283,8 @@
                                         @endif
                                     </div>
                                 </div>
-                                <h3 class="flex justify-end mb-4 text-gray-400 pr-2 md:!pt-2 pt-1 md:!text-[14px] text-[10px]">{{$item->usuario->descripcion}}</h3>
+                                <h3 class="flex justify-end mb-1 text-gray-400 pr-2 md:!pt-2 pt-1 md:!text-[14px] text-[10px]">{{$item->usuario->descripcion}}</h3>
+                                <h3 class="flex justify-end mb-4 text-gray-400 pr-2 md:!text-[14px] text-[10px]">{{ substr($item->created_at,5,11)}}</h3>
                             @else
                                 <!-- Mensaje alineado a la izquierda -->
                                 <div class="flex justify-start">
@@ -289,7 +296,9 @@
                                     </div>
                                     
                                 </div>
-                                <h3 class="flex mb-4 text-gray-400 pl-2 md:!pt-2 pt-1 md:!text-[14px] text-[10px]">{{$item->usuario->descripcion}}</h3>
+                                <h3 class="flex mb-1 text-gray-400 pl-2 md:!pt-2 pt-1 md:!text-[14px] text-[10px]">{{$item->usuario->descripcion}}</h3>
+                                <h3 class="flex mb-4 text-gray-400 pl-2 md:!text-[14px] text-[10px]">{{ substr($item->created_at,5,11)}}</h3>
+                                
                             @endif
                         @endforeach
                     </div>
@@ -378,7 +387,11 @@
             <div class="bg-white p-6 w-11/12 rounded-lg items-center shadow-md mx-auto">
                 <h1 class="text-center font-semibold text-lg text-blue-500">Informacion sobre la solucion:</h1>
                 <div class="md:w-3/4 mx-auto border-1 border-gray-300 md:!p-4 p-1 rounded-lg mt-4">
-                    <p class="break-words">{{$reporte[0]->soluciondef->solucion_mensaje}}</p>
+                    @if($reporte[0]->soluciondef->solucion_mensaje == "")
+                    <p class="break-words">{{$reporte[0]->soluciondef->tipo->descripcion}}</p>
+                    @else
+                        <p class="break-words">{{$reporte[0]->soluciondef->solucion_mensaje}}</p>
+                    @endif
                 </div>
             </div>
         @endif
@@ -438,8 +451,8 @@
 
                         <!-- Campo de texto opcional -->
                         <div id="extraField" >
-                            <label for="extraInput" class="block text-sm font-medium text-gray-700 mb-2">Escribe el metodo de la solucion</label>
-                            <textarea id="extraInput" name="extraInput" rows="3" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-1"></textarea>
+                            <label for="" class="block text-sm font-medium text-gray-700 mb-2">Escribe el metodo de la solucion</label>
+                            <textarea id="" name="" rows="3" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-1"></textarea>
                         </div>
 
                         <!-- Botones -->
@@ -503,6 +516,8 @@
                                 <label for="extraInput2" class="block text-sm font-medium text-gray-700 mb-2">Escriba como se soluciono el problema</label>
                                 <textarea id="extraInputusuario" name="extraInputusuario" rows="3" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-28 p-2" placeholder="Ej: mediante chat, llamada, etc."></textarea>
                             </div>
+
+                            <input type="text" hidden name="usuario" id="usuario" value="{{Auth::user()->id}}">
 
                             <!-- Botones -->
                             <div class="mt-6 flex justify-end gap-4">
@@ -659,12 +674,14 @@
         console.log('hola');
 
         const formData ={
-            tecnico : $('#modal #tecnico').val(),
-            extraInput: $('#modal #extraInput').val(),
-            options: $('#modal #options').val(),
-            rol: $('#modal #rol').val(),
-            id: $('#modal #id').val(),
-            numero: $('#modal #numero').val(),
+            tecnico : $('#modalsolucion #tecnico').val(),
+            extraInput: $('#modalsolucion #extraInput').val(),
+            options: $('#modalsolucion #options').val(),
+            rol: $('#modalsolucion #rol').val(),
+            id: $('#modalsolucion #id').val(),
+            numero: $('#modalsolucion #numero').val(),
+            estado: $('#selecstatus').val(),
+
         };
 
         console.log(formData);
@@ -897,14 +914,10 @@
             $('#modalestatus').modal('hide');
             $('#modalsolucion').modal('show');
         }else{
-            const formData = {
-                estado: estado,
-                reporte: $('#reporte').val(),
-            }
+            const reporte = $('#reporte').val();
 
             $.ajax({
-                url: '/cambiar-status-reporte',
-                data: formData,
+                url: '/cambiar-status-reporte/'+reporte +'/'+estado,
                 type: 'POST',
                 headers:{
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

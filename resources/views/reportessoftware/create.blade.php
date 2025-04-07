@@ -7,7 +7,7 @@
           @csrf
           <!-- Primer Select -->
           <div class="mb-4">
-            <label for="select-principal" class="block text-sm font-bold text-gray-700 mb-1">Seleccione el sistema en el cual desea hacer el reporte</label>
+            <label for="select-principal" class="block text-sm font-bold text-gray-700 mb-1">Seleccione el sistema en el cual desea hacer el ticket</label>
             <select id="sistema" name="sistema" class="w-full border-gray-300 rounded-lg shadow p-2 focus:ring focus:ring-teal-300" onchange="actualizarOpciones()">
               <option id="primeraopc" value="0" selected>Sistema</option>
               @foreach($sistemas as $item)
@@ -22,7 +22,7 @@
     
           <!-- Segundo Select -->
           <div class="mb-4">
-            <label for="select-secundario" class="block text-sm font-bold text-gray-700 mb-1">Seleccione el modulo en el cual desea hacer el reporte</label>
+            <label for="select-secundario" class="block text-sm font-bold text-gray-700 mb-1">Seleccione el modulo en el cual desea hacer el ticket</label>
             <select id="modulo" name="modulo" class="w-full border-gray-300 rounded-lg shadow p-2 focus:ring focus:ring-teal-300" onchange="actualizarOpciones2($('#modulo').val())">
               <option value="0" selected>Sin modulo</option>
             </select>
@@ -37,9 +37,9 @@
           </div> --}}
 
           <div class="mb-4" id="selectvista">
-            <label for="select-secundario" class="block text-sm font-bold text-gray-700 mb-1">Seleccione el lugar en el cual desea hacer el reporte</label>
+            <label for="select-secundario" class="block text-sm font-bold text-gray-700 mb-1">Seleccione la vista, reporte o proceso en el cual desea hacer el ticket</label>
             <select id="vista" name="vista" class="w-full border-gray-300 rounded-lg shadow p-2 focus:ring focus:ring-teal-300" onchange="actualizarOpciones3($('#sistema').val())">
-              <option value="0" selected>Sin lugar</option>
+              <option value="0" selected>Sin especificar</option>
               {{-- @foreach ($vista as $item )
                 <option value="{{$item->id}}">{{$item->nombre}}</option>
               @endforeach --}}
@@ -174,6 +174,7 @@
                 }
 
                 actualizarOpciones3(sistema)
+                
             },
             error: function(xhr, status, error) {
                 // Error handling
@@ -226,6 +227,8 @@
                     selectSecundario.appendChild(nuevaOpcion);
                     });
                 }
+
+                $('#tip_solucion').addClass('hidden');
             },
             error: function(xhr, status, error) {
                 // Error handling
