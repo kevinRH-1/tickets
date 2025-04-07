@@ -53,7 +53,7 @@
         @if($reporte[0]?->falla?->solucion)
             @if(Auth::user()->roleid==3)
                 @if($reporte[0]->falla->solucion->checked==1)
-                    <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto border-2 border-yellow-500 flex justify-center md:grid md:grid-cols-4 md:gap-2">
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto border-2 border-yellow-500 flex flex-col justify-center md:grid md:grid-cols-4 md:gap-2">
                         <div>
                             <h1 class="text-lg font-semibold text-yellow-500">TIP QUE PODRIA FUNCIONAR: </h1>
                         </div>
@@ -63,7 +63,7 @@
                     </div>
                 @endif
             @else
-                <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto flex border-2 border-yellow-500 justify-center md:grid md:grid-cols-4 md:gap-2">
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto  border-2 border-yellow-500 justify-center flex flex-col md:grid md:grid-cols-4 md:gap-2">
                     <div>
                         <h1 class="text-lg font-semibold">PODRIA FUNCIONAR: </h1>
                     </div>
