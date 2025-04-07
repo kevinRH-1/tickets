@@ -117,7 +117,7 @@
         </a>
       </div>
 
-      <div id="" class=" rounded-md mt-8 justify-center align-middle text-center grid grid-cols-2">
+      <div id="" class="hidden md:!grid rounded-md mt-8 justify-center align-middle text-center grid-cols-2">
         <div class="col-span-2 bg-white rounded-lg border-2 border-black">
           <h1 class="mt-8 font-semibold text-xl">TICKETS DE SISTEMAS:</h1>
           <div class="mt-4 mb-4 ml-4 w-1/4">
@@ -424,7 +424,7 @@
                         labels: labels,
                         datasets: [{
                             data: counts,
-                            backgroundColor: ['#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                            backgroundColor: ['#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF7006', '#FF0606'],
                         }]
                     },
                     options: {
@@ -432,6 +432,18 @@
                         plugins: {
                             legend: {
                                 position: '',
+                                labels: {
+                                  boxWidth: 20,
+                                  padding: 10,
+                                  // Puedes usar esta función para acortar nombres si son muy largos
+                                  generateLabels: function(chart) {
+                                    const original = Chart.overrides.doughnut.plugins.legend.labels.generateLabels(chart);
+                                    return original.map(label => ({
+                                      ...label,
+                                      text: label.text.length > 20 ? label.text.slice(0, 20) + '...' : label.text
+                                    }));
+                                  }
+                                },
                             },
                             title: {
                                 display: true,
@@ -440,6 +452,7 @@
                                   size:14,
                                   weight:'bold'
                                 },
+                                
                             }
                         }
                     }
@@ -451,7 +464,7 @@
                         labels: labels,
                         datasets: [{
                             data: counts,
-                            backgroundColor: ['#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                            backgroundColor: ['#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF7006', '#FF0606'],
                         }]
                     },
                     options: {
@@ -459,6 +472,19 @@
                         plugins: {
                             legend: {
                                 position:'right',
+                                labels: {
+                                  boxWidth: 20,
+                                  padding: 10,
+                                  // Puedes usar esta función para acortar nombres si son muy largos
+                                  generateLabels: function(chart) {
+                                    const original = Chart.overrides.doughnut.plugins.legend.labels.generateLabels(chart);
+                                    return original.map(label => ({
+                                      ...label,
+                                      text: label.text.length > 20 ? label.text.slice(0, 20) + '...' : label.text
+                                    }));
+                                  }
+                                },
+                                
                             },
                             title: {
                                 display: true,
@@ -523,6 +549,18 @@
                         plugins: {
                             legend: {
                                 position: '',
+                                labels: {
+                                  boxWidth: 80,
+                                  padding: 10,
+                                  // Puedes usar esta función para acortar nombres si son muy largos
+                                  generateLabels: function(chart) {
+                                    const original = Chart.overrides.doughnut.plugins.legend.labels.generateLabels(chart);
+                                    return original.map(label => ({
+                                      ...label,
+                                      text: label.text.length > 20 ? label.text.slice(0, 20) + '...' : label.text
+                                    }));
+                                  }
+                                },
                             },
                             title: {
                                 display: true,
@@ -531,11 +569,6 @@
                                   size:14,
                                   weight:'bold'
                                 },
-                                // position: 'top',
-                                // padding:{
-                                //   right:100,
-                                // },
-                                // align:'center'
                             }
                         }
                     }
@@ -555,6 +588,18 @@
                         plugins: {
                             legend: {
                                 position: 'right',
+                                labels: {
+                                  boxWidth: 80,
+                                  padding: 10,
+                                  // Puedes usar esta función para acortar nombres si son muy largos
+                                  generateLabels: function(chart) {
+                                    const original = Chart.overrides.doughnut.plugins.legend.labels.generateLabels(chart);
+                                    return original.map(label => ({
+                                      ...label,
+                                      text: label.text.length > 20 ? label.text.slice(0, 20) + '...' : label.text
+                                    }));
+                                  }
+                                }
                             },
                             title: {
                                 display: true,
@@ -563,11 +608,6 @@
                                   size:14,
                                   weight:'bold'
                                 },
-                                // position: 'top',
-                                // padding:{
-                                //   right:100,
-                                // },
-                                // align:'center'
                             }
                         }
                     }

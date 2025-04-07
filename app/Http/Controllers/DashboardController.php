@@ -88,12 +88,24 @@ class DashboardController extends Controller
         if($tiempo ==0){
             $reportes = ReportesSoftware::with('usuario.sucursal')
                 ->get()
-                ->groupBy('usuario.sucursal.nombre') // Asumiendo que el campo en la tabla sucursales se llama "nombre"
-                ->map(function ($items, $sucursal) {
+                ->groupBy('usuario.sucursal.nombre')
+                ->map(function ($items) {
                     return count($items);
-                });
-
-            return response()->json($reportes);
+                })
+                ->sortDesc(); // Ordenar de mayor a menor
+            
+            // Tomamos los 6 primeros
+            $top6 = $reportes->take(6);
+            
+            // Agrupamos el resto en "Otros"
+            $otros = $reportes->slice(6)->sum();
+            
+            if ($otros > 0) {
+                $top6->put('Otros', $otros);
+            }
+            
+            return response()->json($top6);
+        
         }elseif($tiempo==1){
             $tiempo2 = Carbon::now()->subDay();
         }elseif($tiempo==2){
@@ -107,9 +119,20 @@ class DashboardController extends Controller
                 ->groupBy('usuario.sucursal.nombre') // Asumiendo que el campo en la tabla sucursales se llama "nombre"
                 ->map(function ($items, $sucursal) {
                     return count($items);
-                });
-
-            return response()->json($reportes);
+                })
+                ->sortDesc(); // Ordenar de mayor a menor
+            
+            // Tomamos los 6 primeros
+            $top6 = $reportes->take(6);
+            
+            // Agrupamos el resto en "Otros"
+            $otros = $reportes->slice(6)->sum();
+            
+            if ($otros > 0) {
+                $top6->put('Otros', $otros);
+            }
+            
+            return response()->json($top6);
         
         
     }
