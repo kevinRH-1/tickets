@@ -195,8 +195,8 @@
         </li>
         @endif
         @if(Auth::user()->roleid===3)
-         <li>
-            {{-- <button type="button" class="flex items-center w-full px-2 py-3 text-base  transition duration-75  group  text-white hover:bg-gray-700" id="menu" data-type="ayu">
+         {{-- <li>
+            <button type="button" class="flex items-center w-full px-2 py-3 text-base  transition duration-75  group  text-white hover:bg-gray-700" id="menu" data-type="ayu">
                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                 </svg>
@@ -210,11 +210,11 @@
                   <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
                      <a href="{{route ('manual.usuario')}}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Manual de Usuario</a>
                   </li>   
-            </ul> --}}
-         </li>
+            </ul>
+         </li> --}}
         @endif
         @if(Auth::user()->roleid===1)
-         {{-- <li>
+         <li>
             <button type="button" class="flex items-center w-full px-2 py-3 text-base  transition duration-75  group  text-white hover:bg-gray-700" id="menu" data-type="ayu">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
                      <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
@@ -227,13 +227,32 @@
             </button>
             <ul id="submenuayu" class="hidden overflow-hidden max-h-0 transition-[max-height] bg-gray-900 duration-500 ease-in-out">
                   <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
-                     <a href="{{ asset('storage/pdf/Guia_administrador_soporte-cvc.pdf') }}" target="_blank" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Manual de Administrador</a>
+                     <a href="{{ asset('storage/pdf/Guia_usuario2_soporte-cvc.pdf') }}" target="_blank" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Manual de tickets de sistemas</a>
                   </li>  
-                  <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
+                  {{-- <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
                     <a href="{{route ('manual.usuario')}}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Manual de Usuario</a>
-                 </li> 
+                 </li>  --}}
             </ul>
-         </li> --}}
+         </li>
+        @endif
+        @if(Auth::user()->roleid===3)
+         <li>
+            <button type="button" class="flex items-center w-full px-2 py-3 text-base  transition duration-75  group  text-white hover:bg-gray-700" id="menu" data-type="ayu">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
+                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                  </svg>
+                
+                  <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Ayuda</span>
+                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                     <path stroke="red" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                  </svg>
+            </button>
+            <ul id="submenuayu" class="hidden overflow-hidden max-h-0 transition-[max-height] bg-gray-900 duration-500 ease-in-out">
+                  <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
+                     <a href="{{ asset('storage/pdf/Guia_usuario2_soporte-cvc.pdf') }}" target="_blank" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Manual de tickets de sistemas</a>
+                  </li>  
+            </ul>
+         </li>
         @endif
         {{-- <li>
             <button type="button" class="flex items-center w-full px-2 py-3 text-base  transition duration-75  group  text-white hover:bg-gray-700" id="menu" data-type="vid">

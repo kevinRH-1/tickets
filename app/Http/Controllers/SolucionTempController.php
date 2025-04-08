@@ -27,6 +27,7 @@ class SolucionTempController extends Controller
 
         $reporte = ReportesSoftware::findOrFail($request->id);
         $reporte->solucionado_tecnico=0;
+        $reporte->status_id=3;
         $reporte->save();
 
         return response()->json(['message', 'solucion temporal borrada']);
