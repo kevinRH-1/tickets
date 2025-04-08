@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    @if (Auth::user()->roleid === 1 || Auth::user()->roleid===2)
+    @if (Auth::user()->roleid === 1 || Auth::user()->roleid===3)
       
 
       @if ($videos->isEmpty())
@@ -42,8 +42,8 @@
           <div id="carousel" class="w-full flex transition-transform duration-500">
             @foreach ($videos as $imagen)
               <div class="min-w-full flex flex-col md:flex-row bg-gray-100">
-                <a href="https://www.youtube.com/watch?v=XPg5txu_DkA" target="_blank" class="p-4 md:w-[55%] w-full">
-                  <img src="https://img.youtube.com/vi/3_g2un5M350/hqdefault.jpg" class="rounded-lg mx-auto" alt="">
+                <a href="{{$imagen->link}}" target="_blank" class="p-4 md:w-[55%] w-full">
+                  <img src="https://img.youtube.com/vi/{{$imagen->codigo}}/hqdefault.jpg" class="rounded-lg mx-auto" alt="">
                 </a>
                 
                 <div class="md:w-[40%] w-full md:!p-4 p-1 text-center">
