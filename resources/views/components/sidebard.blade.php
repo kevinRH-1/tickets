@@ -213,7 +213,7 @@
             </ul>
          </li> --}}
         @endif
-        @if(Auth::user()->roleid===1)
+        {{-- @if(Auth::user()->roleid===1)
          <li>
             <button type="button" class="flex items-center w-full px-2 py-3 text-base  transition duration-75  group  text-white hover:bg-gray-700" id="menu" data-type="ayu">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
@@ -229,9 +229,7 @@
                   <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
                      <a href="{{ asset('storage/pdf/Guia_usuario2_soporte-cvc.pdf') }}" target="_blank" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Manual de tickets de sistemas</a>
                   </li>  
-                  {{-- <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
-                    <a href="{{route ('manual.usuario')}}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Manual de Usuario</a>
-                 </li>  --}}
+                  
             </ul>
          </li>
         @endif
@@ -253,7 +251,7 @@
                   </li>  
             </ul>
          </li>
-        @endif
+        @endif --}}
         {{-- <li>
             <button type="button" class="flex items-center w-full px-2 py-3 text-base  transition duration-75  group  text-white hover:bg-gray-700" id="menu" data-type="vid">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
