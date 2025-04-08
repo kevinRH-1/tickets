@@ -213,7 +213,7 @@
             </ul>
          </li> --}}
         @endif
-        @if(Auth::user()->roleid===1)
+        {{-- @if(Auth::user()->roleid===1)
          <li>
             <button type="button" class="flex items-center w-full px-2 py-3 text-base  transition duration-75  group  text-white hover:bg-gray-700" id="menu" data-type="ayu">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
@@ -251,7 +251,7 @@
                   </li>  
             </ul>
          </li>
-        @endif
+        @endif --}}
         {{-- <li>
             <button type="button" class="flex items-center w-full px-2 py-3 text-base  transition duration-75  group  text-white hover:bg-gray-700" id="menu" data-type="vid">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
