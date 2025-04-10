@@ -14,7 +14,7 @@
         <div id="listaVideos">
             @forelse ($videos as $item)
                 <div 
-                    class="flex flex-col md:flex-row items-center mb-6 border-b pb-4 video-item"
+                    class="flex flex-col md:flex-row mb-6 border-b pb-4 video-item"
                     data-nombre="{{ Str::lower($item->nombre) }}"
                 >
                     <a href="{{$item->link}}">
@@ -24,7 +24,7 @@
                             class="w-full md:w-48 rounded-lg shadow-md mb-4 md:mb-0 md:mr-6"
                         >
                     </a>
-                    <div class="text-center md:text-left">
+                    <div class="text-center md:text-left w-3/4">
                         <h2 class="text-xl font-bold mb-2 nombre-video">{{ $item->nombre }}</h2>
                         <p class="text-gray-700">{{ $item->descripcion }}</p>
                     </div>
