@@ -17,11 +17,13 @@
                     class="flex flex-col md:flex-row items-center mb-6 border-b pb-4 video-item"
                     data-nombre="{{ Str::lower($item->nombre) }}"
                 >
-                    <img 
-                        src="https://img.youtube.com/vi/{{$item->codigo}}/hqdefault.jpg" 
-                        alt="Miniatura de {{ $item->nombre }}" 
-                        class="w-full md:w-48 rounded-lg shadow-md mb-4 md:mb-0 md:mr-6"
-                    >
+                    <a href="{{$item->link}}">
+                        <img 
+                            src="https://img.youtube.com/vi/{{$item->codigo}}/hqdefault.jpg" 
+                            alt="Miniatura de {{ $item->nombre }}" 
+                            class="w-full md:w-48 rounded-lg shadow-md mb-4 md:mb-0 md:mr-6"
+                        >
+                    </a>
                     <div class="text-center md:text-left">
                         <h2 class="text-xl font-bold mb-2 nombre-video">{{ $item->nombre }}</h2>
                         <p class="text-gray-700">{{ $item->descripcion }}</p>
