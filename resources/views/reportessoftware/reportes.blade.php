@@ -83,7 +83,7 @@
                                     <tr class="border-1 border-{{$color_status}} hover:bg-{{$color_status2}}">
                                 
                                     <td class="md:!pl-4 p-1">
-                                        @if($item->noti_u==1 || $item->solucion)
+                                        @if($item->noti_u==1 || $item->solucion || $item->status_id ==4)
                                             <i class="fa-solid fa-circle-exclamation md:fa-xl" style="color: #ff0000;"></i>
                                         @else
 
