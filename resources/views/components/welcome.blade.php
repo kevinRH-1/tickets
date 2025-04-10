@@ -529,6 +529,9 @@
                     "Espera de mas informacion": "gray",
                     "Por Confirmar Solucion": "purple",
                 };
+                console.log(labels)
+                let larga = labels.some(element => element.length > 15);
+                console.log(larga);
 
                 // Mapear los colores según el nombre de la sucursal
                 const backgroundColors = labels.map(label => colors[label] || '#CCCCCC');
@@ -550,7 +553,7 @@
                             legend: {
                                 position: '',
                                 labels: {
-                                  boxWidth: 80,
+                                  boxWidth: larga ? 20: 80,
                                   padding: 10,
                                   // Puedes usar esta función para acortar nombres si son muy largos
                                   generateLabels: function(chart) {
@@ -589,7 +592,7 @@
                             legend: {
                                 position: 'right',
                                 labels: {
-                                  boxWidth: 80,
+                                  boxWidth: larga ? 20: 80,
                                   padding: 10,
                                   // Puedes usar esta función para acortar nombres si son muy largos
                                   generateLabels: function(chart) {
