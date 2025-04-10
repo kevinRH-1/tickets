@@ -20,4 +20,10 @@ class VideosController extends Controller
 
         return response()->json(['message', 'video subido']);
     }
+
+    public function videos(){
+
+        $videos = Videos::orderBy('id')->get();
+        return view ('Videos.index', compact('videos'));
+    }
 }

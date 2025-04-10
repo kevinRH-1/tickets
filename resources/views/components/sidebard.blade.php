@@ -338,6 +338,8 @@
     </div>
 </div>
 
+@stack('scripts')
+
 
 
 <style>
