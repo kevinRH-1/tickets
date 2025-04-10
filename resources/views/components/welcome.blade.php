@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    @if (Auth::user()->roleid === 1 || Auth::user()->roleid===3)
+    @if (Auth::user()->roleid === 1 )
       
 
       @if ($videos->isEmpty())
@@ -235,6 +235,48 @@
       </div>
     @endif
     @if (Auth::user()->roleid === 3)
+
+
+      @if ($videos->isEmpty())
+
+      @else
+        {{-- <div id="anuncio" class="bg-white rounded-md mt-8 justify-center align-middle text-center">
+          <div class="">titulo</div>
+          <div class="">
+            <a href="https://www.youtube.com/watch?v=XPg5txu_DkA" target="_blank">
+              <img src="https://img.youtube.com/vi/3_g2un5M350/hqdefault.jpg" alt="">
+            </a>
+          </div>
+        </div> --}}
+
+        <div class="relative w-full md:max-w-[70%] mx-auto overflow-hidden rounded-lg bg-gray-800 shadow-lg mt-4 border-gray-800 border-2">
+          <h1 class="text-center p-2 text-2xl font-semibold text-white">VIDEOS IMPORTANTES</h1>
+          <div id="carousel" class="w-full flex transition-transform duration-500">
+            @foreach ($videos as $imagen)
+              <div class="min-w-full flex flex-col md:flex-row bg-gray-100">
+                <a href="{{$imagen->link}}" target="_blank" class="p-4 md:w-[55%] w-full">
+                  <img src="https://img.youtube.com/vi/{{$imagen->codigo}}/hqdefault.jpg" class="rounded-lg mx-auto" alt="">
+                </a>
+                
+                <div class="md:w-[40%] w-full md:!p-4 p-1 text-center">
+                  <h1 class="md:!mt-4 text-xl font-semibold">{{$imagen->nombre}}</h1>
+                  <p class="text-base">{{$imagen->descripcion}}</p>
+                </div>
+              </div>
+            @endforeach
+          </div>
+          
+          <button onclick="anterior()" class="absolute top-1/2 left-0 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full">
+            &#10094;
+          </button>
+          <button onclick="siguiente()" class="absolute top-1/2 right-0 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full">
+            &#10095;
+          </button>
+        </div>
+
+      @endif
+
+
       <div class="md:flex md:justify-between mt-5 text-white grid grid-cols-2">
         <a href="{{route ('misreportessoftware', [Auth::user()->id])}}">
           <div class="md:w-60 md:h-36 bg-emerald-500 md:rounded-lg p-4">
