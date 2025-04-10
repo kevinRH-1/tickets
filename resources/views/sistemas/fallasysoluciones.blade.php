@@ -809,7 +809,7 @@
             })
 
             $(document).on('click', '#confirmNob2', function(){
-
+                $('#confirmarborrar').modal('hide')
             })
 
 

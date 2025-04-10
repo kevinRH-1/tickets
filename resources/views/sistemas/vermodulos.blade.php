@@ -432,8 +432,11 @@
                         <input type="checkbox" name="checkusuario" id="checkusuario" class="rounded-md">
     
                     </div>
-                    <div class="mt-6">
+                    <div class="mt-6 flex justify-around">
                         <button id="cambiarsolucion" class="btn btn-success">cambiar solucion</button>
+                        <button class="btn-secondary btn" onclick="$('#modalfalla').modal('hide')">
+                            Cancelar
+                        </button>
                     </div>
                 </div>
             </div>

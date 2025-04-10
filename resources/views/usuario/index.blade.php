@@ -269,9 +269,12 @@
                                     <div class="modal fade" id="historialmodal" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
                                         <div class="modal-dialog modal-lg max-h-[600px] overflow-y-auto">
                                           <div class="modal-content p-4">
-                                            <div class="modal-header flex justify-center">
+                                            <div class="modal-header grid grid-cols-3 justify-center">
+                                              <div></div>
                                               <h1 class="modal-title fs-5 text-semibold text-4xl text-red-600" id="titulohistorial">Historial del usuario</h1>
+                                              <button type="button" class="btn-close btn-sm" onclick="$('#historialmodal').modal('hide')"></button>
                                             </div>
+                                            
                                             <div class="modal-body">
                                               <div id="divfiltro" class="flex w-full justify-end mb-20">
                                                 <label for="filtro" class="pt-[10px] mr-2">Buscar por fecha: </label>

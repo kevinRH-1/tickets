@@ -241,6 +241,22 @@
             </div>
         </div>
 
+        <div class="modal fade mt-[20%]" id="confirmModal" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content p-8">
+                    <h2 class="text-lg font-semibold text-center">¿Estás seguro de cancelar la solucion?</h2>
+                    <div class="flex justify-between mt-8">
+                        <button id="confirmYes" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+                            Sí, Seguro
+                        </button>
+                        <button id="confirmNo" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="modal fade pt-[10%]" id="modalestatus" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
             <div class="modal-dialog">
@@ -878,30 +894,43 @@
         }
         console.log(formData);
 
-        $.ajax({
-            url: '/negarsolucionsoftware',
-            type: 'POST',
-            data: formData,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response){
-                $('#confirmarsolucion').modal('hide');
-                $('#modalmensaje #mensaje').text('Se ha negado la solucion del ticket');
-                $('#modalmensaje').modal('show');
-                setTimeout(() => {
-                    location.reload();
-                }, 2000);
-            },
-            error: function (xhr){
-                $('#confirmarsolucion').modal('hide');
-                $('#modalmensaje #mensaje').text('Ha ocurrido un error!');
-                $('#modalmensaje').modal('show');
-                setTimeout(() => {
-                    location.reload();
-                }, 2000);
+        $('#confirmarsolucion').modal('hide');
+        $('#confirmModal').modal('show')
+
+        $(document).off('click', '#confirmModal #confirmYes').on('click', '#confirmModal #confirmYes', function(){
+            $.ajax({
+                url: '/negarsolucionsoftware',
+                type: 'POST',
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response){
+                    $('#confirmarsolucion').modal('hide');
+                    $('#confirmModal').modal('hide');
+                    $('#modalmensaje #mensaje').text('Se ha negado la solucion del ticket');
+                    $('#modalmensaje').modal('show');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                },
+                error: function (xhr){
+                    $('#confirmarsolucion').modal('hide');
+                    $('#modalmensaje #mensaje').text('Ha ocurrido un error!');
+                    $('#modalmensaje').modal('show');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
             }
         })
+        });
+        $(document).off('click', '#confirmModal #confirmNo').on('click', '#confirmModal #confirmNo', function(){
+            $('#confirmModal').modal('hide');
+        })
+
+
+
+        
     }
 
 

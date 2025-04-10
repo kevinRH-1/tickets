@@ -280,10 +280,16 @@
                             @endforeach
                         </select>
                         
+
                         <p id="filtro-error" class="text-red-500 text-sm hidden">Debe llenar al menos una de las opciones!</p>
                         <div class="mb-10"></div>
-
-                        <button class="block p-2 bg-emerald-500 rounded-md text-white w-40 m-auto" id="filtroboton">VER RESULTADOS</button>
+                        <div class="justify-between  w-full">
+                            <button class="block p-2 bg-emerald-500 rounded-md text-white w-40 m-auto" id="filtroboton">VER RESULTADOS</button>
+                            <button class="btn-secondary btn mt-4" onclick="$('#modalfiltro').modal('hide')">
+                                Cancelar
+                            </button>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -516,8 +522,11 @@
     
                     </div>
                     
-                    <div class="mt-6">
+                    <div class="mt-6 flex justify-around">
                         <button id="cambiarsolucion" class="btn btn-success">cambiar solucion</button>
+                        <button class="btn-secondary btn" onclick="$('#modalfalla').modal('hide')">
+                            Cancelar
+                        </button>
                     </div>
                 </div>
             </div>
