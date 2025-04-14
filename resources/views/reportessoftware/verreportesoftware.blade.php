@@ -136,7 +136,7 @@
                         </div>
                         <div class="col-span-1">
                             <label for="telefono" class=" text-gray-700 mt-4 w-2/4 text-lg font-bold m-auto hidden md:!inline">Teléfono: </label>
-                            <label name="codigo" id="codigo"  class="h-7 md:text-lg  m-auto p-2 ">{{ $reporte[0]->usuario->number }}</label>
+                            <label name="codigo" id="codigo"  class="h-7 md:text-lg  m-auto p-2 ">{{ $reporte[0]->usuario->phone }}</label>
                         </div>
                     </div>
                 </div>
@@ -331,12 +331,12 @@
                                         <input type="text" name="problema1" id="problema1" readonly value="{{$reporte[0]->descripcion}}" hidden>
                                         
                                         <input type="text" id="tecnicomensaje" name="tecnicomensaje" value="{{Auth::user()->id}}" hidden>
-                                        <textarea type="text" name="mensaje" id="mensaje" class="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 min-h-[100px]" oninput="toggleButton()" maxlength="2000"></textarea>
+                                        <textarea type="text" name="mensaje" id="mensaje" class="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 min-h-[100px]"  maxlength="2000"></textarea>
                                     </div>
                                 @else
                     
                                     <div class="md:col-span-7 col-span-8" id="">
-                                        <textarea type="text" name="mensaje" id="mensaje" class="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 min-h-[100px]" oninput="toggleButton()" maxlength="2000"></textarea>
+                                        <textarea type="text" name="mensaje" id="mensaje" class="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 min-h-[100px]"  maxlength="2000"></textarea>
                                         <input type="text" class="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" readonly hidden>
                                     </div>
                                     
@@ -601,17 +601,9 @@
                     modal.classList.add('hidden');
                 });
 
-                // optionsSelect.addEventListener('change', () => {
-                //     if (optionsSelect.value === 'otra') {
-                //         extraField.classList.remove('hidden');
-                //     } else {
-                //         extraField.classList.add('hidden');
-                //     }
-                // });
-
 
             } else {
-                console.error('Algunos elementos para el rol 1 no se encontraron en el DOM.');
+                // console.error('Algunos elementos para el rol 1 no se encontraron en el DOM.');
             }
         } else {
             const openModal2Button = document.getElementById('openModalusuario');
@@ -629,16 +621,8 @@
                 closeModal2Button.addEventListener('click', () => {
                     modal2.classList.add('hidden');
                 });
-
-                // optionsSelect2.addEventListener('change', () => {
-                //     if (optionsSelect2.value === 'otra') {
-                //         extraField2.classList.remove('hidden');
-                //     } else {
-                //         extraField2.classList.add('hidden');
-                //     }
-                // });
             } else {
-                console.error('Algunos elementos para el rol 2 no se encontraron en el DOM.');
+                // console.error('Algunos elementos para el rol 2 no se encontraron en el DOM.');
             }
 
         }
@@ -733,60 +717,6 @@
 
     }
 
-
-    // function enviarmensaje(event){
-    //     event.preventDefault();
-    //     const formData = {
-    //         mensaje:$('#formmensaje #mensaje').val(),
-    //         reporte:$('#formmensaje #reporte').val(),
-    //         usuario:$('#formmensaje #usuario').val(),
-    //         tipo_reporte:1,
-    //         rol:$('#formmensaje #rol').val(),
-    //         tecnicomensaje:$('#formmensaje #tecnicomensaje').val(),
-    //         foto:$('#fileInput').val(),
-
-    //     };
-
-    //     // $('#formmensaje #botonmensaje').attr('disabled', true);
-    //     // $('#formmensaje #botonmensaje2').attr('disabled', true);
-
-
-    //     console.log(formData);
-
-    //     // if($('#fileInput').val()){
-    //     //     console.log('hay imagen');
-    //     //     console.log(formData.foto)
-    //     // }else{
-    //     //     console.log('no hay imagen');
-    //     //     console.log(formData.foto)
-    //     // }
-
-    //     if(!formData.foto && !formData.mensaje){
-    //         console.log('no hay mensaje que enviar');
-    //     }else{
-    //         console.log('enviando')
-    //     }
-
-
-    //     $.ajax({
-    //         url: '/enviar/mensaje',
-    //         data:formData,
-    //         type:'POST',
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         },
-    //         success:function (response){
-    //             location.reload();
-    //         },
-    //         error:function(xhr){
-    //             console.log('error al enviar el mensaje');
-    //             console.log(xhr);
-    //             $('#formmensaje #botonmensaje').removeAttr('disabled');
-    //             $('#formmensaje #botonmensaje2').removeAttr('disabled');
-    //         }
-    //     })
-    // }
-
     function enviarmensaje(event) {
         event.preventDefault();
 
@@ -807,12 +737,17 @@
         $('#formmensaje #botonmensaje').attr('disabled', true);
         $('#formmensaje #botonmensaje2').attr('disabled', true);
 
+        $('#formmensaje #botonmensaje').text('enviando...');
+        $('#formmensaje #botonmensaje2').text('enviando...');
+
         console.log(formData.get('imagen'));
 
         if(formData.get('mensaje').trim()==='' && !formData.get('imagen')){
             console.log('mensaje vacio');
             $('#formmensaje #botonmensaje').removeAttr('disabled');
             $('#formmensaje #botonmensaje2').removeAttr('disabled');
+            $('#formmensaje #botonmensaje').text('enviar mensaje');
+            $('#formmensaje #botonmensaje2').text('enviar mensaje');
         }else{
             $.ajax({
                 url: '/enviar/mensaje',
@@ -831,6 +766,8 @@
                     console.log(xhr);
                     $('#formmensaje #botonmensaje').removeAttr('disabled');
                     $('#formmensaje #botonmensaje2').removeAttr('disabled');
+                    $('#formmensaje #botonmensaje').text('enviar mensaje');
+                    $('#formmensaje #botonmensaje2').text('enviar mensaje');
                 }
             });
         }

@@ -40,17 +40,6 @@ class ControllerSoftwareReporte extends Controller
         $estatus = statusReporte::orderBy('id')->get();
         $nivel = Importancias::orderBy('id')->get();
 
-        // foreach($reportes as $item){
-        //     $mensaje = Mensaje::where('reporte_id', $item->id)->where('tipo_id', 1)->wherehas('usuario', function($query){
-        //         $query->where('roleid', 3);
-        //     })
-        //     ->with('usuario')->orderBy('id', 'desc')->get();
-        //     if($mensaje != null && $item->ultima_revision_t < $mensaje[0]->created_at){
-        //         $item->notificacion =1;
-        //     }else{
-        //         $item->notificacion =0;
-        //     }
-        // }
 
         return view('reportessoftware.index', compact('reportes', 'generados', 'revision', 'solucionados24', 'totales24', 'sucursales', 'sistemas', 'estatus', 'nivel'));
     }
@@ -59,23 +48,6 @@ class ControllerSoftwareReporte extends Controller
         $reportes = ReportesSoftware::with('usuario', 'modulo', 'sistema', 'status')->where('usuario_id', $id)
             ->orderBy('noti_u', 'desc')->orderBy('status_id')->orderBy('id', 'desc')->paginate(10);
 
-
-        // foreach($reportes as $item){
-        //     $mensaje = Mensaje::where('reporte_id', $item->id)->where('tipo_id', 1)->wherehas('usuario', function($query){
-        //         $query->where('roleid', '!=', 3);
-        //     })
-        //     ->with('usuario')->orderBy('id', 'desc')->get();
-        //     if($mensaje->isNotEmpty()){
-        //         if($item->ultima_revision_u < $mensaje[0]->created_at){
-        //             $item->notificacion =1;
-        //         }else{
-        //             $item->notificacion =0;
-        //         }
-                
-        //     }else{
-        //         $item->notificacion =0;
-        //     }
-        // }
 
         return view('reportessoftware.reportes', compact('reportes'));
     }
@@ -147,13 +119,6 @@ class ControllerSoftwareReporte extends Controller
         $reporte = ReportesSoftware::with('tecnico')->where('id', $id)->get();
         $mensajes = Mensaje::where('reporte_id', $id)->where('tipo_id', 1)->orderBy('id')->get();
 
-        // // $solucion =Mensaje::where('reporte_id', $id)->where('usuario_id','!=', 1)->where('tipo_reporte',1)->get();
-        // if ($mensajes->isEmpty()){
-        //     $confirmar =  0;
-        // }else{
-        //     $confirmar = 1;
-        // }
-
         $tec = [1,2];
 
         $solucion =Mensaje::with('usuario')->where('reporte_id', $id)->wherehas('usuario', function ($query) use ($tec){
@@ -202,7 +167,7 @@ class ControllerSoftwareReporte extends Controller
         $reporte = ReportesSoftware::findOrFail($request->reporte);
 
         $usuario = User::findOrFail($reporte->usuario_id);
-        $correo = $usuario->email;
+        
 
 
         // si el mensaje es enviado por el usuario
@@ -254,16 +219,14 @@ class ControllerSoftwareReporte extends Controller
 
         // nombre del tecnico o administrador para el correo
 
-            $nombreusuario = User::findOrFail($request->usuario);
-
-            // Mail::to($correo)->send(new notificacionCorreo('emails.notireporte', $reporte->codigo, $request->mensaje, $nombreusuario->name));
-
+            
+            // if($usuario->email != null){
+            //     $correo = $usuario->email;
+            //     $nombreusuario = User::findOrFail($request->usuario);
+            //     Mail::to($correo)->send(new notificacionCorreo('emails.notireporte', $reporte->codigo, $request->mensaje, $nombreusuario->name));
+            // }
         }
         return response()->json(['message' => 'mensaje enviado']);
-
-        // recarga la vista
-        
-        // return redirect()->back();
 
     }
 
@@ -309,15 +272,14 @@ class ControllerSoftwareReporte extends Controller
             $solucion->save();
             return to_route('reportessoftware.general');
         }else{
-            // $soluciontemp = SolucionTemp::where('reporte_id', $id)->get();
+    
             $solucion = new Solucion();
             $solucion->reporte_id = $reporte->id;
             $solucion->tipo_reporte=1;
             $solucion->tecnico_id = $reporte->tecnico_id;
-            // $solucion->tipo_solucion = $reporte->tipo_solucion;
             $solucion->solucion_mensaje = $request->extraInputusuario;
             $solucion->save();
-            // $soluciontemp[0]->delete();
+
             $reporte->solucionado_usuario =1;
             $reporte->solucionado_tecnico =1;
             $this->cambiar_status($id, 5);

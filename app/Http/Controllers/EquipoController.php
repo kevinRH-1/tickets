@@ -31,9 +31,6 @@ class EquipoController extends Controller
         $impresorasc = Impresoras::with('categoria', 'lugar', 'estado')->where('activo',1)->orderBy('id')->get();
         $pcsc = Pc::with('categoria', 'lugar', 'estado')->where('activo',1)->orderBy('id')->get();
         $laptopsc = Laptops::with('categoria', 'lugar', 'estado')->where('activo',1)->orderBy('id')->get();
-        // $teclados = Teclados::orderBy('id')->get();
-        // $ratones = Raton::orderBy('id')->get();
-        // $monitores = Monitores::orderBy('id')->get();
         $usuarios= User::orderby('name')->where('activo',1)->get();
         $categorias= CategoriasEquipos::orderby('id')->get();
         $sucursales= Sucursal::orderby('id')->where('activo', 1)->get();
@@ -315,9 +312,6 @@ class EquipoController extends Controller
         $impresorasc = Impresoras::with('categoria', 'lugar', 'estado')->where('activo',1)->orderBy('id')->get();
         $pcsc = Pc::with('categoria', 'lugar', 'estado')->where('activo',1)->orderBy('id')->get();
         $laptopsc = Laptops::with('categoria', 'lugar', 'estado')->where('activo',1)->orderBy('id')->get();
-        // $teclados = Teclados::orderBy('id')->get();
-        // $ratones = Raton::orderBy('id')->get();
-        // $monitores = Monitores::orderBy('id')->get();
         $usuarios= User::orderby('name')->where('activo',1)->get();
         $categorias= CategoriasEquipos::orderby('id')->get();
         $sucursales= Sucursal::orderby('id')->where('activo', 1)->get();
@@ -364,9 +358,6 @@ class EquipoController extends Controller
                 'equiposnouso', 'query_totales', 'sucursales', 'estados', 'categorias',
                 'usuarios'));
         }
-
-
-
     }
 
 }

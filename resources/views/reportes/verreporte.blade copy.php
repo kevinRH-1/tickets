@@ -75,7 +75,7 @@
         <input type="text" name="codigo" id="correo" value="{{ $reporte[0]->usuario->email }}" class="border p-2 rounded bg-gray-100 w-full">
 
         <label for="telefono" class="block font-medium">Teléfono</label>
-        <input type="text" name="codigo" id="telefono" value="{{ $reporte[0]->usuario->number }}" class="border p-2 rounded bg-gray-100 w-full">
+        <input type="text" name="codigo" id="telefono" value="{{ $reporte[0]->usuario->phone }}" class="border p-2 rounded bg-gray-100 w-full">
     </div>
 
     <!-- Sección 3: Información del reporte y acción -->

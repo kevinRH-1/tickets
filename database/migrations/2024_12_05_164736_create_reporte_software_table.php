@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('status_id');
             $table->dateTime('tiempo_revision')->nullable();
             $table->datetime('tiempo_solucion')->nullable();
-            $table->string('img')->nullable();
+            $table->float('tiempo')->nullable();
             $table->integer('noti_t')->nullable();
             $table->integer('noti_u')->nullable();
             $table->timestamps();

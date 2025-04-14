@@ -61,7 +61,7 @@
     <input type="text" name="codigo" id="codigo" value='{{$reporte[0]->usuario->email}}'>
     <br>
     <label for="">telefono</label>
-    <input type="text" name="codigo" id="codigo" value='{{$reporte[0]->usuario->number}}'>
+    <input type="text" name="codigo" id="codigo" value='{{$reporte[0]->usuario->phone}}'>
 
 
     <br>

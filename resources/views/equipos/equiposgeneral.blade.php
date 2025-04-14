@@ -1121,28 +1121,6 @@
         $('#confirmar #confirmYes').addClass('btn-danger');
         $("#confirmar").modal("show");
 
-
-        // $.ajax({
-        //   url:'quitar/'+id+'/'+type,
-        //   type:'POST',
-        //   data:lugar,
-        //   headers: {
-        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF Token
-        //   },
-        //   success: function(response) {
-        //     // Manejar la respuesta exitosa (por ejemplo, mostrar un mensaje o cerrar el modal)
-        //     alert('sucursal quitada');
-        //     // $('#modalModificarpc').modal('hide'); // Cierra el modal
-        //     // location.reload();
-        //     // Puedes añadir lógica para actualizar la vista si es necesario
-        //   },
-        //   error: function(xhr) {
-        //     // Manejar errores (opcional)
-        //     alert('Error al quitar');
-        //   }
-
-        // })
-
       });
       
     });
@@ -1183,38 +1161,7 @@
 
     
   });
-  // document.querySelectorAll('[name="quitar"]').forEach(button => {
-  //   button.addEventListener('click', function(event) {
-  //     event.preventDefault(); 
-  //     console.log('aqui');
-  //     var type = $(this).data('type');
-  //     var id = $("form #modalModificar" +type+ " #idact").val();
-  //     var lugar = null
-  //     console.log(id);
-
-  //     $.ajax({
-  //       url:'/quitar/'+type+'/'+id,
-  //       type:'POST',
-  //       data:lugar,
-  //       headers: {
-  //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF Token
-  //       },
-  //       success: function(response) {
-  //         // Manejar la respuesta exitosa (por ejemplo, mostrar un mensaje o cerrar el modal)
-  //         alert('sucursal quitada');
-  //         // $('#modalModificarpc').modal('hide'); // Cierra el modal
-  //         // location.reload();
-  //         // Puedes añadir lógica para actualizar la vista si es necesario
-  //       },
-  //       error: function(xhr) {
-  //         // Manejar errores (opcional)
-  //         alert('Error al quitar');
-  //       }
-
-  //     })
-
-  //   });
-  // });
+ 
 
   function mostrarDiv() {
 
@@ -1233,25 +1180,7 @@
     }if (select.value ==3){
       divs[2].classList.remove("oculto");
     }
-
-   
   }
-
-  // $(document).ready(function(){
-  //   $(document).on('click', 'actualizar', function(){
-  //     console.log('hola');
-  //     $('#modalModificarpc #codigolabel').attr('hidden');
-  //     $('#modalModificarpc #descripcionlabel').attr('hidden', true);
-  //     $('#modalModificarpc #marcalabel').setAttr('hidden',);
-  //     $('#modalModificarpc #modelolabel').attr('hidden', true);
-  //     $('#modalModificarpc #procesadorlabel').attr('hidden', true);
-  //     $('#modalModificarpc #ramlabel').attr('hidden', true);
-  //     $('#modalModificarpc #HDDlabel').attr('hidden', true);
-  //     $('#modalModificarpc #categorialabel').attr('hidden', true);
-  //     $('#modalModificarpc #lugarlabel').attr('hidden', true);
-  //     $('#modalModificarpc #estadolabel').attr('hidden', true);
-  //   })
-  // })
 
 
 
@@ -1308,49 +1237,6 @@
     $('#modalModificarpc #actualizar').attr('onclick','confirmaract()');
     $('#modalModificarpc #actualizar').addClass('btn-success');
 
-  // console.log('aqui no0');
-
-  // var type = tipo;
-  // console.log(type);
-  // const formData = {
-  //   id: $("form #modalModificar" + type + " #idact").val(),
-  //   marca: $("form #modalModificar" + type + " #marca").val(),
-  //   modelo: $("form #modalModificar" + type + " #modelo").val(),
-  //   codigo: $("form #modalModificar" + type + " #codigo").val(),
-  //   procesador: $("form #modalModificar" + type + " #procesador").val(),
-  //   ram: $("form #modalModificar" + type + " #ram").val(),
-  //   HDD: $("form #modalModificar" + type + " #HDD").val(),
-  //   lugar: $("form #modalModificar" + type + " #lugar").val(),
-  //   estado: $("form #modalModificar" + type + " #estado").val(),
-  //   categoria: $("form #modalModificar" + type + " #cate").val(),
-  //   descripcion: $("form #modalModificar" + type + " #descripcion").val(),
-  // };
-  // var id = formData.id;
-  
-  // console.log(formData.categoria);
-
-  
-
-  // Configuración del AJAX
-  // $.ajax({
-  //   url: '/actualizar/' +type+'/'+id, // Ruta en Laravel que procesa la actualización
-  //   type: 'POST',
-  //   data: formData,
-  //   headers: {
-  //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF Token
-  //   },
-  //   success: function(response) {
-  //     // Manejar la respuesta exitosa (por ejemplo, mostrar un mensaje o cerrar el modal)
-  //     alert('Equipo actualizado exitosamente');
-  //     $('#modalModificarpc').modal('hide'); // Cierra el modal
-  //     location.reload();
-  //     // Puedes añadir lógica para actualizar la vista si es necesario
-  //   },
-  //   error: function(xhr) {
-  //     // Manejar errores (opcional)
-  //     alert('Error al actualizar el equipo. Intente nuevamente.');
-  //   }
-  // });
 
   // Evita el envío del formulario por el método convencional
   return false;

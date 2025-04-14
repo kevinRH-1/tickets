@@ -49,18 +49,6 @@ class ControllerHardwareReporte extends Controller
         $solucionados = count($querysolucionados);
         $r24h = count($query24h);
 
-        // foreach($reportes as $item){
-        //     $mensaje = Mensaje::where('reporte_id', $item->id)->where('tipo_id', 2)->wherehas('usuario', function($query){
-        //         $query->where('roleid', 3);
-        //     })
-        //     ->with('usuario')->orderBy('id', 'desc')->get();
-        //     if($mensaje != null && $item->ultima_revision_t < $mensaje[0]->created_at){
-        //         $item->notificacion =1;
-        //     }else{
-        //         $item->notificacion =0;
-        //     }
-        // }
-
         return view('reportes.reportesgeneral', compact('reportes', 'solucionados', 'generados', 'revision', 'sucursales', 'fallas', 'estatus', 'r24h'));
     }
 
@@ -74,31 +62,11 @@ class ControllerHardwareReporte extends Controller
                                             ->merge($laptops)
                                             ->merge($impresoras);
 
-        // return view('reportes.misreportes', compact('pc', 'laptops', 'impresoras', 'equipossucursal'));
-
-        
-
 
         $reportes = ReportesHardware::whereHas('usuario', function ($query) use ($id) {
             $query->where('lugar_id', $id);
         })->orderBy('noti_u', 'desc')->orderBy('status_id','asc')->orderBy('id', 'desc')->paginate(10);
 
-        // foreach($reportes as $item){
-        //     $mensaje = Mensaje::where('reporte_id', $item->id)->where('tipo_id', 2)->wherehas('usuario', function($query){
-        //         $query->where('roleid', '!=', 3);
-        //     })
-        //     ->with('usuario')->orderBy('id', 'desc')->get();
-        //     if($mensaje->isNotEmpty()){
-        //         if($item->ultima_revision_u < $mensaje[0]->created_at){
-        //             $item->notificacion =1;
-        //         }else{
-        //             $item->notificacion =0;
-        //         }
-                
-        //     }else{
-        //         $item->notificacion =0;
-        //     }
-        // }
 
         $querygenerados = collect();
         $queryrevision = collect();
@@ -128,6 +96,8 @@ class ControllerHardwareReporte extends Controller
         return view('reportes.create', compact('pc', 'laptops', 'impresoras', 'fallas', 'falla', 'status'));
     }
 
+    //FUNCION PARA CREAR UN REPORTE CON UN EQUIPO YA SELECCIONADO
+
     public function createid($id, $tipo){
 
         $fallas = CategoriaFalla::orderBy('id')->get();
@@ -149,23 +119,7 @@ class ControllerHardwareReporte extends Controller
             return view('reportes.create', compact('equipo', 'tipo', 'fallas', 'falla', 'status'));
         }
 
-        //return view('components.welcome');
-
     }
-
-    // public function redirigirVista(Request $request){
-    //     $id = $request->input('id');
-    //     $tipo = $request->input('tipo');
-
-    //     // Procesar los datos según sea necesario
-    //     // Crear una URL para redirigir a una vista específica
-    //     $redirectUrl = route('reportes.create', ['id' => $id, 'tipo' => $tipo]);
-
-    //     // Responder con la URL
-    //     return response()->json([
-    //         'redirect_url' => $redirectUrl
-    //     ]);
-    // }
 
     public function equipos($cate, $lugar){
 
@@ -182,8 +136,6 @@ class ControllerHardwareReporte extends Controller
             return response()->json($impresora);
 
         }
-    
-
     }
 
     public function getequipo(Request $request){
@@ -272,10 +224,7 @@ class ControllerHardwareReporte extends Controller
     public function detalles($id, $role){
 
         $reporterevision = ReportesHardware::findOrFail($id); 
-
         $soluciones = TipoSolucion::orderBy('id')->where('categoria', '!=', 1)->where('activo', 1)->get();
-        
-        
 
         $mensajes1 = Mensaje::where('reporte_id', $id)->where('tipo_id', 2)->with('usuario', 'reporte')->get();
 
@@ -293,10 +242,6 @@ class ControllerHardwareReporte extends Controller
         }else{
             $confirmar = 1;
         }
-
-
-
-        //return response()->json($reporte);
         $rol = $role;
 
         if($rol == 1 && $reporterevision->tiempo_revision == null){
@@ -384,7 +329,7 @@ class ControllerHardwareReporte extends Controller
         if($rol ==1 || $rol ==2){
             $reporte->solucionado_tecnico = 1;
             $reporte->idtecnico = $request->tecnico;
-            // $reporte->solucion = $request->options;
+            
             $reporte->save();
             $borraranterior = SolucionTemp::where('reporte_id', $id)->get();
             foreach($borraranterior as $borrar){
@@ -394,11 +339,11 @@ class ControllerHardwareReporte extends Controller
             $solucion->reporte_id = $reporte->id;
             $solucion->tecnico_id = $request->tecnico;
             $solucion->tipo_reporte = 2;
-            // if($request->extraInput == ""){
-                $solucion->tipo_solucion = $request->options;
-            // }else{
-                $solucion->solucion_mensaje = $request->extraInput;
-            // }
+            
+            $solucion->tipo_solucion = $request->options;
+            
+            $solucion->solucion_mensaje = $request->extraInput;
+            
             $solucion->save();
             return to_route('reportes.general');
         }else{
@@ -441,10 +386,6 @@ class ControllerHardwareReporte extends Controller
         return response()->json(['message' => 'ticket solucionado']);
 
     }
-
-    // public function solucionusuario(Request $request){
-    //     $reporte = re
-    // }
 
     public function delete($id){
         $reporte = ReportesHardware::findOrFail($id);

@@ -37,7 +37,7 @@ class UserController extends Controller
         $usuario = new User();
         $usuario->name = $request->name;
         $usuario->lastname = $request->lastname;
-        $usuario->number = $request->number;
+        $usuario->phone = $request->phone;
         $usuario->lugar_id = $request->sucursal;
         $usuario->roleid = $request->roleid;
         $usuario->password = Hash::make($request->password);
@@ -100,7 +100,7 @@ class UserController extends Controller
         $usuario = User::findOrFail($id);
         $usuario->name = $request->name;
         $usuario->lastname = $request->lastname;
-        $usuario->number = $request->number;
+        $usuario->phone = $request->phone;
         $usuario->email = $request->email;
         $usuario->roleid = $request->roleid;
         $usuario->lugar_id = $request->sucursal;

@@ -101,7 +101,7 @@
                         </div>
                         <div class="col-span-1 md:pt-2">
                             <label for="telefono" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold m-auto">Teléfono: </label>
-                            <label type="text" name="codigo" id="codigo"  class="w-2/4 text-lg m-auto p-0 pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->number }}</label>
+                            <label type="text" name="codigo" id="codigo"  class="w-2/4 text-lg m-auto p-0 pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->phone }}</label>
                         </div>
                 
                     </div>

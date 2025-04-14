@@ -95,7 +95,7 @@ class DatabaseSeeder extends Seeder
         $admin->id = 1;
         $admin->name='administrador';
         $admin->lastname='administrador';
-        $admin->number='04245873003';
+        $admin->phone='04245873003';
         $admin->roleid=1;
         $admin->email='admin@gmail.com';
         $admin->password= bcrypt('Kevin2001*');
@@ -110,7 +110,7 @@ class DatabaseSeeder extends Seeder
         $user->id = 2;
         $user->name='tecnico';
         $user->lastname='admin';
-        $user->number='04265502089';
+        $user->phone='04265502089';
         $user->roleid=2;
         $user->email='tecnico@gmail.com';
         $user->password= bcrypt('Kevin2001*');
@@ -125,7 +125,7 @@ class DatabaseSeeder extends Seeder
         $user->id = 3;
         $user->name='usuario';
         $user->lastname='admin';
-        $user->number='04245503003';
+        $user->phone='04245503003';
         $user->roleid=3;
         $user->email='user@gmail.com';
         $user->password= bcrypt('Kevin2001*');

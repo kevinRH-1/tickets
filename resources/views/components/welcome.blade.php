@@ -28,14 +28,7 @@
       @if ($videos->isEmpty())
 
       @else
-        {{-- <div id="anuncio" class="bg-white rounded-md mt-8 justify-center align-middle text-center">
-          <div class="">titulo</div>
-          <div class="">
-            <a href="https://www.youtube.com/watch?v=XPg5txu_DkA" target="_blank">
-              <img src="https://img.youtube.com/vi/3_g2un5M350/hqdefault.jpg" alt="">
-            </a>
-          </div>
-        </div> --}}
+        
 
         <div class="relative w-full md:max-w-[70%] mx-auto overflow-hidden rounded-lg bg-gray-800 shadow-lg mt-4 border-gray-800 border-2">
           <h1 class="text-center p-2 text-2xl font-semibold text-white">VIDEOS IMPORTANTES</h1>
@@ -164,7 +157,7 @@
               <div class="row flex justify-around">
 
                 <div class="col-sm-4">Nombre: {{ Auth::user()->descripcion }}</div>
-                {{-- <div class="col-sm-4">Teléfono:{{Auth::user()->number}}</div> --}}
+                {{-- <div class="col-sm-4">Teléfono:{{Auth::user()->phone}}</div> --}}
 
                 <div class="col-sm-4">Rol de Usuario: {{ Auth::user()->rol->nombre }}</div>
               </div>
@@ -345,7 +338,7 @@
             <div class="row flex justify-around">
 
               <div class="col-sm-4">Nombre: {{ Auth::user()->descripcion }}</div>
-              {{-- <div class="col-sm-4">Teléfono:{{Auth::user()->number}}</div> --}}
+              {{-- <div class="col-sm-4">Teléfono:{{Auth::user()->phone}}</div> --}}
 
               <div class="col-sm-4">Rol de Usuario: {{ Auth::user()->rol->nombre }}</div>
             </div>

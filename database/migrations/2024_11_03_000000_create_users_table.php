@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('descripcion')->nullable();
-            $table->string('lastname');
-            $table->string('number');
+            // $table->string('lastname');
+            $table->string('phone')->nullable();
             $table->unsignedBigInteger('lugar_id')->nullable();
             $table->foreign('lugar_id')->references('id')->on('sucursals')->onDelete('set null');
             $table->unsignedBigInteger('roleid');

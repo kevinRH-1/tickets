@@ -78,9 +78,11 @@ class DashboardController extends Controller
 
 
         $sucursales = Sucursal::where('activo', 1)->get();
-
         return view('components.welcome', compact('sucursales','cantidaddia', 'cantidadmes', 'cantidadsinrevisar', 'cantidadrevision', 'ticketprogreso', 'progresousuariototal', 'usuariototal', 'equipostotales', 'cantidadFiltrados', 'videos'));
     }
+
+
+    //FUNCION PARA MOSTRAR GRAFICOS EN EL DASHBOARD
 
 
     public function graficos($tiempo){
