@@ -437,6 +437,45 @@
                       </div>
                   </div>
                 </div>
+
+                {{-- MODAL PARA SELECCIONAR USUARIO --}}
+
+
+                <div class="modal fade" id="verusuarios" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="exampleModalLabel">Elegir usuario</h1>
+                              <button class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close" onclick="cerrarmodalusuario()"></button>
+                          </div>
+                          <div class="modal-body">
+                              <div class="mb-4 w-11/12 mx-auto text-center flex justify-center">
+                                  <input type="text" class="form-control" id="buscarusuarios" placeholder="Buscar usuario...">
+                              </div>
+              
+                              <div id="usuarios" class="max-h-[570px] overflow-auto">
+                                  <table class="w-11/12 mx-auto">
+                                      <tbody id="tablaUsuarios">
+                                          @foreach ($usuarios as $item)
+                                              <tr class="fila-usuario" onclick="usuarioporsucursal()">
+                                                  <td class="border border-black p-3 rounded-sm hover:cursor-pointer w-full" nombre="nombre">
+                                                      {{ $item->descripcion }}
+                                                  </td>
+                                                  <td hidden id="id">{{$item->id}}</td>
+                                              </tr>
+                                          @endforeach
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+
+
+
+
                 <div class="modal fade mt-[20%]" id="confirmar" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
                   <div class="modal-dialog">
                       <div class="modal-content p-4">
@@ -1069,32 +1108,73 @@
       function esperar(ms) {
           return new Promise(resolve => setTimeout(resolve, ms));
       }
+
+      if(formData.sucursal==0){
+        $('#modalasignar').modal('hide');
+        $('#verusuarios').modal('show')
+
+
+      }else{
+        $.ajax({
+          url:'asignar/' +id+'/'+type,
+          type:'POST',
+          data: formData,
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF Token
+          },  
+          success: function(response) {
+            $('#modalasignar').modal('hide');
+            $('#mensaje').text('Sucursal asignada con exito!');
+            $('#modalmensaje').modal('show');
+            setTimeout(() => {
+                location.reload();
+              }, 2000);
+            
+          },
+          error: function(xhr) {
+            // Manejar errores (opcional)
+            alert('Error al asignar sucursal');
+          }
+
+        })
+      }
+
       //console.log(type);
 
-      $.ajax({
-        url:'asignar/' +id+'/'+type,
-        type:'POST',
-        data: formData,
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF Token
-        },  
-        success: function(response) {
-          $('#modalasignar').modal('hide');
-          $('#mensaje').text('Sucursal asignada con exito!');
-          $('#modalmensaje').modal('show');
-          setTimeout(() => {
-              location.reload();
-            }, 2000);
-          
-        },
-        error: function(xhr) {
-          // Manejar errores (opcional)
-          alert('Error al asignar sucursal');
-        }
-
-      })
+      
     })
   })
+
+  
+
+  document.addEventListener("DOMContentLoaded", function () {
+      const inputBuscar = document.getElementById('buscarusuarios');
+      const filas = document.querySelectorAll('.fila-usuario');
+
+      inputBuscar.addEventListener('input', function () {
+          const texto = this.value.toLowerCase();
+
+          if (texto.length < 3) {
+              filas.forEach(fila => fila.style.display = '');
+              return;
+          }
+
+          filas.forEach(fila => {
+              const textoFila = fila.textContent.toLowerCase();
+              fila.style.display = textoFila.includes(texto) ? '' : 'none';
+          });
+      });
+  });
+
+  function usuarioporsucursal(){
+    var id = $(event.currentTarget).find("td[id]").text().trim(); // Obtén el id correctamente
+    var nombre = $(event.currentTarget).find("td[nombre]").text().trim(); // Obtén el nombre correctamente
+
+    console.log(nombre);
+    console.log(id);
+  }
+
+
 
   
 

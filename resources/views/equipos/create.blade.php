@@ -174,42 +174,36 @@
         }else{
             $('#nombre-error').attr('hidden', true);
         }
-
         if(!form.marca||form.marca.trim()===''){
             $('#marca-error').removeAttr('hidden');
             valido = false;
         }else{
             $('#marca-error').attr('hidden', true);
         }
-
         if(!form.modelo||form.modelo.trim()===''){
             $('#modelo-error').removeAttr('hidden');
             valido = false;
         }else{
             $('#modelo-error').attr('hidden', true);
         }
-
         if(!form.procesador||form.procesador.trim()===''){
             $('#procesador-error').removeAttr('hidden');
             valido = false;
         }else{
             $('#procesador-error').attr('hidden', true);
         }
-
         if(!form.ram||form.ram.trim()===''){
             $('#ram-error').removeAttr('hidden');
             valido = false;
         }else{
             $('#ram-error').attr('hidden', true);
         }
-
         if(!form.almacenamiento||form.almacenamiento.trim()===''){
             $('#almacenamiento-error').removeAttr('hidden');
             valido = false;
         }else{
             $('#almacenamiento-error').attr('hidden', true);
         }
-
         return valido;
     }
 
@@ -238,7 +232,7 @@
            $('#confirmar #bsucursal').text(lugartext);
            $('#confirmar').modal('show');
 
-            $(document).on('click', '#confirmYes', function(){
+            $(document).off('click', '#confirmYes').on('click', '#confirmYes', function(){
                 $.ajax({
                     url:'/equipos/store',
                     data:formData,

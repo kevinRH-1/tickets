@@ -31,7 +31,7 @@ class EquipoController extends Controller
         $impresorasc = Impresoras::with('categoria', 'lugar', 'estado')->where('activo',1)->orderBy('id')->get();
         $pcsc = Pc::with('categoria', 'lugar', 'estado')->where('activo',1)->orderBy('id')->get();
         $laptopsc = Laptops::with('categoria', 'lugar', 'estado')->where('activo',1)->orderBy('id')->get();
-        $usuarios= User::orderby('name')->where('activo',1)->get();
+        $usuarios= User::orderby('name')->where('activo',1)->where('lugar_id', 0)->get();
         $categorias= CategoriasEquipos::orderby('id')->get();
         $sucursales= Sucursal::orderby('id')->where('activo', 1)->get();
         $estados = EstadosEquipos::orderby('id')->get();

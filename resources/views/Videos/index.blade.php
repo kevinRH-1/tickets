@@ -13,10 +13,7 @@
 
         <div id="listaVideos">
             @forelse ($videos as $item)
-                <div 
-                    class="flex flex-col md:flex-row mb-6 border-b pb-4 video-item"
-                    data-nombre="{{ Str::lower($item->nombre) }}"
-                >
+                <div class="flex flex-col md:flex-row mb-6 border-b pb-4 video-item" data-nombre="{{ Str::lower($item->nombre) }}">
                     <a href="{{$item->link}}">
                         <img 
                             src="https://img.youtube.com/vi/{{$item->codigo}}/hqdefault.jpg" 

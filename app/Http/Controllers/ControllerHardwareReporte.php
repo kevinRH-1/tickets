@@ -19,6 +19,7 @@ use App\Models\statusReporte;
 use App\Models\Sucursal;
 use App\Models\TipoFalla;
 use App\Models\TipoSolucion;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
