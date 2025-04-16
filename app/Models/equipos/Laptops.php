@@ -7,6 +7,7 @@ use App\Models\EstadosEquipos;
 use App\Models\CategoriasEquipos;
 use App\Models\Sucursal;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 class Laptops extends Model
 {
@@ -23,6 +24,10 @@ class Laptops extends Model
 
     public function lugar(){
         return $this->belongsTo(Sucursal::class);
+    }
+
+    public function usuario(){
+        return $this->belongsTo(User::class, 'userid', 'id');
     }
 
     public static function generateUniqueCode(){

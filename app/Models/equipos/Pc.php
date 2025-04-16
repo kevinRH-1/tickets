@@ -5,6 +5,7 @@ namespace App\Models\equipos;
 use App\Models\CategoriasEquipos;
 use App\Models\EstadosEquipos;
 use App\Models\Sucursal;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -24,6 +25,10 @@ class Pc extends Model
 
     public function lugar(){
         return $this->belongsTo(Sucursal::class);
+    }
+
+    public function usuario(){
+        return $this->belongsTo(User::class, 'userid', 'id');
     }
 
     public static function generateUniqueCode()

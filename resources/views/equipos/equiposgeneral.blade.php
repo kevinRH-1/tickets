@@ -144,7 +144,7 @@
                         <thead class="bg-gray-800 text-white rounded-t-lg">
                     
                           <th class="text-center p-4 hidden md:table-cell rounded-tl-lg">Codigo</th>
-                          <th class="text-center p-4 hidden md:table-cell">Departamento o sucursal</th>
+                          <th class="text-center p-4 hidden md:table-cell">Departamento/sucursal <br> o usuario</th>
                           <th class="text-center p-4 hidden md:table-cell">Nombre</th>
                           <th class="text-center p-4  md:hidden ">Datos</th>
                           <th class="text-center p-4" hidden>Categoria</th>
@@ -162,7 +162,7 @@
                           <tr class="odd:bg-white even:bg-gray-100 border-r-2 border-l-2 border-b-2 border-gray-200"> 
                               <td class="text-center p-4" hidden id="id">{{$item->id}}</td>
                               <td class="text-center p-4 hidden md:table-cell">{{$item->codigo}}</td>
-                              <td class="text-center p-4 hidden md:table-cell">{{$item->lugar?->nombre?? 'sin sucursal'}}</td>
+                              <td class="text-center p-4 hidden md:table-cell">{{$item->lugar?->nombre?? $item->usuario?->descripcion?? 'sin sucursal'}}</td>
                               <td class="text-center p-4 hidden md:table-cell" nombre="nombre">{{$item->descripcion}}</td>
                               <td class="text-left p-1 pt-1  md:hidden" datos="datos"><h1 class="text-lg font-semibold">{{ \Illuminate\Support\Str::limit($item->descripcion, 35, '...')}}</h1><p class="pt-2">{{$item->codigo}}</p><p class="pt-1">{{$item->estado->descripcion}}</p></td>
                               <td class="text-center p-4" hidden categoria='1'>{{$item->categoria_id?? 'sin categoria'}}</td>
@@ -195,7 +195,7 @@
                     <thead class="bg-gray-800 text-white rounded-t-lg">
                 
                         <th class="text-center p-4 hidden md:table-cell rounded-tl-lg">Codigo</th>
-                        <th class="text-center p-4 hidden md:table-cell">Departamento o sucursal</th>
+                        <th class="text-center p-4 hidden md:table-cell">Departamento/sucursal <br> o usuario</th>
                         <th class="text-center p-4 hidden md:table-cell">Nombre</th>
                         <th class="text-center p-4 md:hidden rounded-tl-lg">Datos</th>
                         <th class="text-center p-4" hidden>Categoria</th>
@@ -213,7 +213,7 @@
                         <tr class="odd:bg-white even:bg-gray-100 border-r-2 border-l-2 border-b-2 border-gray-200"> 
                             <td class="text-center p-4" hidden id="id">{{$item->id}}</td>
                             <td class="text-center p-4 hidden md:table-cell">{{$item->codigo}}</td>
-                            <td class="text-center p-4 hidden md:table-cell">{{$item->lugar?->nombre?? 'sin sucursal'}}</td>
+                            <td class="text-center p-4 hidden md:table-cell">{{$item->lugar?->nombre?? $item->usuario?->descripcion?? 'sin sucursal'}}</td>
                             <td class="text-center p-4 hidden md:table-cell" nombre="nombre">{{$item->descripcion}}</td>
                             <td class="text-left p-1 pt-1  md:hidden" datos="datos"><h1 class="text-lg font-semibold">{{ \Illuminate\Support\Str::limit($item->descripcion, 20, '...')}}</h1><p class="pt-2">{{$item->codigo}}</p><p class="pt-1">{{$item->estado->descripcion}}</p></td>
                             <td class="text-center p-4" hidden categoria='1' >{{$item->categoria_id}}</td>
@@ -244,7 +244,7 @@
                   <thead class="bg-gray-800 text-white rounded-t-lg">
               
                       <th class="text-center p-4 hidden md:table-cell rounded-tl-lg">Codigo</th>
-                      <th class="text-center p-4 hidden md:table-cell">Departamento o sucursal</th>
+                      <th class="text-center p-4 hidden md:table-cell">Departamento/sucursal <br> o usuario</th>
                       <th class="text-center p-4 hidden md:table-cell">Nombre</th>
                       <th class="text-center p-4 md:hidden rounded-tl-lg">Datos</th>
                       <th class="text-center p-4" hidden>Categoria</th>
@@ -259,7 +259,7 @@
                       <tr class="odd:bg-white even:bg-gray-100 border-r-2 border-l-2 border-b-2 border-gray-200"> 
                           <td class="text-center p-4" hidden id="id">{{$item->id}}</td>
                           <td class="text-center p-4 hidden md:table-cell">{{$item->codigo}}</td>
-                          <td class="text-center p-4 hidden md:table-cell">{{$item->lugar?->nombre?? 'sin sucursal'}}</td>
+                          <td class="text-center p-4 hidden md:table-cell">{{$item->lugar?->nombre?? $item->usuario?->descripcion?? 'sin sucursal'}}</td>
                           <td class="text-center p-4 hidden md:table-cell" nombre="nombre">{{$item->descripcion}}</td>
                           <td class="text-left p-1 pt-1  md:hidden" datos="datos"><h1 class="text-lg font-semibold">{{ \Illuminate\Support\Str::limit($item->descripcion, 20, '...')}}</h1><p class="pt-2">{{$item->codigo}}</p><p class="pt-1">{{$item->estado->descripcion}}</p></td>
                           <td class="text-center p-4" hidden categoria='1'>{{$item->categoria_id}}</td>
@@ -450,15 +450,15 @@
                           </div>
                           <div class="modal-body">
                               <div class="mb-4 w-11/12 mx-auto text-center flex justify-center">
-                                  <input type="text" class="form-control" id="buscarusuarios" placeholder="Buscar usuario...">
+                                  <input type="text" class="form-control mt-1 block w-full rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm" id="buscarusuarios" placeholder="Buscar usuario...">
                               </div>
               
                               <div id="usuarios" class="max-h-[570px] overflow-auto">
-                                  <table class="w-11/12 mx-auto">
-                                      <tbody id="tablaUsuarios">
+                                  <table class="w-11/12 mx-auto border-separate border-spacing-y-2">
+                                      <tbody id="tablaUsuarios" class="space-y-2">
                                           @foreach ($usuarios as $item)
-                                              <tr class="fila-usuario" onclick="usuarioporsucursal()">
-                                                  <td class="border border-black p-3 rounded-sm hover:cursor-pointer w-full" nombre="nombre">
+                                              <tr class="fila-usuario my-2" onclick="usuarioporsucursal()">
+                                                  <td class=" p-3 rounded-md border border-gray-200 bg-gray-100 hover:cursor-pointer hover:bg-gray-200 shadow-md w-full" nombre="nombre">
                                                       {{ $item->descripcion }}
                                                   </td>
                                                   <td hidden id="id">{{$item->id}}</td>
@@ -630,6 +630,7 @@
                               <option value="{{$item->id}}">{{$item->nombre}}</option>
                             @endforeach
                           </select>
+                          <label for="" id="usuariosele" hidden class="text-center"></label>
                         </div>
             
               
@@ -807,6 +808,10 @@
         console.log(type);
         console.log(id);
 
+        $('#agregarusuario').attr('id', 'agregarsucursal');
+        $('#usuariosele').attr('hidden', true);
+        $('#asignarsele').removeAttr('hidden');
+
         var ruta = '/consulta-datos/' +id;
         console.log(ruta);
 
@@ -943,7 +948,7 @@
                 $(" #modalModificarpc #idact").val(datos.id);
                 console.log(datos.lugar_id);
 
-                if(datos.lugar_id == null){
+                if(datos.lugar_id == null && datos.userid==null){
                   divs[0].classList.remove("oculto");
                   divs[1].classList.add("oculto");
                 }else{
@@ -1172,6 +1177,49 @@
 
     console.log(nombre);
     console.log(id);
+
+    $("form #modalasignar #asignarsele").attr('hidden', true);
+    $("form #modalasignar #usuariosele").text(nombre);
+    $("form #modalasignar #usuariosele").removeAttr('hidden');
+    $('#agregarsucursal').attr('id', 'agregarusuario');
+    
+    $('#verusuarios').modal('hide');
+    $('#modalasignar').modal('show');
+
+    $(document).off('click', '#agregarusuario').on('click', '#agregarusuario', function(){
+      event.preventDefault();
+      console.log('agregando usuario');
+      const formData = {
+        usuario: id,
+        type : $("form #modalasignar #tipo").text(),
+        id :  $("form #modalasignar #id").text(),
+      };
+      $.ajax({
+        url:'asignarusuario',
+        type:'POST',
+        data: formData,
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF Token
+        },
+        success: function(response){
+          $('#modalasignar').modal('hide');
+          $('#mensaje').text('Usuario asignado con exito!');
+          $('#modalmensaje').modal('show');
+          setTimeout(() => {
+              location.reload();
+            }, 2000);
+        },
+        error: function(xhr){
+          $('#modalasignar').modal('hide');
+          $('#mensaje').text('Error al asignar el usuario!');
+          $('#modalmensaje').modal('show');
+          setTimeout(() => {
+              location.reload();
+            }, 2000);
+        }
+      })
+    })
+
   }
 
 

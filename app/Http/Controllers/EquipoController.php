@@ -121,12 +121,14 @@ class EquipoController extends Controller
         if($cate==1){
             $pc = Pc::findOrFail($id);
             $pc->lugar_id = $request->lugar;
+            $pc->userid = null;
             $pc->save();
 
             return response()->json(['message'=>'sucursal quitada']);
         }else if($cate==2){
             $laptop = Laptops::findOrFail($id);
             $laptop->lugar_id = $request->lugar;
+            $laptop->userid = null;
             $laptop->save();
 
             return response()->json(['message'=>'sucursal quitada']);
@@ -134,6 +136,7 @@ class EquipoController extends Controller
         }else if($cate==3){
             $impresora = Impresoras::findOrFail($id);
             $impresora->lugar_id = $request->lugar;
+            $impresora->userid = null;
             $impresora->save();
 
             return response()->json(['message'=>'sucursal quitada']);
@@ -163,6 +166,26 @@ class EquipoController extends Controller
 
             $impresora->save();
             return response()->json(['message'=>'sucursal asignada']);
+        }
+    }
+
+
+    public function asignarusuario(Request $request){
+        if($request->type==1){
+            $pc = pc::findOrFail($request->id);
+            $pc->userid = $request->usuario;
+            $pc->save();
+            return response()->json(['message'=>'usuario asignado']);
+        }else if($request->type==2){
+            $laptop = Laptops::findOrFail($request->id);
+            $laptop->userid = $request->usuario;
+            $laptop->save();
+            return response()->json(['message'=>'usuario asignado']);
+        }else if($request->type==3){
+            $impresora = Impresoras::findOrFail($request->id);
+            $impresora->userid = $request->usuario;
+            $impresora->save();
+            return response()->json(['message'=>'usuario asignado']);
         }
     }
 

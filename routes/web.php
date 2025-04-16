@@ -127,6 +127,7 @@ Route::middleware([
     Route::get('/consulta-datos/{id}/{tipo}', [EquipoController::class,'datos'])->name('equipo.datos');
     Route::post('quitar/{id}/{cate}',[EquipoController::class, 'quitar'])->name('equipo.quitar');
     Route::post('asignar/{id}/{cate}',[EquipoController::class, 'asignar'])->name('equipo.asignar');
+    Route::post('asignarusuario', [EquipoController::class, 'asignarusuario'])->name('asignar.usuario');
     Route::post('actualizar/{id}/{cate}',[EquipoController::class, 'update'])->name('equipo.update');
     Route::post('equipos/store', [EquipoController::class, 'store'])->name('equipo.store');
     Route::delete('equipo/eliminar/{id}/{cate}', [EquipoController::class, 'eliminar'])->name('equipo.eliminar');

@@ -7,6 +7,7 @@ use App\Models\CategoriasEquipos;
 use App\Models\Sucursal;
 use App\Models\EstadosEquipos;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 class Impresoras extends Model
 {
@@ -24,6 +25,10 @@ class Impresoras extends Model
 
     public function lugar(){
         return $this->belongsTo(Sucursal::class, 'lugar_id', 'id');
+    }
+
+    public function usuario(){
+        return $this->belongsTo(User::class, 'userid', 'id');
     }
 
     public static function generateUniqueCode(){
