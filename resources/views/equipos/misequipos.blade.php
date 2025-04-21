@@ -19,7 +19,11 @@
 
       <!-- Título en el centro -->
       <h1 class="text-lg font-semibold text-gray-800 text-center md:ml-10">
-          MIS EQUIPOS | {{Auth::user()->sucursal->nombre}}
+          MIS EQUIPOS  @if(Auth::user()->lugar_id==0)
+                        
+                        @else
+                        | {{Auth::user()->sucursal->nombre}}
+                        @endif
       </h1>
 
       <!-- Botón derecho -->

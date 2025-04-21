@@ -93,16 +93,27 @@ class EquipoController extends Controller
     }
 
     public function misequipos($id){
-        $pcs = Pc::where('lugar_id', $id)->where('activo',1)->with('lugar', 'categoria', 'estado')->paginate(10);
-        $laptops = Laptops::where('lugar_id', $id)->where('activo',1)->paginate(10);
-        $impresoras = Impresoras::where('lugar_id', $id)->where('activo',1)->paginate(10);
-        $estados = EstadosEquipos::orderBy('id')->get();
-        $sucursales = Sucursal::orderBy('id')->where('activo', 1)->get();
+        $usuario = User::findOrFail($id);
+        if($usuario->lugar_id!=0){
+            $suc= $usuario->lugar_id;
+            $pcs = Pc::where('lugar_id', $suc)->where('activo',1)->with('lugar', 'categoria', 'estado')->paginate(10);
+            $laptops = Laptops::where('lugar_id', $suc)->where('activo',1)->paginate(10);
+            $impresoras = Impresoras::where('lugar_id', $suc)->where('activo',1)->paginate(10);
+            $estados = EstadosEquipos::orderBy('id')->get();
+            $sucursales = Sucursal::orderBy('id')->where('activo', 1)->get();
 
+            return view('equipos.misequipos', compact('pcs', 'laptops', 'impresoras', 'estados', 'sucursales'));
+        }else{
+            $pcs = Pc::where('userid', $id)->where('activo',1)->with('lugar', 'categoria', 'estado')->paginate(10);
+            $laptops = Laptops::where('userid', $id)->where('activo',1)->paginate(10);
+            $impresoras = Impresoras::where('userid', $id)->where('activo',1)->paginate(10);
+            $estados = EstadosEquipos::orderBy('id')->get();
+            $sucursales = Sucursal::orderBy('id')->where('activo', 1)->get();
 
-        return view('equipos.misequipos', compact('pcs', 'laptops', 'impresoras', 'estados', 'sucursales'));
-
+            return view('equipos.misequipos', compact('pcs', 'laptops', 'impresoras', 'estados', 'sucursales'));
+        }
     }
+    
 
     public function datos($id, $tipo){
         if($tipo ==1 ){

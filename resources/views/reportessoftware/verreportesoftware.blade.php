@@ -7,7 +7,6 @@
             display: none;
         }
     </style>
-
     @php
         $colores = [
             1 => 'text-emerald-500',
@@ -74,7 +73,7 @@
             @endif
         @endif
 
-        <!-- Sección 1: Datos del Equipo -->
+        
         <div class="grid grid-cols-4 gap-2">
             <div class="bg-white md:!p-10 p-2 !pt-6 rounded-lg shadow-md  w-11/12 m-auto md:mt-4 md:col-span-3 col-span-4">
                 <div class=" text-left border-b-2 border-gray-300 md:!pb-5 md!:mb-0 pb-8">
@@ -188,7 +187,6 @@
                     <input type="text" name="solucion" id="solucion" value="sin solucionar" class="w-3/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                 @endif
             </div>
-        
         </div>
 
         @if($reporte[0]?->solucionado_tecnico && $reporte[0]->status_id !=5)

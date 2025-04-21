@@ -463,6 +463,14 @@
                         }]
                     },
                     options: {
+                        onClick: (event, elements, chart) => {
+                          if (elements.length > 0) {
+                            const index = elements[0].index;
+                            const label = chart.data.labels[index];
+                            const valor = chart.data.datasets[0].data[index];
+                            segmentoClickeado(label, valor); // Llama tu función personalizada
+                          }
+                        },
                         responsive: true,
                         plugins: {
                             legend: {
@@ -503,6 +511,14 @@
                         }]
                     },
                     options: {
+                        onClick: (event, elements, chart) => {
+                          if (elements.length > 0) {
+                            const index = elements[0].index;
+                            const label = chart.data.labels[index];
+                            const valor = chart.data.datasets[0].data[index];
+                            segmentoClickeado(label, valor); // Llama tu función personalizada
+                          }
+                        },
                         responsive: true,
                         plugins: {
                             legend: {
@@ -583,6 +599,14 @@
                         }]
                     },
                     options: {
+                        onClick: (event, elements, chart) => {
+                          if (elements.length > 0) {
+                            const index = elements[0].index;
+                            const label = chart.data.labels[index];
+                            const valor = chart.data.datasets[0].data[index];
+                            segmentoClickeado(label, valor); // Llama tu función personalizada
+                          }
+                        },
                         responsive: true,
                         plugins: {
                             legend: {
@@ -622,6 +646,14 @@
                         }]
                     },
                     options: {
+                        onClick: (event, elements, chart) => {
+                          if (elements.length > 0) {
+                            const index = elements[0].index;
+                            const label = chart.data.labels[index];
+                            const valor = chart.data.datasets[0].data[index];
+                            segmentoClickeado(label, valor); // Llama tu función personalizada
+                          }
+                        },
                         responsive: true,
                         plugins: {
                             legend: {
@@ -653,6 +685,11 @@
                 }
                 
             });
+    }
+
+    function segmentoClickeado(label, valor) {
+      console.log('Segmento clickeado:', label, 'con valor:', valor);
+      // Aquí puedes hacer lo que quieras con la información
     }
         
 
