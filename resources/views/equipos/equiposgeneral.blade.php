@@ -119,10 +119,14 @@
         </div>
         <div class=" bg-white border-0 rounded-tr-lg shadow mb-5 pt-3 ">
 
+          
+
           <div class="d-grid gap-2 hidden md:block d-md-flex justify-content-md-end  mr-10">
+            <input type="text" id="search" placeholder="Buscar por nombre..." class=" form-control md:w-[300px]  h-[50px] rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm col-span-4">
             <button class="p-2 md:mb-4 mb-2 bg-emerald-500 rounded-md text-white md:w-40 mt-2 md:mt-0  ml-2 md:ml-0 hidden md:block" onclick="mostrarfiltro()">FILTRAR</button>
             <button type="button" class="btn btn-primary hidden md:block mt-2 mb-2" data-bs-toggle="modal" data-bs-target="#modalAgregarEquipo"><i class="bi bi-check2-square"></i>
                 Agregar</button>
+
           </div>
 
           <div class="w-full md:!hidden flex flex-col items-end">
@@ -140,7 +144,7 @@
                 <hr>
                 <div id="tablaEquiposLoad" class="oculto">
                     <div class="overflow-x-auto">
-                      <table class="table-auto w-full  border-gray-200  rounded-t-lg " id="tablaEquiposDataTable">
+                      <table class="table-auto w-full  border-gray-200  rounded-t-lg" name="" id="tablaEquiposDataTable">
                         <thead class="bg-gray-800 text-white rounded-t-lg">
                     
                           <th class="text-center p-4 hidden md:table-cell rounded-tl-lg">Codigo</th>
@@ -159,7 +163,7 @@
                       </thead>
                       <tbody>
                           @foreach($pcs as $item)
-                          <tr class="odd:bg-white even:bg-gray-100 border-r-2 border-l-2 border-b-2 border-gray-200"> 
+                          <tr class="odd:bg-white even:bg-gray-100 border-r-2 border-l-2 border-b-2 border-gray-200 tablapc"> 
                               <td class="text-center p-4" hidden id="id">{{$item->id}}</td>
                               <td class="text-center p-4 hidden md:table-cell">{{$item->codigo}}</td>
                               <td class="text-center p-4 hidden md:table-cell">{{$item->lugar?->nombre?? $item->usuario?->descripcion?? 'sin sucursal'}}</td>
@@ -210,7 +214,7 @@
                     </thead>
                     <tbody>
                         @foreach($laptops as $item)
-                        <tr class="odd:bg-white even:bg-gray-100 border-r-2 border-l-2 border-b-2 border-gray-200"> 
+                        <tr class="odd:bg-white even:bg-gray-100 border-r-2 border-l-2 border-b-2 border-gray-200 tablalap"> 
                             <td class="text-center p-4" hidden id="id">{{$item->id}}</td>
                             <td class="text-center p-4 hidden md:table-cell">{{$item->codigo}}</td>
                             <td class="text-center p-4 hidden md:table-cell">{{$item->lugar?->nombre?? $item->usuario?->descripcion?? 'sin sucursal'}}</td>
@@ -256,7 +260,7 @@
                   </thead>
                   <tbody>
                       @foreach($impresoras as $item)
-                      <tr class="odd:bg-white even:bg-gray-100 border-r-2 border-l-2 border-b-2 border-gray-200"> 
+                      <tr class="odd:bg-white even:bg-gray-100 border-r-2 border-l-2 border-b-2 border-gray-200 tablaimp"> 
                           <td class="text-center p-4" hidden id="id">{{$item->id}}</td>
                           <td class="text-center p-4 hidden md:table-cell">{{$item->codigo}}</td>
                           <td class="text-center p-4 hidden md:table-cell">{{$item->lugar?->nombre?? $item->usuario?->descripcion?? 'sin sucursal'}}</td>
@@ -1170,6 +1174,42 @@
           });
       });
   });
+
+
+  document.addEventListener("DOMContentLoaded", function(){
+    const input = document.getElementById('search');
+    const pc = document.querySelectorAll('.tablapc');
+    const laptop = document.querySelectorAll('.tablalap');
+    const impresora = document.querySelectorAll('.tablaimp');
+
+    input.addEventListener('input', function(){
+      const texto= this.value.toLowerCase();
+
+      if (texto.length < 3){
+        pc.forEach(fila => fila.style.display = '');
+        laptop.forEach(fila => fila.style.display = '');
+        impresora.forEach(fila => fila.style.display = '');
+        return;
+      }
+      pc.forEach(fila=> {
+        const textoe = fila.textContent.toLowerCase();
+        fila.style.display = textoe.includes(texto)? '': 'none';
+      })
+      laptop.forEach(fila=> {
+        const textoe = fila.textContent.toLowerCase();
+        fila.style.display = textoe.includes(texto)? '': 'none';
+      })
+      impresora.forEach(fila=> {
+        const textoe = fila.textContent.toLowerCase();
+        fila.style.display = textoe.includes(texto)? '': 'none';
+      })
+      
+
+
+    })
+
+
+  })
 
   function usuarioporsucursal(){
     var id = $(event.currentTarget).find("td[id]").text().trim(); // Obtén el id correctamente
