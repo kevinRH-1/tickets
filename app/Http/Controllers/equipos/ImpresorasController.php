@@ -12,7 +12,7 @@ class ImpresorasController extends Controller
         $request = request();
 
         $impresora = new Impresoras();
-        $impresora->id = $request->id;
+        // $impresora->id = $request->id;
         $impresora->codigo = Impresoras::generateUniqueCode();
         $impresora->lugar_id = $request->lugarpc;
         $impresora->categoria_id = $request->categoria;

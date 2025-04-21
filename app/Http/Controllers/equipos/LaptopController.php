@@ -13,7 +13,7 @@ class LaptopController extends Controller
         $request = request();
 
         $laptop = new Laptops();
-        $laptop->id = $request->id;
+        // $laptop->id = $request->id;
         $laptop->codigo = Laptops::generateUniqueCode();
         $laptop->lugar_id = $request->lugarpc;
         $laptop->categoria_id = $request->categoria;
