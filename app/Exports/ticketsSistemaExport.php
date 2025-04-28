@@ -58,14 +58,14 @@ class ticketsSistemaExport implements FromCollection, WithMapping, ShouldAutoSiz
         $result[]=[
             $reportes['codigo'],
             $reportes->usuario->sucursal->nombre,
-            $reportes->usuario->name,
+            $reportes->usuario->descripcion,
             $reportes->sistema->nombre,
             isset($reportes->modulo) ? $reportes->modulo->nombre : 'sin modulo',
             isset($reportes->falla)? $reportes->falla->descripcion : 'no es problema comun',
             $reportes->created_at->format('d/m/Y'),
             isset($reportes)? $reportes->tiempo_solucion : 'sin solucionar',
             $tiempo,
-            isset($reportes->tecnico)? $reportes->tecnico->name : 'sin tecnico',
+            isset($reportes->tecnico)? $reportes->tecnico->descripcion : 'sin tecnico',
         ];
 
         return $result;
