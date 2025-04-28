@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-
-
-
 @section('content')
 
 <head>
@@ -450,6 +447,7 @@
                 const labels = Object.keys(data);
                 const counts = Object.values(data);
                 console.log(data);
+                let corta = labels.some(element => element.length > 2);
 
                 const ctx = document.getElementById('graficosucursal').getContext('2d');
                 if(pantalla){
@@ -476,7 +474,7 @@
                             legend: {
                                 position: '',
                                 labels: {
-                                  boxWidth: 20,
+                                  boxWidth: corta ? 20: 100,
                                   padding: 10,
                                   // Puedes usar esta función para acortar nombres si son muy largos
                                   generateLabels: function(chart) {
@@ -524,7 +522,7 @@
                             legend: {
                                 position:'right',
                                 labels: {
-                                  boxWidth: 20,
+                                  boxWidth: corta ? 20: 100,
                                   padding: 10,
                                   // Puedes usar esta función para acortar nombres si son muy largos
                                   generateLabels: function(chart) {

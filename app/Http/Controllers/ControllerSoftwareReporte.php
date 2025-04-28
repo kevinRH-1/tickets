@@ -39,7 +39,7 @@ class ControllerSoftwareReporte extends Controller
         $sistemas = Sistemas::orderBy('id')->get();
         $estatus = statusReporte::orderBy('id')->get();
         $nivel = Importancias::orderBy('id')->get();
-
+    
 
         return view('reportessoftware.index', compact('reportes', 'generados', 'revision', 'solucionados24', 'totales24', 'sucursales', 'sistemas', 'estatus', 'nivel'));
     }
