@@ -171,6 +171,21 @@ class DashboardController extends Controller
         
     }
 
+    public function graficossistema($tiempo){
+        if($tiempo==0){
+            $reportes = ReportesSoftware::with('sistema')
+                ->get()
+                ->groupBy('sistema.nombre')
+                ->map(function ($item){
+                    return count($item);
+                })
+                ->sortDesc();
+
+
+            return response()->json($reportes);
+        }
+    }
+
 
 
 

@@ -128,6 +128,12 @@
               <canvas id="graficoestado" width="50" height="50"></canvas>
             </div>
           </div>
+          <div class="flex w-[80%] mx-auto">
+            <div class="w-[40%]">
+              {{-- <h2>Gráfico de Pastel Dinámico</h2> --}}
+              <canvas id="graficosistema" width="50" height="50"></canvas>
+            </div>
+          </div>
         </div>
           
           
@@ -416,6 +422,7 @@
     document.addEventListener('DOMContentLoaded', function () {
       cargargrafica1();
       cargargrafica2();
+      cargargrafica3();
     });
 
     function cargargraficas(){
@@ -658,6 +665,134 @@
                                 position: 'right',
                                 labels: {
                                   boxWidth: larga ? 20: 80,
+                                  padding: 10,
+                                  // Puedes usar esta función para acortar nombres si son muy largos
+                                  generateLabels: function(chart) {
+                                    const original = Chart.overrides.doughnut.plugins.legend.labels.generateLabels(chart);
+                                    return original.map(label => ({
+                                      ...label,
+                                      text: label.text.length > 20 ? label.text.slice(0, 20) + '...' : label.text
+                                    }));
+                                  }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: titulo,
+                                font:{
+                                  size:14,
+                                  weight:'bold'
+                                },
+                            }
+                        }
+                    }
+                  });
+                }
+                
+            });
+    }
+
+
+    function cargargrafica3(){
+      var pantalla =  window.innerWidth < 700;
+      let titulo;
+      const tiempo = $('#tiempo').val();
+      if(tiempo==0){
+        titulo = 'Cantidad de Reportes por Sistema'
+      }else if(tiempo==1){
+        titulo = 'Reportes por Sistema del Dia'
+      }else if(tiempo==2){
+        titulo = 'Reportes por Sistema de la Semana'
+      }else{
+        titulo = 'Reportes por Sistema del Mes'
+      }
+        fetch('/reportes-por-sistema/'+tiempo)
+            .then(response => response.json())
+            .then(data => {
+                const labels = Object.keys(data);
+                const counts = Object.values(data);
+                console.log('ng');
+                console.log(data);
+
+                console.log(labels)
+                let larga = labels.some(element => element.length > 15);
+                console.log(larga);
+
+                // Mapear los colores según el nombre de la sucursal
+
+                const ctx = document.getElementById('graficosistema').getContext('2d');
+                if(pantalla){
+                  new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: counts,
+                            backgroundColor: ['#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF7006', '#FF0606'],
+                        }]
+                    },
+                    options: {
+                        onClick: (event, elements, chart) => {
+                          if (elements.length > 0) {
+                            const index = elements[0].index;
+                            const label = chart.data.labels[index];
+                            const valor = chart.data.datasets[0].data[index];
+                            segmentoClickeado(label, valor); // Llama tu función personalizada
+                          }
+                        },
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: '',
+                                labels: {
+                                  boxWidth: 20,
+                                  padding: 10,
+                                  // Puedes usar esta función para acortar nombres si son muy largos
+                                  generateLabels: function(chart) {
+                                    const original = Chart.overrides.doughnut.plugins.legend.labels.generateLabels(chart);
+                                    return original.map(label => ({
+                                      ...label,
+                                      text: label.text.length > 20 ? label.text.slice(0, 20) + '...' : label.text
+                                    }));
+                                  }
+                                },
+                            },
+                            title: {
+                                display: true,
+                                text: titulo,
+                                font:{
+                                  size:14,
+                                  weight:'bold'
+                                },
+                            }
+                        }
+                    }
+                  });
+                }else{
+                  new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: counts,
+                            backgroundColor: ['#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF7006', '#FF0606'],
+                        }]
+                    },
+                    options: {
+                        onClick: (event, elements, chart) => {
+                          if (elements.length > 0) {
+                            const index = elements[0].index;
+                            const label = chart.data.labels[index];
+                            const valor = chart.data.datasets[0].data[index];
+                            segmentoClickeado(label, valor); // Llama tu función personalizada
+                          }
+                        },
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                                labels: {
+                                  boxWidth: 20,
                                   padding: 10,
                                   // Puedes usar esta función para acortar nombres si son muy largos
                                   generateLabels: function(chart) {
