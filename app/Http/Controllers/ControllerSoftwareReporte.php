@@ -211,7 +211,8 @@ class ControllerSoftwareReporte extends Controller
         // cambia status del reporte y asigna un tecnico al reporte (ultimo que ha respondido)
 
             if($reporte->status_id==1){
-                $reporte->status_id=3;
+                $this->cambiar_status($reporte->id, 3);
+
             }
             $reporte->tecnico_id = $request->tecnicomensaje;
             $reporte->noti_u=1;
