@@ -367,7 +367,7 @@
                                     {{-- HECHO POR IA --}}
 
                                     <form id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
-                                        <input type="file" id="fileInput" name="file" accept="*" style="display: none;" onchange="showPreview(event)">
+                                        <input type="file" id="fileInput" name="file" accept="image/*" style="display: none;" onchange="showPreview(event)">
                                         <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success md:mt-2 w-[35%] md:w-full">imagen</button>
                                         
                                         {{-- <button type="submit">Enviar</button> --}}

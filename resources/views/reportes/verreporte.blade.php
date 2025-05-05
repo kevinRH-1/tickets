@@ -266,7 +266,7 @@
                                     {{-- <button class="bg-green-500 text-white py-2 hover:bg-green-700 cursor-pointer" type="submit">enviar foto</button> --}}
 
                                     <form id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
-                                        <input type="file" id="fileInput" name="file" accept="*" style="display: none;" onchange="showPreview(event)">
+                                        <input type="file" id="fileInput" name="file" accept="image/*" style="display: none;" onchange="showPreview(event)">
                                         <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success md:mt-2 w-[35%] md:w-full">imagen</button>
                                         
                                         {{-- <button type="submit">Enviar</button> --}}
