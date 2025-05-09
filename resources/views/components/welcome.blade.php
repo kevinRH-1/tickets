@@ -119,17 +119,15 @@
             </select>
           </div>
           <div class="flex justify-around">
-            <div class="w-[40%]">
+            <div class="w-[30%]">
               {{-- <h2>Gráfico de Pastel Dinámico</h2> --}}
               <canvas id="graficosucursal" width="50" height="50"></canvas>
             </div>
-            <div class="w-[40%]">
+            <div class="w-[30%]">
               {{-- <h2>Gráfico de Pastel Dinámico</h2> --}}
               <canvas id="graficoestado" width="50" height="50"></canvas>
             </div>
-          </div>
-          <div class="flex w-[80%] mx-auto">
-            <div class="w-[40%]">
+            <div class="w-[30%]">
               {{-- <h2>Gráfico de Pastel Dinámico</h2> --}}
               <canvas id="graficosistema" width="50" height="50"></canvas>
             </div>
@@ -496,6 +494,7 @@
                             title: {
                                 display: true,
                                 text: titulo,
+                                align:'start',
                                 font:{
                                   size:14,
                                   weight:'bold'
@@ -545,6 +544,7 @@
                             title: {
                                 display: true,
                                 text: titulo,
+                                align:'start',
                                 font:{
                                   size:14,
                                   weight:'bold'
@@ -617,14 +617,14 @@
                             legend: {
                                 position: '',
                                 labels: {
-                                  boxWidth: larga ? 20: 80,
+                                  boxWidth: 20,
                                   padding: 10,
                                   // Puedes usar esta función para acortar nombres si son muy largos
                                   generateLabels: function(chart) {
                                     const original = Chart.overrides.doughnut.plugins.legend.labels.generateLabels(chart);
                                     return original.map(label => ({
                                       ...label,
-                                      text: label.text.length > 20 ? label.text.slice(0, 20) + '...' : label.text
+                                      text: label.text.length > 20 ? label.text.slice(0, 14) + '...' : label.text
                                     }));
                                   }
                                 },
@@ -632,6 +632,7 @@
                             title: {
                                 display: true,
                                 text: titulo,
+                                align:'start',
                                 font:{
                                   size:14,
                                   weight:'bold'
@@ -664,14 +665,14 @@
                             legend: {
                                 position: 'right',
                                 labels: {
-                                  boxWidth: larga ? 20: 80,
+                                  boxWidth: 20,
                                   padding: 10,
                                   // Puedes usar esta función para acortar nombres si son muy largos
                                   generateLabels: function(chart) {
                                     const original = Chart.overrides.doughnut.plugins.legend.labels.generateLabels(chart);
                                     return original.map(label => ({
                                       ...label,
-                                      text: label.text.length > 20 ? label.text.slice(0, 20) + '...' : label.text
+                                      text: label.text.length > 20 ? label.text.slice(0, 14) + '...' : label.text
                                     }));
                                   }
                                 }
@@ -679,6 +680,7 @@
                             title: {
                                 display: true,
                                 text: titulo,
+                                align:'start',
                                 font:{
                                   size:14,
                                   weight:'bold'
@@ -760,6 +762,7 @@
                             title: {
                                 display: true,
                                 text: titulo,
+                                align:'start',
                                 font:{
                                   size:14,
                                   weight:'bold'
@@ -807,6 +810,7 @@
                             title: {
                                 display: true,
                                 text: titulo,
+                                align:'start',
                                 font:{
                                   size:14,
                                   weight:'bold'
