@@ -184,6 +184,11 @@ class ControllerSoftwareReporte extends Controller
                 $rutaImagen = $request->file('imagen')->store('imagen', 'public');
                 $mensaje->imagen = $rutaImagen;
             }
+
+            if($request->hasFile('audio')){
+                $rutaAudio = $request->file('audio')->store('audio', 'public');
+                $mensaje->audio = $rutaAudio;
+            }
     
             $mensaje->save();
             $reporte->noti_t=1;
@@ -203,6 +208,11 @@ class ControllerSoftwareReporte extends Controller
             if ($request->hasFile('imagen')) {
                 $rutaImagen = $request->file('imagen')->store('imagen', 'public');
                 $mensaje->imagen = $rutaImagen;
+            }
+
+            if($request->hasFile('audio')){
+                $rutaAudio = $request->file('audio')->store('audio', 'public');
+                $mensaje->audio = $rutaAudio;
             }
     
             $mensaje->save();

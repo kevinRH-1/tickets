@@ -292,6 +292,11 @@
                                 <div class="flex justify-end">
                                     <div class="bg-blue-100 text-gray-800 md:!p-3 p-2 rounded-lg shadow-md md:max-w-[50%] max-w-[80%] break-words md:!text-[16px] text-[12px]">
                                         {{$item->mensaje}}
+                                        @if($item->audio)
+                                            <div class="flex justify-end">
+                                                <audio class="mt-2" controls src="{{ asset('storage/'.$item->audio) }}"></audio>
+                                            </div>                                           
+                                        @endif
                                         @if($item->imagen)
                                             <img src="{{ asset('storage/'.$item->imagen) }}" alt="" class="mt-4">
                                         @endif
@@ -304,6 +309,9 @@
                                 <div class="flex justify-start">
                                     <div class="bg-gray-100 text-gray-800 md:!p-3 p-2 rounded-lg shadow-md md:max-w-[50%] max-w-[80%] break-words md:!text-[16px] text-[12px]">
                                         {{ $item->mensaje }}
+                                        @if($item->audio)
+                                            <audio src="{{ asset('storage/'.$item->audio) }}"></audio>
+                                        @endif
                                         @if($item->imagen)
                                             <img src="{{ asset('storage/'.$item->imagen) }}" alt="" class="mt-4">
                                         @endif
@@ -325,7 +333,7 @@
                             @if($reporte[0]->status_id != 5)
                                 @if(Auth::user()->roleid==1 || Auth::user()->roleid==2)
                                     
-                                    <div class="md:col-span-7 col-span-8">
+                                    <div class="md:col-span-8 col-span-8">
                                         <input type="text" name="problema1" id="problema1" readonly value="{{$reporte[0]->descripcion}}" hidden>
                                         
                                         <input type="text" id="tecnicomensaje" name="tecnicomensaje" value="{{Auth::user()->id}}" hidden>
@@ -351,24 +359,26 @@
                             <input type="text" value="1" name="tipo_reporte" name="tipo_reporte" hidden>
                             <input type="text" name="usuario" id="usuario" hidden value="{{Auth::user()->id}}">
                             <input type="text" name="rol" id="rol" hidden value="{{Auth::user()->roleid}}">
-                            <div class="md:col-span-1 col-span-8 pt-[8px] flex md:flex-col md:!w-full w-[80%] mx-auto justify-between">
+                            <div class="md:col-span-8 col-span-8 pt-[8px] flex  w-full mx-auto justify-around">
                                 @if($reporte[0]->status_id!=5)
                                     @if(Auth::user()->roleid ==1 || Auth::user()->roleid==2)
-                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded w-[35%] md:w-full md:!py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje" >enviar mensaje</button>
+                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded w-[35%] md:w-[25%]  md:!py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje" >enviar mensaje</button>
                                         {{-- <button class="bg-emerald-500 text-white py-2 hover:bg-emerald-700  cursor-pointer rounded mt-3" onclick="subirimagen(event)" >enviar imagen</button> --}}
                                         <input type="text" name="tecnico" id="tecnico" value="{{Auth::user()->id}}" hidden>
                                     @else
-                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded w-[35%] md:w-full md:!py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje2">enviar respuesta</button>
+                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded w-[35%] md:w-[25%]  md:!py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje2">enviar respuesta</button>
                                         {{-- <button class="bg-emerald-500 text-white py-2 hover:bg-emerald-700  cursor-pointer rounded mt-3" onclick="subirimagen(event)" >enviar imagen</button> --}}
                                         
                                         
                                     @endif
+
+                                    <button id="record-btn" class="bg-orange-600 px-4 rounded-md text-white">🎙️ Grabar</button>
                                     
                                     {{-- HECHO POR IA --}}
 
                                     <form id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
                                         <input type="file" id="fileInput" name="file" accept="image/*" style="display: none;" onchange="showPreview(event)">
-                                        <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success md:mt-2 w-[35%] md:w-full">imagen</button>
+                                        <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success w-[35%] md:w-[25%]">imagen</button>
                                         
                                         {{-- <button type="submit">Enviar</button> --}}
                                     </form>
@@ -381,7 +391,13 @@
                                     
                                 @endif
                             </div>
-                            <div class="flex justify-center col-span-8">
+                            <div class="md:!col-span-2 hidden"></div>
+                            <div id="audio-preview" style="display:none; margin-top:10px;" class="w-full relative md:col-span-5 col-span-8 max-w-[381px]">
+                                <audio id="audio" controls class="md:max-w-[500px] max-w-[270px]"></audio>
+                            
+                                <button id="delete-btn" class="absolute md:right-10 md:top-7 right-4 top-4"><i class="fa-regular fa-circle-xmark md:!fa-2xl fa-xl"></i></button>
+                            </div>
+                            <div class="flex justify-center col-span-8 pb-2">
                                 <div id="imagePreview" style="margin-top: 20px;" class=""></div>
                                 <div class="pl-2 pt-6" id="quitarimagen" hidden>
                                     <button onclick="quitarimg(event)"><i class="fa-regular fa-circle-xmark fa-2xl"></i></button>
@@ -389,6 +405,7 @@
                             </div>
                         </div>
                     </form>
+                    
                 </div>
             </div>
         </div>
@@ -561,6 +578,88 @@
 
 <script>
 
+    let audioBlob;
+
+    document.addEventListener('DOMContentLoaded', function(){
+        let isRecording = false;
+        let mediaRecorder;
+        let audioChunks = [];
+        
+
+        const recordBtn = document.getElementById('record-btn');
+        const audioPreview = document.getElementById('audio-preview');
+        const audioElement = document.getElementById('audio');
+        const sendBtn = document.getElementById('send-btn');
+        const deleteBtn = document.getElementById('delete-btn');
+
+        recordBtn.onclick = async () => {
+            event.preventDefault();
+            if (!isRecording) {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = event => {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    audioElement.src = audioUrl;
+                    audioPreview.style.display = 'block';
+                };
+
+                mediaRecorder.start();
+                isRecording = true;
+                recordBtn.textContent = '⏹️ Detener';
+            } else {
+                mediaRecorder.stop();
+                isRecording = false;
+                recordBtn.textContent = '🎙️ Grabar';
+            }
+        };
+
+        //funcion original de enviar audio
+
+        // sendBtn.onclick = () => {
+        //     event.preventDefault();
+        //     if (!audioBlob) return;
+
+        //     const formData = new FormData();
+        //     formData.append('audio', audioBlob, 'audio.webm');
+
+        //     fetch('/guardar-audio', {
+        //         method: 'POST',
+        //         body: formData,
+        //         headers: {
+        //             'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        //         }
+        //     }).then(res => res.json())
+        //     .then(data => {
+        //         alert('Audio enviado correctamente.');
+        //         resetAudioUI();
+        //     }).catch(err => {
+        //         alert('Error al enviar el audio.');
+        //     });
+        // };
+
+        deleteBtn.onclick = () => {
+            event.preventDefault();
+            resetAudioUI();
+        };
+
+        function resetAudioUI() {
+            event.preventDefault();
+            audioBlob = null;
+            audioChunks = [];
+            audioElement.src = '';
+            audioPreview.style.display = 'none';
+            recordBtn.textContent = '🎙️ Grabar';
+        }
+    })
+    
+
 
 
     function vermensajes(){
@@ -732,15 +831,17 @@
             formData.append('imagen', fileInput);
         }
 
+        if(audioBlob){
+            formData.append('audio', audioBlob, 'audio.webm');
+        }
+
         $('#formmensaje #botonmensaje').attr('disabled', true);
         $('#formmensaje #botonmensaje2').attr('disabled', true);
 
         $('#formmensaje #botonmensaje').text('enviando...');
         $('#formmensaje #botonmensaje2').text('enviando...');
 
-        console.log(formData.get('imagen'));
-
-        if(formData.get('mensaje').trim()==='' && !formData.get('imagen')){
+        if(formData.get('mensaje').trim()==='' && !formData.get('imagen') && !formData.get('audio')){
             console.log('mensaje vacio');
             $('#formmensaje #botonmensaje').removeAttr('disabled');
             $('#formmensaje #botonmensaje2').removeAttr('disabled');
