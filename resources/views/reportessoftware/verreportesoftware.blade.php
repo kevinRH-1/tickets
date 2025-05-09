@@ -87,13 +87,13 @@
                             <label for="" class="text-gray-700 w-2/4 text-lg font-bold hidden md:!inline" >SISTEMA: </label>
                             <input type="text" name="codigo" id="codigo" value="{{ $reporte[0]->sistema->nombre }}" class=" h-7 text-lg text-gray-600 px-1 border-none bg-transparent rounded-md pointer-events-none focus:outline-none" readonly>
                         </div>
-                        <div class="col-span-1">
+                        <div class="md:!col-span-1 col-span-2">
                             <label for="" class="text-gray-700 mt-4 w-2/4 text-lg font-bold hidden md:!inline">MODULO: </label>
                             <input type="text" name="codigo" id="codigo" value="{{ $reporte[0]->modulo?->nombre?? 'sin modulo' }}" class=" h-7 text-gray-600 text-lg m-auto px-1 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                         </div>
                         <div class="col-span-2">
                             <label for="" class=" text-gray-700 mt-4 w-2/4 text-lg font-bold hidden md:!inline">PROBLEMA: </label>
-                            <label type="text" name="codigo" id="codigo"  class=" h-7 md:mt-0 mt-2 text-lg m-auto px-1 border-none bg-transparent text-gray-600 rounded-md pointer-events-none focus:outline-none ">{{ $reporte[0]->falla?->descripcion?? 'sin informacion' }}</label>
+                            <label type="text" name="codigo" id="codigo"  class="  md:mt-0 mt-1 text-lg m-auto px-1 border-none bg-transparent text-gray-600 rounded-md pointer-events-none focus:outline-none ">{{ $reporte[0]->falla?->descripcion?? 'sin informacion' }}</label>
                         </div>
                        
                             
@@ -367,7 +367,7 @@
                                     {{-- HECHO POR IA --}}
 
                                     <form id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
-                                        <input type="file" id="fileInput" name="file" accept="*" style="display: none;" onchange="showPreview(event)">
+                                        <input type="file" id="fileInput" name="file" accept="image/*" style="display: none;" onchange="showPreview(event)">
                                         <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success md:mt-2 w-[35%] md:w-full">imagen</button>
                                         
                                         {{-- <button type="submit">Enviar</button> --}}
