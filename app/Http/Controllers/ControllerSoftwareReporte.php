@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mensaje;
 use App\Models\Modulos;
+use App\Models\traz_reportes;
 use Illuminate\Http\Request;
 use App\Models\ReportesSoftware;
 use App\Models\Sistemas;
@@ -98,6 +99,14 @@ class ControllerSoftwareReporte extends Controller
                 $mensaje->imagen = $rutaImagen;
             }
             $mensaje->save();
+
+            $traz = new traz_reportes();
+            $traz->reporte_id = $reporte->id;
+            $traz->tipo=1;
+            $traz->status_id=1;
+            $traz->usuario_id= $request->userid;
+            $traz->save();
+
 
             
 
@@ -221,7 +230,7 @@ class ControllerSoftwareReporte extends Controller
         // cambia status del reporte y asigna un tecnico al reporte (ultimo que ha respondido)
 
             if($reporte->status_id==1){
-                $this->cambiar_status($reporte->id, 3);
+                $this->cambiar_status($reporte->id, 3, $request->usuario);
 
             }
             $reporte->tecnico_id = $request->tecnicomensaje;
@@ -242,7 +251,7 @@ class ControllerSoftwareReporte extends Controller
     }
 
 
-    public function cambiar_status($id, $estado){
+    public function cambiar_status($id, $estado, $usuario){
         $reporte = ReportesSoftware::findOrFail($id);
         $reporte->status_id = $estado;
         if($estado==3){
@@ -257,6 +266,15 @@ class ControllerSoftwareReporte extends Controller
             } 
         }
         $reporte->save();
+
+        $traz = new traz_reportes();
+        $traz->reporte_id = $id;
+        $traz->tipo=1;
+        $traz->status_id=$estado;
+        $traz->usuario_id = $usuario;
+        $traz->save();
+
+
         return response()->json(['message', 'estatus cambiado']);
     }
 
@@ -269,7 +287,7 @@ class ControllerSoftwareReporte extends Controller
             $reporte->tecnico_id = $request->tecnico;
             // $reporte->status_id = 4;
             $reporte->save();
-            $this->cambiar_status($id, $request->estado);
+            $this->cambiar_status($id, $request->estado, $request->usuario);
             $borraranterior = SolucionTemp::where('reporte_id', $id)->get();
             foreach($borraranterior as $borrar){
                 $borrar->delete();
@@ -293,7 +311,7 @@ class ControllerSoftwareReporte extends Controller
 
             $reporte->solucionado_usuario =1;
             $reporte->solucionado_tecnico =1;
-            $this->cambiar_status($id, 5);
+            $this->cambiar_status($id, 5, $request->usuario);
             $reporte->tiempo_solucion = date("Y-m-d H:i:s");
             $reporte->save();
 

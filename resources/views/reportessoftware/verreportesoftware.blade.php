@@ -561,6 +561,13 @@
                 </div>
             </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-4">
+                <!-- DATOS DEL TICKET -->
+                <div class="bg-white p-6 rounded-lg shadow-md md:col-span-3">
+                    
+                </div>
+            </div>
+
 
         </div>
 
@@ -778,6 +785,7 @@
             id: $('#modalsolucion #id').val(),
             numero: $('#modalsolucion #numero').val(),
             estado: $('#selecstatus').val(),
+            usuario: $('#usuario').val(),
 
         };
 
@@ -980,9 +988,12 @@
             $('#modalsolucion').modal('show');
         }else{
             const reporte = $('#reporte').val();
+            const usuario = $('#usuario').val();
+
+            console.log(usuario)
 
             $.ajax({
-                url: '/cambiar-status-reporte/'+reporte +'/'+estado,
+                url: '/cambiar-status-reporte/'+reporte +'/'+estado + '/' + usuario,
                 type: 'POST',
                 headers:{
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

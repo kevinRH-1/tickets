@@ -175,7 +175,7 @@ Route::middleware([
     Route::delete('reportes/borrar/{id}', [ControllerSoftwareReporte::class, 'delete'])->name('reporte.borrar');
     Route::get('filtrosreportesS', [ControllerSoftwareReporte::class, 'filtros'])->name('filtros.software');
     Route::get('cargarvista/{id}/{sistema}', [VistasController::class, 'cargar'])->name('cargar.vista');
-    Route::post('cambiar-status-reporte/{id}/{estado}', [ControllerSoftwareReporte::class, 'cambiar_status'])->name('cambiar.status');
+    Route::post('cambiar-status-reporte/{id}/{estado}/{usuario}', [ControllerSoftwareReporte::class, 'cambiar_status'])->name('cambiar.status');
     
     
     //          REPORTES HARDWARE
