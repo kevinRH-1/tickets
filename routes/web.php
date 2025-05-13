@@ -183,7 +183,7 @@ Route::middleware([
     Route::post('reporteh/store', [ControllerHardwareReporte::class, 'store'])->name('reporteh.store');
     Route::get('/reporte-detalles/{id}{role}', [ControllerHardwareReporte::class, 'detalles'])->name('reportes.detalles');
     Route::post('/enviar/solucion', [ControllerHardwareReporte::class, 'problemaysolucion'])->name('enviar.solucion');
-    Route::get('cambiar/estatus/{id}/{rol}/{sucursal}', [ControllerHardwareReporte::class , 'cambiarestatus'])->name('cambiar.status');
+    Route::get('hardware-cambiar/estatus/{id}/{rol}/{sucursal}', [ControllerHardwareReporte::class , 'cambiarestatus'])->name('cambiar.status');
     Route::get('/verfallas/{id}', [TipoFaLLaController::class, 'verfallas'])->name('verfallas');
     // Route::get('reporte/eliminar{id}{sucursal}', [ControllerHardwareReporte::class, 'delete'])->name('reporte.eliminar');
     Route::get('reportes', [ControllerHardwareReporte::class,'indexgeneral'])->name('reportes.general');
@@ -198,6 +198,7 @@ Route::middleware([
     Route::get('/verhistorial', [ControllerHardwareReporte::class, 'historial'])->name('historial.ver');
     Route::get('filtrosreportesH', [ControllerHardwareReporte::class, 'filtros'])->name('filtros.hardware');
     Route::get('mostrarhistorial', [ControllerHardwareReporte::class, 'historial2'])->name('historial.ver2');
+    Route::post('cambiar-status-reporteH/{id}/{estado}/{usuario}', [ControllerHardwareReporte::class, 'cambiar_status'])->name('cambiar.status');
     
     
     Route::post('/negarsolucion', [SolucionTempController::class, 'negar'])->name('negar.solucion');

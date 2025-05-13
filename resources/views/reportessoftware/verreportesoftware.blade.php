@@ -31,6 +31,8 @@
         $color_status = $colores_status[$nivel_status] ?? ''; // Si no hay coincidencia, no se asigna color
     @endphp
 
+   
+
     <div class="space-y-6 pb-6 md:!pt-6 pt-0" >
 
         <div class="bg-white p-6 rounded-lg shadow-md w-11/12 m-auto space-y-10">
@@ -272,7 +274,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <button class="btn btn-primary w-2/4 mx-auto mb-8" onclick="estatus()">Cambiar</button>
+                    <button id="btnestatus" class="btn btn-primary w-2/4 mx-auto mb-8" onclick="estatus()">Cambiar</button>
                 </div>
             </div>
         </div>
@@ -341,7 +343,7 @@
                                     </div>
                                 @else
                     
-                                    <div class="md:col-span-7 col-span-8" id="">
+                                    <div class="md:col-span-8 col-span-8" id="">
                                         <textarea type="text" name="mensaje" id="mensaje" class="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 min-h-[100px]"  maxlength="2000"></textarea>
                                         <input type="text" class="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" readonly hidden>
                                     </div>
@@ -358,30 +360,35 @@
                             <input type="text" name="reporte" id="reporte" hidden value="{{$reporte[0]->id}}">
                             <input type="text" value="1" name="tipo_reporte" name="tipo_reporte" hidden>
                             <input type="text" name="usuario" id="usuario" hidden value="{{Auth::user()->id}}">
+                            <input type="text" name="estado" id="estado" hidden value="{{$reporte[0]->status_id}}">
                             <input type="text" name="rol" id="rol" hidden value="{{Auth::user()->roleid}}">
-                            <div class="md:col-span-8 col-span-8 pt-[8px] flex  w-full mx-auto justify-around">
+                            <div class="md:col-span-8 col-span-8 pt-[8px] md:!flex grid grid-cols-4 gap-4 w-[90%] mx-auto md:!justify-around">
+
+                                <button id="record-btn" class="bg-orange-600 px-4 col-span-2 rounded-md text-white">🎙️ Grabar</button>
+                                    
+                                    {{-- HECHO POR IA --}}
+
+                                <form id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
+                                    <input type="file" id="fileInput" name="file" accept="image/*" style="display: none;" onchange="showPreview(event)">
+                                    <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success col-span-2 md:!w-[25%]">imagen</button>
+                                    
+                                    {{-- <button type="submit">Enviar</button> --}}
+                                </form>
+                                <div class="md:hidden"></div>
+
                                 @if($reporte[0]->status_id!=5)
                                     @if(Auth::user()->roleid ==1 || Auth::user()->roleid==2)
-                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded w-[35%] md:w-[25%]  md:!py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje" >enviar mensaje</button>
+                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded col-span-2 md:w-[25%]  py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje" >enviar mensaje</button>
                                         {{-- <button class="bg-emerald-500 text-white py-2 hover:bg-emerald-700  cursor-pointer rounded mt-3" onclick="subirimagen(event)" >enviar imagen</button> --}}
                                         <input type="text" name="tecnico" id="tecnico" value="{{Auth::user()->id}}" hidden>
                                     @else
-                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded w-[35%] md:w-[25%]  md:!py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje2">enviar respuesta</button>
+                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded col-span-2 md:w-[25%]  py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje2">enviar respuesta</button>
                                         {{-- <button class="bg-emerald-500 text-white py-2 hover:bg-emerald-700  cursor-pointer rounded mt-3" onclick="subirimagen(event)" >enviar imagen</button> --}}
                                         
                                         
                                     @endif
 
-                                    <button id="record-btn" class="bg-orange-600 px-4 rounded-md text-white">🎙️ Grabar</button>
                                     
-                                    {{-- HECHO POR IA --}}
-
-                                    <form id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
-                                        <input type="file" id="fileInput" name="file" accept="image/*" style="display: none;" onchange="showPreview(event)">
-                                        <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success w-[35%] md:w-[25%]">imagen</button>
-                                        
-                                        {{-- <button type="submit">Enviar</button> --}}
-                                    </form>
 
                                     
 
@@ -561,18 +568,57 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-4">
-                <!-- DATOS DEL TICKET -->
-                <div class="bg-white p-6 rounded-lg shadow-md md:col-span-3">
-                    
-                </div>
-            </div>
+            
 
 
         </div>
 
+        <div class="grid grid-cols-1 mx-auto md:grid-cols-6 gap-4 px-4">
+                <!-- DATOS DEL TICKET -->
+                <div></div>
+                <div class="bg-white p-6 rounded-lg shadow-md md:col-span-4">
+                    @foreach ($traz as $item)
 
-        
+                        @php
+                            $colores_status2 = [
+                            1 => 'red-500',
+                            3 => 'amber-500',
+                            5 => 'sky-500',
+                            2 => 'orange-700',
+                            4 => 'green-700',
+                            ];
+                            $nivel_status2 = $item->status_id;
+                            $color_status2 = $colores_status2[$nivel_status2] ?? ''; // Si no hay coincidencia, no se asigna color
+                        @endphp
+
+                        @if($item->status_id==1)
+                            <div class="grid grid-cols-3 my-4 px-2 border-b-2 border-gray-500 align-middle">
+                                <p class="flex items-center justify-center h-full md:text-lg text-gray-700 font-semibold">{{ $item->usuario->descripcion }}</p>
+                                <label class="flex items-center justify-center text-gray-700 md:text-lg ">Creó el ticket</label>
+                                <div class="flex flex-col justify-center text-center">
+                                    <p class="md:text-lg text-gray-700">{{ substr($item->created_at, 0, 10) }}</p>
+                                    <p class="md:text-lg text-gray-700">{{ substr($item->created_at, 11, 20) }}</p>
+                                </div>
+                            
+                            </div>
+                        @else
+                            <div class="md:grid grid-cols-6 my-4 px-2 border-b-2 border-gray-500 pb-3 align-middle">
+                                <p class="flex items-center justify-center md:h-full md:text-lg text-gray-700 font-semibold">{{ $item->usuario->descripcion }}</p>
+                                <label class="flex items-center justify-center text-gray-700 md:text-lg col-span-2">Movio el ticket a</label>
+                                <p class="flex items-center justify-center md:text-lg text-gray-700 col-span-2 font-semibold">{{ $item->estado->nombre}}</p>
+                                <div class="flex flex-col justify-center text-center">
+                                    <p class="text-lg text-gray-700 hidden md:!block">{{ substr($item->created_at, 0, 10) }}</p>
+                                    <p class="text-lg text-gray-700 hidden md:!block">{{ substr($item->created_at, 11, 20) }}</p>
+                                    <p class=" text-gray-700 md:hidden">{{ $item->created_at }}</p>
+                                </div>
+                                
+                            </div>
+
+                        @endif
+                        
+                    @endforeach
+                </div>
+            </div>  
     </div>
         
 
@@ -980,46 +1026,50 @@
 
     function estatus(){
         const estado= $('#selecstatus').val();
+        const estado1 = $('#estado').val();
         console.log(estado);
 
-        if(estado==4){
-            
-            $('#modalestatus').modal('hide');
-            $('#modalsolucion').modal('show');
+        if(estado==estado1){
+
         }else{
-            const reporte = $('#reporte').val();
-            const usuario = $('#usuario').val();
+            $('#btnestatus').attr('disabled', true);
+            if(estado==4){
+            
+                $('#modalestatus').modal('hide');
+                $('#modalsolucion').modal('show');
+            }else{
+                const reporte = $('#reporte').val();
+                const usuario = $('#usuario').val();
 
-            console.log(usuario)
+                console.log(usuario)
 
-            $.ajax({
-                url: '/cambiar-status-reporte/'+reporte +'/'+estado + '/' + usuario,
-                type: 'POST',
-                headers:{
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response){
-                    $('#modalmensaje #mensaje').text('estado del reporte cambiado!')
-                    $('#modalestatus').modal('hide');
-                    $('#modalmensaje').modal('show');
-                    setTimeout(() => {
-                        location.reload();
-                    }, 2000);
-                },
-                error: function(xhr){
-                    $('#modalmensaje #mensaje').text('Ha ocurrido un error al cambiar el estado!')
-                    $('#modalestatus').modal('hide');
-                    $('#modalmensaje').modal('show');
-                    setTimeout(() => {
-                        location.reload();
-                    }, 2000);
-                }
-            })
+                $.ajax({
+                    url: '/cambiar-status-reporte/'+reporte +'/'+estado + '/' + usuario,
+                    type: 'POST',
+                    headers:{
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response){
+                        $('#modalmensaje #mensaje').text('estado del reporte cambiado!')
+                        $('#modalestatus').modal('hide');
+                        $('#modalmensaje').modal('show');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    },
+                    error: function(xhr){
+                        $('#modalmensaje #mensaje').text('Ha ocurrido un error al cambiar el estado!')
+                        $('#modalestatus').modal('hide');
+                        $('#modalmensaje').modal('show');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    }
+                })
+            }
         }
+
+        
     }
-    
-
-
-    
 
 </script>

@@ -158,12 +158,14 @@ class ControllerSoftwareReporte extends Controller
             $reporte[0]->noti_t = 0;
         }
 
+        $traz = traz_reportes::where('reporte_id', $id)->where('tipo', 1)->orderBy('id')->get();
+
         $reporte[0]->save();
 
         $estados = statusReporte::where('id', '!=', 1)->where('id', '!=', 5)->orderBy('id')->get();
         
 
-        return view('reportessoftware.verreportesoftware', compact('reporte', 'estados', 'mensajes', 'confirmar', 'soluciones', 'tiempo'));
+        return view('reportessoftware.verreportesoftware', compact('reporte', 'estados', 'mensajes', 'confirmar', 'soluciones', 'tiempo', 'traz'));
     }
 
     public function mensajes(Request $request){

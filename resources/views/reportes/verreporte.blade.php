@@ -7,12 +7,46 @@
         }
     </style>
 
+    @php
+        $colores = [
+            1 => 'text-emerald-500',
+            2 => 'text-amber-500',
+            3 => 'text-red-500',
+            4 => 'text-red-800',
+        ];
+        $nivel = $reporte[0]->falla?->nivel_riesgo;
+        $color = $colores[$nivel] ?? ''; // Si no hay coincidencia, no se asigna color
+    @endphp
+
+
+    @php
+        $colores_status = [
+        1 => 'red-500',
+        3 => 'amber-500',
+        5 => 'sky-500',
+        2 => 'orange-700',
+        4 => 'green-700',
+        ];
+        $nivel_status = $reporte[0]->status_id;
+        $color_status = $colores_status[$nivel_status] ?? ''; // Si no hay coincidencia, no se asigna color
+    @endphp
+
     <div class="space-y-6 pb-6 md:!pt-6 pt-0" >
 
         <div class="bg-white p-6 rounded-lg shadow-md w-11/12 m-auto space-y-10">
             <label for="" class="block text-gray-700 w-2/4 m-auto text-center md:text-4xl text-2xl" >DATOS DEL REPORTE</label>
         </div>
         <div class="md:!mt-10 mt-4"></div>
+
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-3/4 mx-auto border-2 border-{{$color_status}} flex flex-col justify-center md:grid md:grid-cols-4 md:gap-2">
+            <div class="flex md:flex-col">
+                <h1 class="text-lg font-bold ">ESTADO: </h1>
+                <h1 class="text-{{$color_status}} text-lg ml-1 md:!ml-0 font-bold">{{$reporte[0]->status->nombre}}</h1>
+            </div>
+            <div class="col-span-3">
+                <p class="text-lg md:!w-[80%] w-full">{{$reporte[0]->status->descripcion}}</p>
+            </div>
+        </div>
 
         <!-- Sección 1: Datos del Equipo -->
         <div class="grid grid-cols-4 gap-4">
@@ -22,20 +56,20 @@
                     @if($reporte[0]->pc ?? false)
                         <div class="mt-4 grid md:grid-cols-2 grid-cols-1 md:gap-2">                         
                             <div class="col-span-1 pl-10 md:!pl-0">
-                                <label for="" class=" text-gray-700 w-2/4 m-auto text-lg font-semibold hidden md:!inline" >Codigo: </label>
-                                <label type="text" name="codigo" id="codigo" class="text-2xl  p-0  md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->pc->codigo }}</label>
+                                <label for="" class=" text-gray-700 w-2/4 m-auto text-lg font-bold hidden md:!inline" >CODIGO: </label>
+                                <label type="text" name="codigo" id="codigo" class="text-2xl text-gray-700 p-0  md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->pc->codigo }}</label>
                             </div>
                             <div class="col-span-1">
-                                <label for="" class=" text-gray-700 w-2/4 text-lg font-semibold hidden md:!inline" >Nombre: </label>
-                                <label type="text" name="codigo" id="codigo" class="w-3/4 text-lg p-0 pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->pc->descripcion }}</label>
+                                <label for="" class=" text-gray-700 w-2/4 text-lg font-bold hidden md:!inline" >NOMBRE: </label>
+                                <label type="text" name="codigo" id="codigo" class="w-3/4 text-gray-700 text-lg p-0 pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->pc->descripcion }}</label>
                             </div>
                             <div class="col-span-1">
-                                <label for="" class=" text-gray-700 mt-4 w-2/4 text-lg font-semibold hidden md:!inline">Modelo: </label>
-                                <label type="text" name="codigo" id="codigo" class="w-2/4 text-lg m-auto p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->pc->modelo }}</label>
+                                <label for="" class=" text-gray-700 mt-4 w-2/4 text-lg font-bold hidden md:!inline">MODELO: </label>
+                                <label type="text" name="codigo" id="codigo" class="w-2/4 text-gray-700 text-lg m-auto p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->pc->modelo }}</label>
                             </div>
                             <div class="col-span-1">
-                                <label for="" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold">Estado: </label>
-                                <label type="text" name="codigo" id="codigo" class="w-2/4 text-lg m-auto p-0 pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->pc->estado->descripcion }}</label>
+                                <label for="" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-bold">ESTADO: </label>
+                                <label type="text" name="codigo" id="codigo" class="w-2/4 text-gray-700 text-lg m-auto p-0 pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->pc->estado->descripcion }}</label>
                             </div>                              
                         </div>
                     @endif
@@ -43,20 +77,20 @@
                     @if($reporte[0]->laptop ?? false)
                         <div class="mt-4 grid md:grid-cols-2 grid-cols-1 md:gap-2">                         
                             <div class="col-span-1 pl-10 md:!pl-0">
-                                <label for="" class="hidden md:!inline text-gray-700 w-2/4 m-auto text-lg font-semibold" >Codigo: </label>
-                                <label type="text" name="codigo" id="codigo" class="text-2xl  p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->laptop->codigo }}</label>
+                                <label for="" class="hidden md:!inline text-gray-700 w-2/4 m-auto text-lg font-bold" >CODIGO: </label>
+                                <label type="text" name="codigo" id="codigo" class="text-2xl text-gray-700  p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->laptop->codigo }}</label>
                             </div>
                             <div class="col-span-1">
-                                <label for="" class="hidden md:!inline text-gray-700 w-2/4 text-lg font-semibold" >Nombre: </label>
-                                <label type="text" name="codigo" id="codigo" class="w-3/4 text-lg p-0 pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->laptop->descripcion }}</label>
+                                <label for="" class="hidden md:!inline text-gray-700 w-2/4 text-lg font-bold" >NOMBRE: </label>
+                                <label type="text" name="codigo" id="codigo" class="w-3/4 text-gray-700 text-lg p-0 pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->laptop->descripcion }}</label>
                             </div>
                             <div class="col-span-1">
-                                <label for="" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold">Modelo: </label>
-                                <label type="text" name="codigo" id="codigo" class="w-2/4 text-lg m-auto p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->laptop->modelo }}</label>
+                                <label for="" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-bold">MODELO: </label>
+                                <label type="text" name="codigo" id="codigo" class="w-2/4 text-gray-700 text-lg m-auto p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->laptop->modelo }}</label>
                             </div>
                             <div class="col-span-1">
-                                <label for="" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold">Estado: </label>
-                                <label type="text" name="codigo" id="codigo" class="w-2/4 text-lg p-0 m-auto pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->laptop->estado->descripcion }}</label>
+                                <label for="" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-bold">ESTADO: </label>
+                                <label type="text" name="codigo" id="codigo" class="w-2/4 text-gray-700 text-lg p-0 m-auto pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->laptop->estado->descripcion }}</label>
                             </div>                              
                         </div>
                     @endif
@@ -64,20 +98,20 @@
                     @if($reporte[0]->impresora ?? false)
                         <div class="mt-4 grid md:grid-cols-2 grid-cols-1 md:gap-2">                         
                             <div class="col-span-1 pl-10 md:!pl-0">
-                                <label for="" class="hidden md:!inline text-gray-700 w-2/4 m-auto text-lg font-semibold" >Codigo: </label>
-                                <label type="text" name="codigo" id="codigo" class="text-2xl  md:!p-2 p-0 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->impresora->codigo }}</label>
+                                <label for="" class="hidden md:!inline text-gray-700 w-2/4 m-auto text-lg font-bold" >CODIGO: </label>
+                                <label type="text" name="codigo" id="codigo" class="text-2xl text-gray-700 md:!p-2 p-0 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->impresora->codigo }}</label>
                             </div>
                             <div class="col-span-1">
-                                <label for="" class="hidden md:!inline text-gray-700 w-2/4 text-lg font-semibold" >Nombre: </label>
-                                <label type="text" name="codigo" id="codigo" class="w-3/4 text-lg p-0 md:!p-2 pt-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->impresora->descripcion }}</label>
+                                <label for="" class="hidden md:!inline text-gray-700 w-2/4 text-lg font-bold" >NOMBRE: </label>
+                                <label type="text" name="codigo" id="codigo" class="w-3/4 text-gray-700 text-lg p-0 md:!p-2 pt-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->impresora->descripcion }}</label>
                             </div>
                             <div class="col-span-1">
-                                <label for="" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold">Modelo: </label>
-                                <label type="text" name="codigo" id="codigo" class="w-2/4 text-lg m-auto p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->impresora->modelo }}</label>
+                                <label for="" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-bold">MODELO: </label>
+                                <label type="text" name="codigo" id="codigo" class="w-2/4 text-gray-700 text-lg m-auto p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->impresora->modelo }}</label>
                             </div>
                             <div class="col-span-1">
-                                <label for="" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold">Estado: </label>
-                                <label type="text" name="codigo" id="codigo" class="w-2/4 text-lg p-0 m-auto pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->impresora->estado->descripcion }}</label>
+                                <label for="" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-bold">ESTADO: </label>
+                                <label type="text" name="codigo" id="codigo" class="w-2/4 text-gray-700 text-lg p-0 m-auto pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->impresora->estado->descripcion }}</label>
                             </div>                              
                         </div>
                     @endif
@@ -87,20 +121,20 @@
                     <label for="" class="block  w-2/4 m-auto text-center text-2xl md:!mb-5 mb-1  text-red-600" >DATOS DEL USUARIO</label>
                     <div class="md:!mt-4 mt-2 grid md:grid-cols-2 grid-cols-1 md:gap-2">
                         <div class="col-span-1">
-                            <label for="sucursal" class="hidden md:!inline text-gray-700 w-2/4 m-auto  font-semibold text-2xl" >Sucursal: </label>
+                            <label for="sucursal" class="hidden md:!inline text-gray-700 w-2/4 m-auto  font-semibold text-2xl" >SUCURSAL: </label>
                             <label type="text" name="codigo" id="codigo" class=" text-xl md:text-2xl m-auto p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->sucursal->nombre }}</label>
                         </div>
                         <div class="col-span-1">
-                            <label for="usuario" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold m-auto">Usuario: </label>
+                            <label for="usuario" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold m-auto">USUARIO: </label>
                             <label type="text" name="codigo" id="codigo" class=" text-lg m-auto p-0 pt-2  md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->descripcion }}</label>
                         </div>
                         <div class="col-span-1">
-                            <label for="correo" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold m-auto">Correo: </label>
+                            <label for="correo" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold m-auto">CORREO: </label>
                             <label type="text" name="codigo" id="codigo"  class="w-2/4 text-lg m-auto p-0 pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->email }}</label>
                         
                         </div>
                         <div class="col-span-1 md:pt-2">
-                            <label for="telefono" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold m-auto">Teléfono: </label>
+                            <label for="telefono" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold m-auto">TELEFONO: </label>
                             <label type="text" name="codigo" id="codigo"  class="w-2/4 text-lg m-auto p-0 pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->phone }}</label>
                         </div>
                 
@@ -112,21 +146,21 @@
         <!-- Sección 3: Datos del Reporte -->
             <div class="bg-white p-6 rounded-lg shadow-md md:col-span-1 col-span-4 w-11/12 mx-auto">
                 <label for="" class="block  w-full m-auto text-center text-2xl mb-3  text-red-600" >DATOS DEL REPORTE</label>
-                <label for="codigo" class="block text-gray-700 mt-1 w-2/4 text-lg font-semibold ">codigo: </label>
+                <label for="codigo" class="block text-gray-700 mt-1 w-2/4 text-lg font-semibold ">CODIGO: </label>
                 <label for="codigo" class="w-full text-lg m-auto py-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{$reporte[0]->codigo}}</label>
-                <label for="falla" class="block text-gray-700 mt-1 w-2/4 text-lg font-semibold ">tipo de falla: </label>
+                <label for="falla" class="block text-gray-700 mt-1 w-2/4 text-lg font-semibold ">TIPO DE FALLA: </label>
                 <label for="falla" class="w-full text-lg m-auto py-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{$reporte[0]->falla->desc}}</label>
-                <label for="hora_generacion" class="block text-gray-700 mt-3 text-xl font-semibold">Tiempo de generación</label>
-                <label for="hora_generacion" class="inline  text-gray-700 mt-2">dia: </label>
+                <label for="hora_generacion" class="block text-gray-700 mt-3 text-xl font-semibold">TEIMPO DE GENERACION</label>
+                <label for="hora_generacion" class="inline  text-gray-700 mt-2">DIA: </label>
                 <input type="text" name="codigo" id="codigo" value="{{ substr($reporte[0]->created_at, 0, 10) }}" class="w-2/4 p-2 border-none bg-transparent mt-2 rounded-md pointer-events-none focus:outline-none"readonly>
                 <br>
-                <label for="hora_generacion" class="inline  text-gray-700">hora: </label>
+                <label for="hora_generacion" class="inline  text-gray-700">HORA: </label>
                 <input type="text" name="codigo" id="codigo" value="{{ substr($reporte[0]->created_at, 11, 20) }}" class="w-2/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                 <div class="mt-3"></div>
-                <label for="riesgo" class="inline text-gray-700  text-2xl">Riesgo: </label>
+                <label for="riesgo" class="inline text-gray-700  text-2xl">IMPORTANCIA: </label>
                 <input type="text" name="codigo" id="codigo" value="bajo" class="w-2/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none text-sky-400"readonly>
                 <div class="mt-2"></div>
-                <label for="estado" class="inline text-gray-700 text-2xl">Estado: </label>
+                {{-- <label for="estado" class="inline text-gray-700 text-2xl">Estado: </label>
                 @if($reporte[0]->status_id == 3)
                     <input type="text" name="verestado" id="verestado" readonly value="{{$reporte[0]->status->nombre}}" class="w-2/4 text-lg p-2 border-none bg-transparent rounded-md text-blue-700">
                 @endif
@@ -135,16 +169,16 @@
                 @endif
                 @if($reporte[0]->status_id == 1)
                     <input type="text" name="verestado" id="verestado" readonly value="{{$reporte[0]->status->nombre}}" class="w-2/4 text-lg p-2 border-none bg-transparent rounded-md text-orange-700">
-                @endif
-                @if($reporte[0]->status_id ==3)
-                    <label for="hora_generacion" class="block text-gray-700 text-xl mb-2 mt-4">tiempo de solucion:</label>
-                    <label for="hora_generacion" class="inline  text-sky-600">dia: </label>
+                @endif --}}
+                @if($reporte[0]->status_id ==5)
+                    <label for="hora_generacion" class="block text-gray-700 text-xl mb-2 mt-4">TIEMPO DE SOLUCION:</label>
+                    <label for="hora_generacion" class="inline  text-sky-600">DIA: </label>
                     <input type="text" name="solucion" id="solucion" value="{{ substr($reporte[0]?->tiempo_solucion, 0, 10)}}" class="w-2/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                     <br>
-                    <label for="hora_generacion" class="inline  text-sky-600">hora: </label>
+                    <label for="hora_generacion" class="inline  text-sky-600">HORA: </label>
                     <input type="text" name="solucion" id="solucion" value="{{ substr($reporte[0]?->tiempo_solucion , 11, 20)}}" class="w-2/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                     <br>
-                    <label for="hora_generacion" class="inline  text-sky-600">tiempo transcurrido: </label>
+                    <label for="hora_generacion" class="inline  text-sky-600">TIEMPO TRANSCURRIDO: </label>
                     <input type="text" name="solucion" id="solucion" value="{{$tiempo}} horas" class="w-3/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                 @endif
             </div>
@@ -152,7 +186,7 @@
         </div>
 
 
-        @if($reporte[0]?->solucionado_tecnico && $reporte[0]->status_id !=3)
+        @if($reporte[0]?->solucionado_tecnico && $reporte[0]->status_id !=5)
 
             <div class="modal fade pt-40" id="confirmarsolucion" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
                 <div class="modal-dialog">
@@ -229,7 +263,7 @@
                         <br>
                         <label for="" class=" w-full border-t-2 border-gray-200"></label>
                         <div class="grid grid-cols-8 gap-2">
-                            @if($reporte[0]->status_id != 3)
+                            @if($reporte[0]->status_id != 5)
                                 @if(Auth::user()->roleid==1 || Auth::user()->roleid==2)
                                     
                                     <div class="md:col-span-7 col-span-8">
@@ -255,22 +289,39 @@
                             <input type="text" name="usuario" id="usuario" hidden value="{{Auth::user()->id}}">
                             <input type="text" name="tipo_reporte" name="tipo_reporte" value="2" hidden>
                             <input type="text" name="rol" id="rol" hidden value="{{Auth::user()->roleid}}">
-                            <div class="md:col-span-1 col-span-8 pt-[8px] flex md:flex-col md:!w-full w-[80%] mx-auto justify-between">
-                                @if($reporte[0]->status_id!=3)
+                            <div class="md:col-span-8 col-span-8 pt-[8px] md:!flex grid grid-cols-4 gap-4 w-[90%] mx-auto md:!justify-around">
+
+                                <button id="record-btn" class="bg-orange-600 px-4 col-span-2 rounded-md text-white">🎙️ Grabar</button>
+                                    
+                                    {{-- HECHO POR IA --}}
+
+                                <form id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
+                                    <input type="file" id="fileInput" name="file" accept="image/*" style="display: none;" onchange="showPreview(event)">
+                                    <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success col-span-2 md:!w-[25%]">imagen</button>
+                                    
+                                    {{-- <button type="submit">Enviar</button> --}}
+                                </form>
+                                <div class="md:hidden"></div>
+
+                                @if($reporte[0]->status_id!=5)
                                     @if(Auth::user()->roleid ==1 || Auth::user()->roleid==2)
-                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded w-[35%] md:w-full md:!py-2 md:!text-[16px] text-[12px]" type="submit" onclick="enviarmensaje(event)" >enviar mensaje</button>
+                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded col-span-2 md:w-[25%]  py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje" >enviar mensaje</button>
+                                        {{-- <button class="bg-emerald-500 text-white py-2 hover:bg-emerald-700  cursor-pointer rounded mt-3" onclick="subirimagen(event)" >enviar imagen</button> --}}
                                         <input type="text" name="tecnico" id="tecnico" value="{{Auth::user()->id}}" hidden>
                                     @else
-                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded w-[35%] md:w-full md:!py-2 md:!text-[16px] text-[12px]" type="submit" onclick="enviarmensaje(event)" >enviar respuesta</button>
-                                    @endif
-                                    {{-- <button class="bg-green-500 text-white py-2 hover:bg-green-700 cursor-pointer" type="submit">enviar foto</button> --}}
-
-                                    <form id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
-                                        <input type="file" id="fileInput" name="file" accept="image/*" style="display: none;" onchange="showPreview(event)">
-                                        <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success md:mt-2 w-[35%] md:w-full">imagen</button>
+                                        <button class="bg-blue-500 text-white  hover:bg-blue-700  cursor-pointer rounded col-span-2 md:w-[25%]  py-2" type="submit" onclick="enviarmensaje(event)" id="botonmensaje2">enviar respuesta</button>
+                                        {{-- <button class="bg-emerald-500 text-white py-2 hover:bg-emerald-700  cursor-pointer rounded mt-3" onclick="subirimagen(event)" >enviar imagen</button> --}}
                                         
-                                        {{-- <button type="submit">Enviar</button> --}}
-                                    </form>
+                                        
+                                    @endif
+
+                                    
+
+                                    
+
+                                    {{--  --}}
+                                    
+                                    {{-- <button class="bg-green-500 text-white py-2 hover:bg-green-700 cursor-pointer" type="submit">enviar foto</button> --}}
                                     
                                 @endif
                             </div>
@@ -286,27 +337,49 @@
             </div>
         </div>
 
+        <div class="modal fade pt-[10%]" id="modalestatus" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="flex">
+                        <div class="w-[90%] mt-4">
+                            <h1 class="text-lg text-black font-semibold text-center">Cambiar estado del reporte</h1>
+                        </div>
+                        <button type="button" class="btn-close btn-sm mt-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center py-9">
+                        <select name="selecstatus" id="selecstatus" class="block px-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mb-4">
+                            @foreach ($estados as $item )
+                                <option value="{{$item->id}}">{{$item->nombre}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button id="btnestatus" class="btn btn-primary w-2/4 mx-auto mb-8" onclick="estatus()">Cambiar</button>
+                </div>
+            </div>
+        </div>
+
         <div class="bg-white p-6 rounded-lg shadow-md mb-6 flex flex-col justify-center md:grid md:grid-cols-3 md:gap-2">
         
         
             <input type="text" name="solucion" id="solucion" value="{{$confirmar}}" hidden>
 
 
-            @if($reporte[0]->status_id==3)
+            @if($reporte[0]->status_id==5)
 
             @else
                 @if(Auth::user()->roleid==1 && $confirmar ==1 || Auth::user()->roleid==2 && $confirmar ==1 )
                     <div></div>
-                    <button id="openModal" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mx-auto">cambiar estatus a solucionado</button>
+                    {{-- <button id="openModal" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mx-auto">Enviar solucion</button> --}}
+                    <button id="" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 mx-auto" onclick="$('#modalestatus').modal('show')">Cambiar estatus</button>
                     @if ($reporte[0]->solucion)
                         <label for="solicitud" class="text-gray-400 pt-2 text-sm text-center">--Ya existe una solicitud pendiente para solucionar!--</label>
                     @endif
-                    {{-- <a href="#" id="link" name="link" ><button name="boton" id="boton" class="px-6 py-2 bg-gray-400 text-white font-semibold rounded-md cursor-not-allowed mt-4">enviar solicitud para confirmar solucion</button></a> --}}
+                {{-- <a href="#" id="link" name="link" ><button name="boton" id="boton" class="px-6 py-2 bg-gray-400 text-white font-semibold rounded-md cursor-not-allowed mt-4">enviar solicitud para confirmar solucion</button></a> --}}
                 @endif
                 @if(Auth::user()->roleid == 3 && $reporte[0]->solucionado_tecnico ==1)
-                    {{-- <a href="{{route('software.status', [$reporte[0]->id, Auth::user()->roleid, Auth::user()->lugar_id])}}" class=""><button class="btn btn-primary ">confirmar solucion</button></a> --}}
                     <div></div>
-                    <button class="btn btn-primary" onclick="$('#confirmarsolucion').modal('show')">confirmar solucion</button>
+                    {{-- <a href="{{route('software.status', [$reporte[0]->id, Auth::user()->roleid, Auth::user()->lugar_id])}}" class=""><button class="btn btn-primary ">confirmar solucion</button></a> --}}
+                    <button class="btn btn-primary" onclick="$('#confirmarsolucion').modal('show')">Confirmar solucion</button>
                     <div></div>
                 @endif
                 @if(Auth::user()->roleid ==3 && $confirmar == 1 && $reporte[0]->solucionado_tecnico !=1)
@@ -396,8 +469,88 @@
                 </div>
             </div>
 
-
         </div>
+        <div class="modal fade pt-[10%]" id="modalsolucion" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content p-4">
+                    <h2 class="text-xl font-semibold mb-4">Selecciona la forma en la que fue solucionado el problema</h2>
+
+                <!-- Formulario dentro del modal -->
+                    <form id="modalForm" method="GET" action="{{route('software.status', [$reporte[0]->id, Auth::user()->roleid, 0])}}">
+                        @csrf
+                        {{-- <label for="options" class="block text-sm font-medium text-gray-700 mb-2">Opciones</label> --}}
+                        <select id="options" name="options" class="block px-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mb-4">
+                            @foreach ($soluciones as $item)
+                                <option value="{{$item->id}}">{{$item->descripcion}}</option>
+                            @endforeach
+                            {{-- <option value="otra">Otra</option> --}}
+                        </select>
+                        <input type="text" id="id" hidden value="{{$reporte[0]->id}}">
+                        <input type="text" id="rol" hidden value="{{Auth::user()->roleid}}">
+                        <input type="text" id="numero" value="0" hidden>
+                        <input type="text" id="tecnico" name="tecnico" hidden value="{{Auth::user()->id}}">
+
+                        <!-- Campo de texto opcional -->
+                        <div id="extraField" >
+                            <label for="extraInput" class="block text-sm font-medium text-gray-700 mb-2">Escribe el metodo de la solucion</label>
+                            <textarea id="extraInput" name="extraInput" rows="3" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-1"></textarea>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="mt-6 flex justify-end gap-4">
+                            <button type="button" id="closeModal" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400" onclick="$('#modalsolucion').modal('hide')">Cancelar</button>
+                            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="enviarsolucion(event)">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 mx-auto md:grid-cols-6 gap-4 px-4">
+            <!-- DATOS DEL TICKET -->
+            <div></div>
+            <div class="bg-white p-6 rounded-lg shadow-md md:col-span-4">
+                @foreach ($traz as $item)
+
+                    @php
+                        $colores_status2 = [
+                        1 => 'red-500',
+                        3 => 'amber-500',
+                        5 => 'sky-500',
+                        2 => 'orange-700',
+                        4 => 'green-700',
+                        ];
+                        $nivel_status2 = $item->status_id;
+                        $color_status2 = $colores_status2[$nivel_status2] ?? ''; // Si no hay coincidencia, no se asigna color
+                    @endphp
+
+                    @if($item->status_id==1)
+                        <div class="grid grid-cols-3 my-4 border-b-2 border-gray-500 px-2 align-middle">
+                            <p class="flex items-center justify-center h-full md:text-lg text-gray-700 font-semibold">{{ $item->usuario->descripcion }}</p>
+                            <label class="flex items-center justify-center text-gray-700 md:text-lg ">Creó el ticket</label>
+                            <div class="flex flex-col justify-center text-center">
+                                <p class="md:text-lg text-gray-700">{{ substr($item->created_at, 0, 10) }}</p>
+                                <p class="md:text-lg text-gray-700">{{ substr($item->created_at, 11, 20) }}</p>
+                            </div>
+                        
+                        </div>
+                    @else
+                        <div class="md:grid grid-cols-6 my-4 border-b-2 border-gray-500 px-2 align-middle">
+                            <p class="flex items-center justify-center md:h-full md:text-lg text-gray-700 font-semibold">{{ $item->usuario->descripcion }}</p>
+                            <label class="flex items-center justify-center text-gray-700 md:text-lg col-span-2">Movio el ticket a</label>
+                            <p class="flex items-center justify-center md:text-lg text-gray-700 col-span-2 font-semibold">{{ $item->estado->nombre}}</p>
+                            <div class="flex flex-col justify-center text-center">
+                                <p class="text-lg text-gray-700 hidden md:!block">{{ substr($item->created_at, 0, 10) }}</p>
+                                <p class="text-lg text-gray-700 hidden md:!block">{{ substr($item->created_at, 11, 20) }}</p>
+                                <p class=" text-gray-700 md:hidden">{{ $item->created_at }}</p>
+                            </div>
+                            
+                        </div>
+
+                    @endif
+                    
+                @endforeach
+            </div>
+        </div>  
     </div>
         
 
@@ -445,7 +598,51 @@
 
     function enviarsolucion(event){
         event.preventDefault();
-        console.log('hola')
+
+        console.log('hola');
+
+        const formData ={
+            tecnico : $('#modalsolucion #tecnico').val(),
+            extraInput: $('#modalsolucion #extraInput').val(),
+            options: $('#modalsolucion #options').val(),
+            rol: $('#modalsolucion #rol').val(),
+            id: $('#modalsolucion #id').val(),
+            numero: $('#modalsolucion #numero').val(),
+            estado: $('#selecstatus').val(),
+            usuario: $('#usuario').val(),
+
+        };
+
+        console.log(formData);
+
+
+        $.ajax({
+            url:'/hardware-cambiar/estatus/'+formData.id +'/'+ formData.rol +'/'+ formData.numero,
+            data: formData,
+            type:'GET',
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response){
+                $('#modalmensaje #mensaje').text('solucion enviada para confirmar!');
+                $('#confirmarsolucion').modal('hide');
+                $('#modalmensaje #check').removeAttr('hidden');
+                $('#modalmensaje').modal('show');
+                
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+            },
+            error: function(xhr){
+                $('#modalmensaje #mensaje').text('Ha ocurrido un error. intentelo de nuevo mas tarde!');
+                $('#confirmarsolucion').modal('hide');
+                $('#modalmensaje #x').removeAttr('hidden');
+                $('#modalmensaje').modal('show');
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+            }
+        })
     }
 
     function enviarconfirm(){
@@ -651,6 +848,54 @@
                 }, 2000);
             }
         })
+    }
+
+    function estatus(){
+        const estado= $('#selecstatus').val();
+        const estado1 = $('#estado').val();
+        console.log(estado);
+
+        if(estado==estado1){
+
+        }else{
+            $('#btnestatus').attr('disabled', true);
+            if(estado==4){
+            
+                $('#modalestatus').modal('hide');
+                $('#modalsolucion').modal('show');
+            }else{
+                const reporte = $('#reporte').val();
+                const usuario = $('#usuario').val();
+
+                console.log(usuario)
+
+                $.ajax({
+                    url: '/cambiar-status-reporteH/'+reporte +'/'+estado + '/' + usuario,
+                    type: 'POST',
+                    headers:{
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response){
+                        $('#modalmensaje #mensaje').text('estado del reporte cambiado!')
+                        $('#modalestatus').modal('hide');
+                        $('#modalmensaje').modal('show');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    },
+                    error: function(xhr){
+                        $('#modalmensaje #mensaje').text('Ha ocurrido un error al cambiar el estado!')
+                        $('#modalestatus').modal('hide');
+                        $('#modalmensaje').modal('show');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    }
+                })
+            }
+        }
+
+        
     }
 
 

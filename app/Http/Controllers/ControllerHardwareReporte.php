@@ -19,6 +19,7 @@ use App\Models\statusReporte;
 use App\Models\Sucursal;
 use App\Models\TipoFalla;
 use App\Models\TipoSolucion;
+use App\Models\traz_reportes;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -271,10 +272,13 @@ class ControllerHardwareReporte extends Controller
 
         $reporte[0]->save();
 
+        $estados = statusReporte::where('id' ,'!=', 1)->orderBy('id')->get();
+        $traz = traz_reportes::where('reporte_id', $id)->where('tipo', 2)->orderBy('id')->get();
+
         
 
 
-        return view('reportes.verreporte', compact('reporte', 'rol', 'mensajes1', 'confirmar', 'soluciones', 'tiempo' ));
+        return view('reportes.verreporte', compact('reporte', 'rol', 'mensajes1', 'confirmar', 'soluciones', 'tiempo', 'estados', 'traz'));
     }
 
     //Funcion para mandar mensajes tanto del usuario como del tecnico
@@ -332,6 +336,7 @@ class ControllerHardwareReporte extends Controller
             $reporte->idtecnico = $request->tecnico;
             
             $reporte->save();
+            $this->cambiar_status($id, $request->estado, $request->usuario);
             $borraranterior = SolucionTemp::where('reporte_id', $id)->get();
             foreach($borraranterior as $borrar){
                 $borrar->delete();
@@ -359,7 +364,7 @@ class ControllerHardwareReporte extends Controller
             // $soluciontemp[0]->delete();
             $reporte->solucionado_usuario =1;
             $reporte->solucionado_tecnico=1;
-            $reporte->status_id =5;
+            $this->cambiar_status($id, 5, $request->usuario);
             $reporte->tiempo_solucion = date("Y-m-d H:i:s");
             $reporte->save();
 
@@ -517,6 +522,33 @@ class ControllerHardwareReporte extends Controller
         }
 
 
+    }
+
+    public function cambiar_status($id, $estado, $usuario){
+        $reporte = ReportesHardware::findOrFail($id);
+        $reporte->status_id = $estado;
+        if($estado==3){
+            $reporte->tiempo_revision = date("Y-m-d H:i:s");
+        }else{
+            if($reporte->tiempo_revision!=null){
+                $fecha = Carbon::now();
+                $tiempo_revision = Carbon::parse($reporte->tiempo_revision);
+                $diferenciaEnMinutos = $tiempo_revision->diffInMinutes($fecha);
+                $diferenciaEnHoras = $diferenciaEnMinutos / 60; // Convierte a horas
+                $reporte->tiempo = $reporte->tiempo+  number_format($diferenciaEnHoras, 2);
+            } 
+        }
+        $reporte->save();
+
+        $traz = new traz_reportes();
+        $traz->reporte_id = $id;
+        $traz->tipo=2;
+        $traz->status_id=$estado;
+        $traz->usuario_id = $usuario;
+        $traz->save();
+
+
+        return response()->json(['message', 'estatus cambiado']);
     }
 
     
