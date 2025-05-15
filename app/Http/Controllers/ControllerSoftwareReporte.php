@@ -337,6 +337,13 @@ class ControllerSoftwareReporte extends Controller
         $reporte->tiempo_solucion = date("Y-m-d H:i:s");
         $reporte->save();
 
+        $traz = new traz_reportes();
+        $traz->reporte_id = $request->reporte;
+        $traz->tipo=1;
+        $traz->status_id=5;
+        $traz->usuario_id=$request->usuario;
+        $traz->save();
+
         return response()->json(['message' => 'ticket solucionado']);
 
     }

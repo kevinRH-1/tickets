@@ -364,16 +364,19 @@
                             <input type="text" name="rol" id="rol" hidden value="{{Auth::user()->roleid}}">
                             <div class="md:col-span-8 col-span-8 pt-[8px] md:!flex grid grid-cols-4 gap-4 w-[90%] mx-auto md:!justify-around">
 
-                                <button id="record-btn" class="bg-orange-600 px-4 col-span-2 rounded-md text-white">🎙️ Grabar</button>
-                                    
-                                    {{-- HECHO POR IA --}}
+                                @if($reporte[0]->status_id!=5)
 
-                                <form id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
-                                    <input type="file" id="fileInput" name="file" accept="image/*" style="display: none;" onchange="showPreview(event)">
-                                    <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success col-span-2 md:!w-[25%]">imagen</button>
+                                    <button id="record-btn" class="bg-orange-600 px-4 col-span-2 rounded-md text-white">🎙️ Grabar</button>
+                                        
                                     
-                                    {{-- <button type="submit">Enviar</button> --}}
-                                </form>
+
+                                    <form id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
+                                        <input type="file" id="fileInput" name="file" accept="image/*" style="display: none;" onchange="showPreview(event)">
+                                        <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success col-span-2 md:!w-[25%]">imagen</button>
+                                        
+                                        {{-- <button type="submit">Enviar</button> --}}
+                                    </form>
+                                @endif
                                 <div class="md:hidden"></div>
 
                                 @if($reporte[0]->status_id!=5)
@@ -782,7 +785,7 @@
         $(document).on('click', '#confirmYes2', function(){
             const formData = {
                 reporte: $('#reporte').val(),
-                userid:  $('#userid').val(), 
+                usuario:  $('#usuario').val(), 
             };
             console.log(formData);
             $.ajax({
