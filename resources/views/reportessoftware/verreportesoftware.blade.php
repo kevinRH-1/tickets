@@ -366,7 +366,7 @@
 
                                 @if($reporte[0]->status_id!=5)
 
-                                    <button id="record-btn" class="bg-orange-600 px-4 col-span-2 rounded-md text-white">🎙️ Grabar</button>
+                                    {{-- <button id="record-btn" class="bg-orange-600 px-4 col-span-2 rounded-md text-white">🎙️ Grabar</button> --}}
                                         
                                     
 
