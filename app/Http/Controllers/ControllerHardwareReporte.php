@@ -54,7 +54,7 @@ class ControllerHardwareReporte extends Controller
         return view('reportes.reportesgeneral', compact('reportes', 'solucionados', 'generados', 'revision', 'sucursales', 'fallas', 'estatus', 'r24h'));
     }
 
-    public function misreportes($id){
+    public function misreportes($id, $usuario){
         $pc = Pc::where('lugar_id', $id)->where('activo',1)->get();
         $laptops = Laptops::where('lugar_id', $id)->where('activo',1)->get();
         $impresoras = Impresoras::where('lugar_id', $id)->where('activo',1)->get();
@@ -65,9 +65,17 @@ class ControllerHardwareReporte extends Controller
                                             ->merge($impresoras);
 
 
-        $reportes = ReportesHardware::whereHas('usuario', function ($query) use ($id) {
-            $query->where('lugar_id', $id);
-        })->orderBy('noti_u', 'desc')->orderBy('status_id','asc')->orderBy('id', 'desc')->paginate(10);
+        $reportes = ReportesHardware::whereHas('usuario', function ($query) use ($id, $usuario) {
+            if ($id == 0) {
+                $query->where('idusuario', $usuario);
+            } else {
+                $query->where('lugar_id', $id);
+            }
+        })->orderBy('noti_u', 'desc')
+        ->orderBy('status_id', 'asc')
+        ->orderBy('id', 'desc')
+        ->paginate(10);
+
 
 
         $querygenerados = collect();
@@ -217,6 +225,13 @@ class ControllerHardwareReporte extends Controller
                 $mensaje->imagen = $rutaImagen;
             }
             $mensaje->save();
+
+            $traz = new traz_reportes();
+            $traz->reporte_id = $reporte->id;
+            $traz->status_id = 1;
+            $traz->tipo=2;
+            $traz->usuario_id = $request->usuario;
+            $traz->save();
             
         });
 
@@ -388,6 +403,13 @@ class ControllerHardwareReporte extends Controller
         $reporte->status_id =5;
         $reporte->tiempo_solucion = date("Y-m-d H:i:s");
         $reporte->save();
+
+        $traz = new traz_reportes();
+        $traz->reporte_id = $request->reporte;
+        $traz->usuario_id = $request->usuario;
+        $traz->tipo=2;
+        $traz->status_id=5;
+        $traz->save();
 
         return response()->json(['message' => 'ticket solucionado']);
 

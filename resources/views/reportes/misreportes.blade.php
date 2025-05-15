@@ -78,9 +78,11 @@
 
                               @php
                                   $colores_status = [
-                                      1 => 'text-red-500',
-                                      2 => 'text-amber-500',
-                                      3 => 'text-sky-500',
+                                    1 => 'text-red-500',
+                                    3 => 'text-amber-500',
+                                    5 => 'text-sky-500',
+                                    2 => 'text-orange-700',
+                                    4 => 'text-green-700',
                                   ];
                                   $nivel_status = $item->status_id;
                                   $color_status = $colores_status[$nivel_status] ?? ''; // Si no hay coincidencia, no se asigna color
@@ -90,9 +92,13 @@
                                 <!-- Fila 1 -->
                                 @if($item->status_id==1)
                                     <tr class="border-1 border-red-500 hover:bg-red-50">
-                                @elseif($item->status_id==2)
-                                    <tr class="border-1 border-amber-500 hover:bg-amber-50">
                                 @elseif($item->status_id==3)
+                                    <tr class="border-1 border-amber-500 hover:bg-amber-50">
+                                @elseif($item->status_id==2)
+                                    <tr class="border-1 border-orange-700 hover:bg-orange-50">
+                                @elseif($item->status_id==4)
+                                    <tr class="border-1 border-green-700 hover:bg-green-100">
+                                @elseif($item->status_id==5)
                                     <tr class="border-1 border-sky-500 hover:bg-sky-50">
                                 @else
                                     <tr class="border-1 border-gray-200 hover:bg-gray-50">
@@ -147,15 +153,7 @@
                                             <td class="p-4 text-center hidden md:table-cell" nombre="nombre">{{$item->impresora->descripcion}}</td>
                                         @endif
                                         <td class="p-4 text-center hidden md:table-cell">{{ \Illuminate\Support\Str::limit($item->descripcion, 40, '...') }}</td>
-                                        @if($item->status_id==1)
-                                            <td class="p-2 text-center text-red-500 hidden md:table-cell">{{$item->status->nombre}}</td>
-                                        @elseif($item->status_id==2)
-                                            <td class="p-2 text-center text-amber-500 hidden md:table-cell">{{$item->status->nombre}}</td>
-                                        @elseif($item->status_id==3)
-                                            <td class="p-2 text-center text-sky-500 hidden md:table-cell">{{$item->status->nombre}}</td>
-                                        @else
-                                            <td class="p-2 text-center hidden md:table-cell">{{$item->status->nombre}}</td>
-                                        @endif
+                                        <td class="p-4 text-center {{$color_status}} hidden md:table-cell">{{$item->status->nombre}}</td>
                                         @if($item->status_id==1)
                                             <td class="p-4 text-left flex md:justify-between md:flex-row flex-col">
                                         @else

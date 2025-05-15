@@ -266,7 +266,7 @@
                             @if($reporte[0]->status_id != 5)
                                 @if(Auth::user()->roleid==1 || Auth::user()->roleid==2)
                                     
-                                    <div class="md:col-span-7 col-span-8">
+                                    <div class="md:col-span-8 col-span-8">
                                         <input type="text" name="problema1" id="problema1" readonly value="{{$reporte[0]->descripcion}}" hidden>
                                         
                                         <input type="text" id="tecnicomensaje" name="tecnicomensaje" value="{{Auth::user()->id}}" hidden>
@@ -274,7 +274,7 @@
                                     </div>
                                 @else
                     
-                                    <div class="md:col-span-7 col-span-8">
+                                    <div class="md:col-span-8 col-span-8">
                                         <textarea type="text" name="mensaje" id="mensaje" class="block w-full mt-2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 min-h-[100px]" oninput="toggleButton()" maxlength="300"></textarea>
                                     </div>
             
@@ -358,7 +358,20 @@
             </div>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md mb-6 flex flex-col justify-center md:grid md:grid-cols-3 md:gap-2">
+        @if($reporte[0]->status_id==5 && Auth::user()->roleid!=3)
+            <div class="bg-white p-6 w-11/12 rounded-lg items-center shadow-md mx-auto">
+                <h1 class="text-center font-semibold text-lg text-blue-500">Informacion sobre la solucion:</h1>
+                <div class="md:w-3/4 mx-auto border-1 border-gray-300 md:!p-4 p-1 rounded-lg mt-4">
+                    @if($reporte[0]->soluciondef->solucion_mensaje == "")
+                    <p class="break-words">{{$reporte[0]->soluciondef->tipo->descripcion}}</p>
+                    @else
+                        <p class="break-words">{{$reporte[0]->soluciondef->solucion_mensaje}}</p>
+                    @endif
+                </div>
+            </div>
+        @endif
+
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6 flex flex-col justify-center md:grid w-3/4 mx-auto md:grid-cols-3 md:gap-2">
         
         
             <input type="text" name="solucion" id="solucion" value="{{$confirmar}}" hidden>
@@ -625,7 +638,7 @@
             },
             success: function(response){
                 $('#modalmensaje #mensaje').text('solucion enviada para confirmar!');
-                $('#confirmarsolucion').modal('hide');
+                $('#modalsolucion').modal('hide');
                 $('#modalmensaje #check').removeAttr('hidden');
                 $('#modalmensaje').modal('show');
                 
@@ -635,7 +648,7 @@
             },
             error: function(xhr){
                 $('#modalmensaje #mensaje').text('Ha ocurrido un error. intentelo de nuevo mas tarde!');
-                $('#confirmarsolucion').modal('hide');
+                $('#modalsolucion').modal('hide');
                 $('#modalmensaje #x').removeAttr('hidden');
                 $('#modalmensaje').modal('show');
                 setTimeout(() => {
@@ -649,6 +662,7 @@
         // console.log('hola');
         const formData = {
             reporte:$('#reporte').val(),
+            usuario:$('#usuario').val()
         }    
         $.ajax({
             url:'/confirmarsolucion',
@@ -894,11 +908,8 @@
                 })
             }
         }
-
         
     }
-
-
 
 </script>
 
