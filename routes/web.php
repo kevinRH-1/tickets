@@ -252,6 +252,12 @@ Route::middleware([
     Route::get('videos', [VideosController::class, 'videos'])->name('videos');
     Route::get('subir-videos', [VideosController::class, 'subir'])->name('subir.videos');
     Route::post('create-video', [VideosController::class, 'create'])->name('crear.video');
+    Route::get('detalles_video/{id}', [VideosController::class, 'detalles'])->name('datelles.video');
+    Route::post('actualizar_video', [VideosController::class, 'update'])->name('update.video');
+    Route::delete('delete_video/{id}', [VideosController::class, 'delete'])->name('delete.video');
+    Route::post('/marcar-anuncio', [VideosController::class, 'marcarAnuncio'])->name('marcar');
+    Route::get('agregar_video', [VideosController::class, 'subir'])->name('agregar.video');
+
     
     
     

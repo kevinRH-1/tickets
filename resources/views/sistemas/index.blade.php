@@ -395,7 +395,7 @@
                 $('#confirmar #confirmYes').attr('id', 'confirmYes3');
                 $('#confirmar #confirmYes2').attr('id', 'confirmYes3');
                 $('#texto').text('Esta accion actualizara los datos de este sistema!')
-                $('#confirmYes3').text('Si, registrar');
+                $('#confirmYes3').text('Si, actualizar');
                 $('#confirmar #bnombre').text(formData.nombre);
                 $('#confirmYes3').removeClass('btn-danger');
                 $('#confirmYes3').addClass('btn-primary');
