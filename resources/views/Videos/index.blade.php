@@ -27,7 +27,7 @@
                             class="w-full md:w-48 rounded-lg shadow-md mb-4 md:mb-0 md:mr-6"
                         >
                     </a>
-                    <div class="relative text-center md:text-left w-3/4">
+                    <div class="relative text-center md:text-left md:!w-3/4 w-full">
                         <div class="absolute top-0 left-0">
                             <h1></h1>
                             @if($item->anuncio == 0)
@@ -41,7 +41,7 @@
                             @endif
 
                         </div>
-                        <h2 class="text-xl font-bold mb-2 nombre-video">{{ $item->nombre }}</h2>
+                        <h2 class="text-xl font-bold mb-2 nombre-video w-3/4 mx-auto">{{ $item->nombre }}</h2>
                         <p class="text-gray-700">{{ $item->descripcion }}</p>
                     </div>
                     <span id="nombrespan-{{$item->id}}" hidden>{{$item->nombre}}</span>
@@ -114,7 +114,7 @@
 
         
         <div id="modalact" class="modal fade">
-            <div class="modal-dialog modal-lg relative mx-auto mt-20 bg-white rounded shadow-lg">
+            <div class="modal-dialog w-3/4 md:!w-full modal-lg  relative mx-auto mt-20 bg-white rounded shadow-lg">
                 <div class="modal-content">
                 <!-- Header -->
                     <div class="flex items-center justify-between px-1 py-2 border-b">
@@ -126,19 +126,19 @@
 
                     <!-- Body -->
                     <div class="p-4 grid grid-cols-3 gap-3">
-                        <div class="col-span-1 p-1 mt-4">
+                        <div class="md:!col-span-1 col-span-3 md:!p-1 p-2 md:!mt-4">
                             <img id="imagen" src="" alt="" class="w-full rounded-md">
                         </div>
                         <input type="text" id="idvid" name="idvid" hidden>
                         <input type="text" id="oldlink" name="oldlink" hidden value="">
-                        <div class="col-span-2">
+                        <div class="md:!col-span-2 col-span-3">
                             <h1 class="mt-1 mb-2 font-semibold text-gray-700 text-lg text-center">NOMBRE DEL VIDEO:</h1>
-                            <div class="w-[80%] mx-auto">
+                            <div class="md:!w-[80%] w-full mx-auto">
                                 <textarea name="nombreact" id="nombreact"  rows="2" class="w-full block border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-1"></textarea>
                                 <p id="nombrei-error" class="text-red-500 text-sm mt-2" hidden>Este campo es obligatorio!</p>
                             </div>
                             <h1 class="mt-2 mb-2 font-semibold text-gray-700 text-lg text-center">LINK DEL VIDEO:</h1>
-                            <div class="w-[80%] mx-auto">
+                            <div class="md:!w-[80%] w-full mx-auto">
                                 <textarea name="linkact" id="linkact"  rows="2" class="w-full block border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-1"></textarea>
                                 <p id="link-error" class="text-red-500 text-sm mt-2" hidden>Este campo es obligatorio!</p>
                         <p id="link-error2" class="text-red-500 text-sm mt-2" hidden>El link no es correcto!</p>
@@ -218,6 +218,11 @@
             function handleModify(id) {
                 const inputId = document.getElementById(`id-${id}`).value;
                 // console.log('Modificar:', { id: inputId });
+                 $('#link-error2').attr('hidden',true);
+                 $('#nombrei-error').attr('hidden', true);
+                 $('#descripcion-error').attr('hidden', true);
+                 $('#link-error').attr('hidden', true);
+
 
                 $.ajax({
                     url:'detalles_video/'+inputId,
@@ -243,16 +248,41 @@
                 }) 
             }
 
+            // function obtenerIdYoutube(url) {
+            //     try {
+            //         const urlObj = new URL(url);
+            //         const urlParams = new URLSearchParams(urlObj.search);
+            //         return urlParams.get("v") || null;
+            //     } catch (error) {
+            //         console.error("URL no válida:", error);
+            //         return null;
+            //     }
+            // }
+
             function obtenerIdYoutube(url) {
                 try {
                     const urlObj = new URL(url);
-                    const urlParams = new URLSearchParams(urlObj.search);
-                    return urlParams.get("v") || null;
+
+                    // Si la URL es del formato largo: youtube.com/watch?v=VIDEO_ID
+                    if (urlObj.hostname.includes("youtube.com")) {
+                        const urlParams = new URLSearchParams(urlObj.search);
+                        return urlParams.get("v") || null;
+                    }
+
+                    // Si la URL es del formato corto: youtu.be/VIDEO_ID
+                    if (urlObj.hostname.includes("youtu.be")) {
+                        const pathSegments = urlObj.pathname.split("/");
+                        return pathSegments.length > 1 ? pathSegments[1] : null;
+                    }
+
+                    return null; // No es un enlace válido de YouTube
                 } catch (error) {
                     console.error("URL no válida:", error);
                     return null;
                 }
             }
+
+            // https://youtu.be/-4YwX0kFaBs?si=mPmB02cyaoqnJfpK
 
             function validar(form){
                 let valido = true;
@@ -277,13 +307,16 @@
                 }else{
                     $('#link-error').attr('hidden', true);
                 }
-                if(form.codigo){
+                if('codigo' in form){
+                    
                     if(!form.codigo||form.codigo==null){
                         valido=false;
                         $('#link-error2').removeAttr('hidden');
                     }else{
                         $('#link-error2').attr('hidden', true);
                     }
+                }else{
+                    $('#link-error2').attr('hidden', true);
                 }
 
                 return valido;

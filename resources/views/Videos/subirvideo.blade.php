@@ -5,8 +5,8 @@
         <h1 class="text-center font-semibold text-2xl">Subir nuevo video</h1>
     </div>
 
-    <div class="container-fluid mt-6 w-3/4">
-        <div class="card border-0 md:shadow-lg my-5 bg-transparent md:!bg-white">
+    <div class="container-fluid mt-6 w-full md:!w-3/4">
+        <div class="card border-0 md:shadow-lg my-5 bg-white px-4">
             <div class="card-body md:!p-4 p-0">
 
                 <form action="" method="POST" class="space-y-6">
@@ -18,7 +18,7 @@
                             type="text" 
                             name="nombre" 
                             id="nombre" 
-                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+                            class="w-full px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         >
                         <p id="nombrei-error" class="text-red-500 text-sm mt-2" hidden>Este campo es obligatorio!</p>
                     </div>
@@ -28,7 +28,7 @@
                         <textarea 
                             name="descripcion" 
                             id="descripcion" 
-                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+                            class="w-full px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                             maxlength="340"
                             rows="4"
                             placeholder=""
@@ -42,7 +42,7 @@
                             type="text" 
                             name="link" 
                             id="link" 
-                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+                            class="w-full px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         >
                         <p id="link-error" class="text-red-500 text-sm mt-2" hidden>Este campo es obligatorio!</p>
                         <p id="link-error2" class="text-red-500 text-sm mt-2" hidden>El link no es correcto!</p>
