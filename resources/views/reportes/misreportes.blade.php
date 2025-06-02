@@ -56,8 +56,12 @@
                                 <th class="p-4 text-center hidden md:table-cell">TECNICO</th>
                                 <th class="p-4 text-center hidden md:table-cell">EQUIPO</th>
                                 <th class="p-4 text-center hidden md:table-cell">PROBLEMA</th>
-                                <th class="p-4 text-center hidden md:table-cell">ESTATUS</th>
-                                <th class="p-4 text-center rounded-tr-lg">VER</th>
+                                @if($borraract==1)
+                                    <th class="p-4 text-center hidden md:table-cell">ESTATUS</th>
+                                    <th class="p-4 text-center rounded-tr-lg">BORRAR</th>
+                                @else
+                                    <th class="p-4 text-center hidden md:table-cell md:rounded-tr-lg">ESTATUS</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -91,17 +95,17 @@
 
                                 <!-- Fila 1 -->
                                 @if($item->status_id==1)
-                                    <tr class="border-1 border-red-500 hover:bg-red-50">
+                                    <tr class="border-1 border-red-500 hover:bg-red-50 hover:cursor-pointer" id='fila'>
                                 @elseif($item->status_id==3)
-                                    <tr class="border-1 border-amber-500 hover:bg-amber-50">
+                                    <tr class="border-1 border-amber-500 hover:bg-amber-50 hover:cursor-pointer" id='fila'>
                                 @elseif($item->status_id==2)
-                                    <tr class="border-1 border-orange-700 hover:bg-orange-50">
+                                    <tr class="border-1 border-orange-700 hover:bg-orange-50 hover:cursor-pointer" id='fila'>
                                 @elseif($item->status_id==4)
-                                    <tr class="border-1 border-green-700 hover:bg-green-100">
+                                    <tr class="border-1 border-green-700 hover:bg-green-100 hover:cursor-pointer" id='fila'>
                                 @elseif($item->status_id==5)
-                                    <tr class="border-1 border-sky-500 hover:bg-sky-50">
+                                    <tr class="border-1 border-sky-500 hover:bg-sky-50 hover:cursor-pointer" id='fila'>
                                 @else
-                                    <tr class="border-1 border-gray-200 hover:bg-gray-50">
+                                    <tr class="border-1 border-gray-200 hover:bg-gray-50 hover:cursor-pointer" id='fila'>
                                 @endif
                                         <td class="md:!pl-4 p-1">
                                             @if($item->noti_u==1 || $item->solucion)
@@ -157,15 +161,15 @@
                                         @if($item->status_id==1)
                                             <td class="p-4 text-left flex md:justify-between md:flex-row flex-col">
                                         @else
-                                            <td class="p-4 text-center items-center justify-center">
+                                            {{-- <td class="p-4 text-center items-center justify-center"> --}}
                                         @endif
-                                            <a href="{{route ('reportes.detalles', [$item->id, Auth::user()->roleid])}}">
+                                            {{-- <a href="{{route ('reportes.detalles', [$item->id, Auth::user()->roleid])}}">
                                                 <button class="bg-teal-500 text-white p-2 rounded hover:bg-teal-600">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                         <path d="M10 3a7 7 0 100 14 7 7 0 000-14zm3.707 7.707a1 1 0 01-1.414 0L10 8.414l-2.293 2.293a1 1 0 11-1.414-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 010 1.414z" />
                                                     </svg>
                                                 </button>
-                                            </a>
+                                            </a> --}}
                                             @if ($item->status_id==1)
                                                 <button class="btn btn-danger btn-sm w-9 h-9 md:ml-2 md:!mt-0 mt-3" id="borrar"><i
                                                     class="bi bi-trash"></i>
@@ -290,6 +294,7 @@
 
         // Mostrar el modal de confirmación al hacer clic en "Borrar"
         $(document).on('click', '#borrar', function(event) {
+            event.stopPropagation();
 
             // Almacena el ID del usuario
             idToDelete = $(this).closest('tr').find('td[id]').text();
@@ -344,6 +349,19 @@
             $('#confirmModal').addClass('hidden');
         });
     });
+
+
+    $(document).ready(function(){
+        $(document).on('click', '#fila', function(){
+           const id = $(this).closest('tr').find('td[id]').text()
+           const usuario = {{Auth::user()->roleid}}
+           console.log(id)
+           console.log(usuario)
+           url = '/reporte-detalles/'+ id + usuario;
+           console.log(url)
+           window.location.href = url
+        })
+    })
 
 
 

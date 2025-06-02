@@ -81,6 +81,14 @@ class ControllerHardwareReporte extends Controller
         ->orderBy('id', 'desc')
         ->paginate(10);
 
+        $borraract=0;
+        foreach($reportes as $r){
+            if($r->status_id==1){
+                $borraract = 1;
+                break;
+            }
+        }
+
 
 
         $querygenerados = collect();
@@ -94,7 +102,7 @@ class ControllerHardwareReporte extends Controller
         $revision = count($queryrevision);
         $solucionados = count($querysolucionados);
 
-        return view('reportes.misreportes', compact('reportes', 'solucionados', 'generados', 'revision'));
+        return view('reportes.misreportes', compact('reportes', 'solucionados', 'generados', 'revision', 'borraract'));
 
     }
 

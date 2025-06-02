@@ -142,8 +142,8 @@
                                 {{-- <th class="p-4 text-center hidden md:table-cell">MODULO</th> --}}
                                 {{-- <th class="p-4 text-center hidden md:table-cell">PROBLEMA</th> --}}
                                 <th class="p-2 text-center hidden md:table-cell">NIVEL DE IMPORTANCIA</th>
-                                <th class="p-2 text-center hidden md:table-cell">ESTADO</th>
-                                <th class="p-2 md:text-center text-left">VER</th>
+                                <th class="p-2 text-center hidden md:table-cell md:rounded-tr-lg">ESTADO</th>
+                                {{-- <th class="p-2 md:text-center text-left">VER</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -180,17 +180,17 @@
 
                                 <!-- Fila 1 -->
                                 @if($item->status_id==1)
-                                    <tr class="border-1 border-red-500 hover:bg-red-50">
+                                    <tr class="border-1 border-red-500 hover:bg-red-50 hover:cursor-pointer" id="fila">
                                 @elseif($item->status_id==3)
-                                    <tr class="border-1 border-amber-500 hover:bg-amber-50">
+                                    <tr class="border-1 border-amber-500 hover:bg-amber-50 hover:cursor-pointer" id="fila">
                                 @elseif($item->status_id==2)
-                                    <tr class="border-1 border-orange-700 hover:bg-orange-50">
+                                    <tr class="border-1 border-orange-700 hover:bg-orange-50 hover:cursor-pointer" id="fila">
                                 @elseif($item->status_id==4)
-                                    <tr class="border-1 border-green-700 hover:bg-green-100">
+                                    <tr class="border-1 border-green-700 hover:bg-green-100 hover:cursor-pointer" id="fila">
                                 @elseif($item->status_id==5)
-                                    <tr class="border-1 border-sky-500 hover:bg-sky-50">
+                                    <tr class="border-1 border-sky-500 hover:bg-sky-50 hover:cursor-pointer" id="fila">
                                 @else
-                                    <tr class="border-1 border-gray-200 hover:bg-gray-50">
+                                    <tr class="border-1 border-gray-200 hover:bg-gray-50 hover:cursor-pointer" id="fila">
                                 @endif  
                                         <td class="md:pl-4 p-1">
                                             @if($item->noti_t==1)
@@ -207,6 +207,7 @@
                                             </div>
                                             
                                         </td>
+                                        <td hidden id='id'>{{$item->id}}</td>
                                         <td class="py-4 text-center hidden md:table-cell">{{$item->created_at}}</td>
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->codigo}}</td>
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->usuario->sucursal->nombre}}</td>
@@ -217,7 +218,7 @@
                                         {{-- <td class="p-4 text-center hidden md:table-cell">{{ \Illuminate\Support\Str::limit($item->falla?->descripcion ?? $item->mensajes[0]->mensaje, 40, '...') }}</td> --}}
                                         <td class="p-4 text-center {{$color}} hidden md:table-cell">{{$item->falla?->importancia?->descripcion?? 'sin informacion'}}</td>
                                         <td class="p-2 text-center {{$color_status}} hidden md:table-cell">{{$item->status->nombre}}</td>
-                                        <td class="p-2 md:text-center text-left">
+                                        {{-- <td class="p-2 md:text-center text-left">
                                             <a href="{{route('reporte.ver', [$item->id, Auth::user()->roleid])}}">
                                                 <button class="bg-teal-500 text-white p-2 rounded hover:bg-teal-600">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -225,7 +226,7 @@
                                                     </svg>
                                                 </button>
                                             </a>
-                                        </td>
+                                        </td> --}}
                                         
                                     </tr>
                             @endforeach
@@ -260,6 +261,18 @@
         
         return valido;
     }
+
+    $(document).ready(function(){
+        $(document).on('click', '#fila', function(){
+           const id = $(this).closest('tr').find('td[id]').text()
+           const usuario = {{Auth::user()->roleid}}
+           console.log(id)
+           console.log(usuario)
+           url = 'verreporte/'+ id + usuario;
+           console.log(url)
+           window.location.href = url
+        })
+    })
 
 
     function mostrarfiltro(){

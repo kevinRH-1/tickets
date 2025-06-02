@@ -48,9 +48,16 @@ class ControllerSoftwareReporte extends Controller
     public function reportes($id){
         $reportes = ReportesSoftware::with('usuario', 'modulo', 'sistema', 'status')->where('usuario_id', $id)
             ->orderBy('noti_u', 'desc')->orderBy('status_id')->orderBy('id', 'desc')->paginate(10);
+        $borraract=0;
+        foreach($reportes as $r){
+            if($r->status_id==1){
+                $borraract = 1;
+                break;
+            }
+        }
 
 
-        return view('reportessoftware.reportes', compact('reportes'));
+        return view('reportessoftware.reportes', compact('reportes', 'borraract'));
     }
 
     public function create(){

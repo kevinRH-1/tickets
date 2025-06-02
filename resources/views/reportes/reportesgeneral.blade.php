@@ -149,17 +149,17 @@
 
                                 <!-- Fila 1 -->
                                 @if($item->status_id==1)
-                                    <tr class="border-1 border-red-500 hover:bg-red-50">
+                                    <tr class="border-1 border-red-500 hover:bg-red-50 hover:cursor-pointer" id='fila'>
                                 @elseif($item->status_id==3)
-                                    <tr class="border-1 border-amber-500 hover:bg-amber-50">
+                                    <tr class="border-1 border-amber-500 hover:bg-amber-50 hover:cursor-pointer" id='fila'>
                                 @elseif($item->status_id==2)
-                                    <tr class="border-1 border-orange-700 hover:bg-orange-50">
+                                    <tr class="border-1 border-orange-700 hover:bg-orange-50 hover:cursor-pointer" id='fila'>
                                 @elseif($item->status_id==4)
-                                    <tr class="border-1 border-green-700 hover:bg-green-100">
+                                    <tr class="border-1 border-green-700 hover:bg-green-100 hover:cursor-pointer" id='fila'>
                                 @elseif($item->status_id==5)
-                                    <tr class="border-1 border-sky-500 hover:bg-sky-50">
+                                    <tr class="border-1 border-sky-500 hover:bg-sky-50 hover:cursor-pointer" id='fila'>
                                 @else
-                                    <tr class="border-1 border-gray-200 hover:bg-gray-50">
+                                    <tr class="border-1 border-gray-200 hover:bg-gray-50 hover:cursor-pointer" id='fila'>
                                 @endif
                                         <td class="md:pl-4 p-1">
                                             @if($item->noti_t==1)
@@ -177,6 +177,7 @@
                                             </div>
                                             
                                         </td>
+                                        <td hidden id='id'>{{$item->id}}</td>
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->codigo}}</td>
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->usuario->sucursal->nombre}}</td>
                                         <td class="p-4 text-center hidden md:table-cell">{{$item->usuario->descripcion}}</td>
@@ -265,4 +266,16 @@
     function truncateText(text, maxLength) {
         return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
     }
+
+    $(document).ready(function(){
+        $(document).on('click', '#fila', function(){
+           const id = $(this).closest('tr').find('td[id]').text()
+           const usuario = {{Auth::user()->roleid}}
+           console.log(id)
+           console.log(usuario)
+           url = '/reporte-detalles/'+ id + usuario;
+           console.log(url)
+           window.location.href = url
+        })
+    })
 </script>
