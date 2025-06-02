@@ -96,9 +96,9 @@ class EquipoController extends Controller
         $usuario = User::findOrFail($id);
         if($usuario->lugar_id!=0){
             $suc= $usuario->lugar_id;
-            $pcs = Pc::where('lugar_id', $suc)->where('activo',1)->with('lugar', 'categoria', 'estado')->paginate(10);
-            $laptops = Laptops::where('lugar_id', $suc)->where('activo',1)->paginate(10);
-            $impresoras = Impresoras::where('lugar_id', $suc)->where('activo',1)->paginate(10);
+            $pcs = Pc::where('lugar_id', $suc)->orWhere('userid', $id)->where('activo',1)->with('lugar', 'categoria', 'estado')->paginate(10);
+            $laptops = Laptops::where('lugar_id', $suc)->orWhere('userid', $id)->where('activo',1)->paginate(10);
+            $impresoras = Impresoras::where('lugar_id', $suc)->orWhere('userid', $id)->where('activo',1)->paginate(10);
             $estados = EstadosEquipos::orderBy('id')->get();
             $sucursales = Sucursal::orderBy('id')->where('activo', 1)->get();
 
