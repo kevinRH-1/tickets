@@ -16,69 +16,139 @@
             class="w-full mb-6 px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-400"
         >
 
-        <div id="listaVideos">
-            @forelse ($videos as $item)
-                <div class="relative flex flex-col md:flex-row mb-6 border-b pb-4 video-item" data-nombre="{{ Str::lower($item->nombre) }}">
-                    <input type="text" id="id-{{$item->id}}" name="id" hidden value="{{$item->id}}">
-                    <a href="{{$item->link}}">
-                        <img 
-                            src="https://img.youtube.com/vi/{{$item->codigo}}/hqdefault.jpg" 
-                            alt="Miniatura de {{ $item->nombre }}" 
-                            class="w-full md:w-48 rounded-lg shadow-md mb-4 md:mb-0 md:mr-6"
-                        >
-                    </a>
-                    <div class="relative text-center md:text-left md:!w-3/4 w-full">
-                        <div class="absolute top-0 left-0">
-                            <h1></h1>
-                            @if($item->anuncio == 0)
-                                <button class="btn btn-light btn-sm" data-id="{{ $item->id }}" data-anuncio="0" onclick="marcar(this)">
-                                    <i class="fa-regular fa-bookmark" style="color: #000000;"></i>
-                                </button>
-                            @else
-                                <button class="btn btn-light btn-sm" data-id="{{ $item->id }}" data-anuncio="1" onclick="marcar(this)">
-                                    <i class="fa-solid fa-bookmark" style="color: #FFD43B;"></i>
-                                </button>
-                            @endif
+        @if(Auth::user()->roleid==1||Auth::user()->roleid==2)
+            <div id="listaVideos">
+                @forelse ($videos as $item)
+                    <div class="relative flex flex-col md:flex-row mb-6 border-b pb-4 video-item" data-nombre="{{ Str::lower($item->nombre) }}">
+                        <input type="text" id="id-{{$item->id}}" name="id" hidden value="{{$item->id}}">
+                        <a href="{{$item->link}}">
+                            <img 
+                                src="https://img.youtube.com/vi/{{$item->codigo}}/hqdefault.jpg" 
+                                alt="Miniatura de {{ $item->nombre }}" 
+                                class="w-full md:w-48 rounded-lg shadow-md mb-4 md:mb-0 md:mr-6"
+                            >
+                        </a>
+                        <div class="relative text-center md:text-left md:!w-3/4 w-full">
+                            <div class="absolute top-0 left-0">
+                                <h1></h1>
+                                @if($item->anuncio == 0)
+                                    <button class="btn btn-light btn-sm" data-id="{{ $item->id }}" data-anuncio="0" onclick="marcar(this)">
+                                        <i class="fa-regular fa-bookmark" style="color: #000000;"></i>
+                                    </button>
+                                @else
+                                    <button class="btn btn-light btn-sm" data-id="{{ $item->id }}" data-anuncio="1" onclick="marcar(this)">
+                                        <i class="fa-solid fa-bookmark" style="color: #FFD43B;"></i>
+                                    </button>
+                                @endif
 
+                            </div>
+                            <h2 class="text-xl font-bold mb-2 nombre-video w-3/4 mx-auto">{{ $item->nombre }}</h2>
+                            <p class="text-gray-700">{{ $item->descripcion }}</p>
                         </div>
-                        <h2 class="text-xl font-bold mb-2 nombre-video w-3/4 mx-auto">{{ $item->nombre }}</h2>
-                        <p class="text-gray-700">{{ $item->descripcion }}</p>
-                    </div>
-                    <span id="nombrespan-{{$item->id}}" hidden>{{$item->nombre}}</span>
-                    <div class="absolute right-0 top-0 w-16 h-4 rounded-md shadow-md">
-                        <button 
-                            id="menu-button-{{$item->id}}" 
-                            class="inline-flex justify-center w-full rounded-md border-none shadow-md text-xl px-1 bg-gray-100 font-medium text-gray-700"
-                            aria-expanded="true"
-                            aria-haspopup="true"
-                            onclick="toggleMenu(event, {{$item->id}})"
-                        >
-                            ...
-                        </button>
-                        <div 
-                            id="dropdown-menu-{{$item->id}}"
-                            class="hidden absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                            role="menu"
-                            aria-orientation="vertical"
-                            aria-labelledby="menu-button-{{$item->id}}"
-                        >
-                            <div class="py-1" role="none">
-                                <a href="#" 
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                    role="menuitem" 
-                                    onclick="handleModify({{$item->id}})">Modificar</a>
-                                <a href="#" 
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                    role="menuitem" 
-                                    onclick="handleDelete({{$item->id}})">Borrar</a>
+                        <span id="nombrespan-{{$item->id}}" hidden>{{$item->nombre}}</span>
+                        <div class="absolute right-0 top-0 w-16 h-4 rounded-md shadow-md">
+                            <button 
+                                id="menu-button-{{$item->id}}" 
+                                class="inline-flex justify-center w-full rounded-md border-none shadow-md text-xl px-1 bg-gray-100 font-medium text-gray-700"
+                                aria-expanded="true"
+                                aria-haspopup="true"
+                                onclick="toggleMenu(event, {{$item->id}})"
+                            >
+                                ...
+                            </button>
+                            <div 
+                                id="dropdown-menu-{{$item->id}}"
+                                class="hidden absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                role="menu"
+                                aria-orientation="vertical"
+                                aria-labelledby="menu-button-{{$item->id}}"
+                            >
+                                <div class="py-1" role="none">
+                                    <a href="#" 
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                        role="menuitem" 
+                                        onclick="handleModify({{$item->id}})">Modificar</a>
+                                    <a href="#" 
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                        role="menuitem" 
+                                        onclick="handleDelete({{$item->id}})">Borrar</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            @empty
-                <p class="text-center text-gray-500">No hay videos disponibles.</p>
-            @endforelse
-        </div>
+                @empty
+                    <p class="text-center text-gray-500">No hay videos disponibles.</p>
+                @endforelse
+            </div>
+        @elseif(Auth::user()->roleid==3)
+            <div id="listaVideos">
+                @forelse ($videos as $item)
+                    @if($item->rol==2)
+                        <div class="relative flex flex-col md:flex-row mb-6 border-b pb-4 video-item" data-nombre="{{ Str::lower($item->nombre) }}">
+                            <input type="text" id="id-{{$item->id}}" name="id" hidden value="{{$item->id}}">
+                            <a href="{{$item->link}}">
+                                <img 
+                                    src="https://img.youtube.com/vi/{{$item->codigo}}/hqdefault.jpg" 
+                                    alt="Miniatura de {{ $item->nombre }}" 
+                                    class="w-full md:w-48 rounded-lg shadow-md mb-4 md:mb-0 md:mr-6"
+                                >
+                            </a>
+                            <div class="relative text-center md:text-left md:!w-3/4 w-full">
+                                <div class="absolute top-0 left-0">
+                                    <h1></h1>
+                                    @if($item->anuncio == 0)
+                                        <button class="btn btn-light btn-sm" data-id="{{ $item->id }}" data-anuncio="0" onclick="marcar(this)">
+                                            <i class="fa-regular fa-bookmark" style="color: #000000;"></i>
+                                        </button>
+                                    @else
+                                        <button class="btn btn-light btn-sm" data-id="{{ $item->id }}" data-anuncio="1" onclick="marcar(this)">
+                                            <i class="fa-solid fa-bookmark" style="color: #FFD43B;"></i>
+                                        </button>
+                                    @endif
+
+                                </div>
+                                <h2 class="text-xl font-bold mb-2 nombre-video w-3/4 mx-auto">{{ $item->nombre }}</h2>
+                                <p class="text-gray-700">{{ $item->descripcion }}</p>
+                            </div>
+                            <span id="nombrespan-{{$item->id}}" hidden>{{$item->nombre}}</span>
+                            <div class="absolute right-0 top-0 w-16 h-4 rounded-md shadow-md">
+                                <button 
+                                    id="menu-button-{{$item->id}}" 
+                                    class="inline-flex justify-center w-full rounded-md border-none shadow-md text-xl px-1 bg-gray-100 font-medium text-gray-700"
+                                    aria-expanded="true"
+                                    aria-haspopup="true"
+                                    onclick="toggleMenu(event, {{$item->id}})"
+                                >
+                                    ...
+                                </button>
+                                <div 
+                                    id="dropdown-menu-{{$item->id}}"
+                                    class="hidden absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                    role="menu"
+                                    aria-orientation="vertical"
+                                    aria-labelledby="menu-button-{{$item->id}}"
+                                >
+                                    <div class="py-1" role="none">
+                                        <a href="#" 
+                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                            role="menuitem" 
+                                            onclick="handleModify({{$item->id}})">Modificar</a>
+                                        <a href="#" 
+                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                            role="menuitem" 
+                                            onclick="handleDelete({{$item->id}})">Borrar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @empty
+                    <p class="text-center text-gray-500">No hay videos disponibles.</p>
+                @endforelse
+            </div>
+
+        @endif
+        
 
         <div class="modal fade mt-[20%] h-[200px]" id="modalmensaje" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
             <div class="modal-dialog">

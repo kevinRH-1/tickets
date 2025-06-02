@@ -48,7 +48,19 @@
                         <p id="link-error2" class="text-red-500 text-sm mt-2" hidden>El link no es correcto!</p>
                     </div>
 
-                    <div class="flex justify-center mt-6">
+                    <div class="grid grid-cols-6 mt-4">
+                        <div class="cols-span-2 pt-3">
+                            <label for=" text-gray-700 font-medium mt-2">Visibilidad: </label>
+                        </div>
+                        <div class="cols-span-2">
+                            <select name="publico" id="publico" class="mt-1 h-12  rounded border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm">
+                                <option value="1">Administradores</option>
+                                <option value="2">Todos</option>
+                            </select>
+                        </div> 
+                    </div>
+
+                    <div class="flex justify-end mt-6">
                         <button 
                             type="submit" 
                             class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none"
@@ -167,6 +179,7 @@
             nombre: $('#nombre').val(),
             descripcion: $('#descripcion').val(),
             codigo: codigo,
+            visibilidad: $('#publico').val(),
         }
 
         console.log(formData);

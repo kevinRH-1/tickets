@@ -14,8 +14,10 @@ class VideosController extends Controller
     public function create(Request $request){
         $video =  new Videos();
         $video->nombre = $request->nombre;
+        $video->descripcion = $request->descripcion;
         $video->link = $request->link;
         $video->codigo = $request->codigo;
+        $video->rol = $request->visibilidad;
         $video->save();
 
         return response()->json(['message', 'video subido']);
