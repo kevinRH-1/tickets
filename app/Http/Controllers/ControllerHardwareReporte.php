@@ -54,24 +54,29 @@ class ControllerHardwareReporte extends Controller
         return view('reportes.reportesgeneral', compact('reportes', 'solucionados', 'generados', 'revision', 'sucursales', 'fallas', 'estatus', 'r24h'));
     }
 
-    public function misreportes($id, $usuario){
-        $pc = Pc::where('lugar_id', $id)->where('activo',1)->get();
-        $laptops = Laptops::where('lugar_id', $id)->where('activo',1)->get();
-        $impresoras = Impresoras::where('lugar_id', $id)->where('activo',1)->get();
+    public function misreportes($usuario){
+        // $pc = Pc::where('lugar_id', $id)->where('activo',1)->get();
+        // $laptops = Laptops::where('lugar_id', $id)->where('activo',1)->get();
+        // $impresoras = Impresoras::where('lugar_id', $id)->where('activo',1)->get();
 
-        $equipossucursal = collect();
-        $equipossucursal = $equipossucursal->merge($pc)
-                                            ->merge($laptops)
-                                            ->merge($impresoras);
+        // $equipossucursal = collect();
+        // $equipossucursal = $equipossucursal->merge($pc)
+        //                                     ->merge($laptops)
+        //                                     ->merge($impresoras);
 
 
-        $reportes = ReportesHardware::whereHas('usuario', function ($query) use ($id, $usuario) {
-            if ($id == 0) {
-                $query->where('idusuario', $usuario);
-            } else {
-                $query->where('lugar_id', $id);
-            }
-        })->orderBy('noti_u', 'desc')
+        // $reportes = ReportesHardware::whereHas('usuario', function ($query) use ($id, $usuario) {
+        //     if ($id == 0) {
+        //         $query->where('idusuario', $usuario);
+        //     } else {
+        //         $query->where('lugar_id', $id);
+        //     }
+        // })->orderBy('noti_u', 'desc')
+        // ->orderBy('status_id', 'asc')
+        // ->orderBy('id', 'desc')
+        // ->paginate(10);
+
+        $reportes = ReportesHardware::where('idusuario', $usuario)->orderBy('noti_u', 'desc')
         ->orderBy('status_id', 'asc')
         ->orderBy('id', 'desc')
         ->paginate(10);
@@ -89,7 +94,7 @@ class ControllerHardwareReporte extends Controller
         $revision = count($queryrevision);
         $solucionados = count($querysolucionados);
 
-        return view('reportes.misreportes', compact('reportes', 'pc', 'laptops', 'impresoras', 'equipossucursal', 'solucionados', 'generados', 'revision'));
+        return view('reportes.misreportes', compact('reportes', 'solucionados', 'generados', 'revision'));
 
     }
 
@@ -276,7 +281,7 @@ class ControllerHardwareReporte extends Controller
             $diferenciaEnHoras = $diferenciaEnMinutos / 60; // Convierte a horas
             $tiempo = number_format($diferenciaEnHoras, 2);
         }else{
-            $tiempo = null;
+            $tiempo = 'sin solucionar';
         }
 
         if($rol ==3){
@@ -349,6 +354,11 @@ class ControllerHardwareReporte extends Controller
         if($rol ==1 || $rol ==2){
             $reporte->solucionado_tecnico = 1;
             $reporte->idtecnico = $request->tecnico;
+            if($request->estado==5){
+                $reporte->solucionado_usuario =1;
+                $reporte->solucionado_tecnico=1;
+                $reporte->tiempo_solucion = date("Y-m-d H:i:s");
+            }
             
             $reporte->save();
             $this->cambiar_status($id, $request->estado, $request->usuario);
@@ -356,16 +366,30 @@ class ControllerHardwareReporte extends Controller
             foreach($borraranterior as $borrar){
                 $borrar->delete();
             }
-            $solucion = new SolucionTemp();
-            $solucion->reporte_id = $reporte->id;
-            $solucion->tecnico_id = $request->tecnico;
-            $solucion->tipo_reporte = 2;
-            
-            $solucion->tipo_solucion = $request->options;
-            
-            $solucion->solucion_mensaje = $request->extraInput;
-            
-            $solucion->save();
+            if($request->estado==4){
+                $solucion = new SolucionTemp();
+                $solucion->reporte_id = $reporte->id;
+                $solucion->tecnico_id = $request->tecnico;
+                $solucion->tipo_reporte = 2;
+                
+                $solucion->tipo_solucion = $request->options;
+                
+                $solucion->solucion_mensaje = $request->extraInput;
+                
+                $solucion->save();
+            }elseif($request->estado==5){
+                $solucion = new Solucion();
+                $solucion->reporte_id = $reporte->id;
+                $solucion->tecnico_id = $request->tecnico;
+                $solucion->tipo_reporte = 2;
+                
+                $solucion->tipo_solucion = $request->options;
+                
+                $solucion->solucion_mensaje = $request->extraInput;
+                
+                $solucion->save();
+            }
+           
             return to_route('reportes.general');
         }else{
             // $soluciontemp = SolucionTemp::where('reporte_id', $id)->get();

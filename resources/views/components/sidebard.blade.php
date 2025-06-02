@@ -131,9 +131,9 @@
                  </svg>
            </button>
            <ul id="submenutic" class="hidden overflow-hidden max-h-0 transition-[max-height] bg-gray-900 duration-500 ease-in-out">
-                 {{-- <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
-                    <a href="{{ route('misreportes', ['id' => Auth::user()->lugar_id, 'usuario' => Auth::user()->id]) }}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Tickets de Equipos</a>
-                 </li> --}}
+                 <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
+                    <a href="{{ route('misreportes', ['usuario' => Auth::user()->id]) }}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Tickets de Equipos</a>
+                 </li>
                  <li class="opacity-0 transform -translate-y-5  transition-all duration-500 ease-in-out">
                     <a href="{{route ('misreportessoftware', [Auth::user()->id])}}" class="flex items-center w-full p-2  transition duration-75  pl-11 group  text-white hover:bg-gray-700">- Tickets de Sistemas</a>
                  </li>

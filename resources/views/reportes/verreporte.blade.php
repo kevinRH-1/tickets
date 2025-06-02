@@ -120,11 +120,11 @@
 
                     <label for="" class="block  w-2/4 m-auto text-center text-2xl md:!mb-5 mb-1  text-red-600" >DATOS DEL USUARIO</label>
                     <div class="md:!mt-4 mt-2 grid md:grid-cols-2 grid-cols-1 md:gap-2">
-                        <div class="col-span-1">
+                        <div class="col-span-2">
                             <label for="sucursal" class="hidden md:!inline text-gray-700 w-2/4 m-auto  font-semibold text-2xl" >SUCURSAL: </label>
                             <label type="text" name="codigo" id="codigo" class=" text-xl md:text-2xl m-auto p-0 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->sucursal->nombre }}</label>
                         </div>
-                        <div class="col-span-1">
+                        <div class="col-span-2">
                             <label for="usuario" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold m-auto">USUARIO: </label>
                             <label type="text" name="codigo" id="codigo" class=" text-lg m-auto p-0 pt-2  md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->descripcion }}</label>
                         </div>
@@ -133,7 +133,7 @@
                             <label type="text" name="codigo" id="codigo"  class="w-2/4 text-lg m-auto p-0 pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->email }}</label>
                         
                         </div>
-                        <div class="col-span-1 md:pt-2">
+                        <div class="col-span-2 md:pt-2">
                             <label for="telefono" class="hidden md:!inline text-gray-700 mt-4 w-2/4 text-lg font-semibold m-auto">TELEFONO: </label>
                             <label type="text" name="codigo" id="codigo"  class="w-2/4 text-lg m-auto p-0 pt-2 md:!p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none">{{ $reporte[0]->usuario->phone }}</label>
                         </div>
@@ -159,7 +159,7 @@
                 <div class="mt-3"></div>
                 <label for="riesgo" class="inline text-gray-700  text-2xl">IMPORTANCIA: </label>
                 <input type="text" name="codigo" id="codigo" value="bajo" class="w-2/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none text-sky-400"readonly>
-                <div class="mt-2"></div>
+                {{-- <div class="mt-1"></div> --}}
                 {{-- <label for="estado" class="inline text-gray-700 text-2xl">Estado: </label>
                 @if($reporte[0]->status_id == 3)
                     <input type="text" name="verestado" id="verestado" readonly value="{{$reporte[0]->status->nombre}}" class="w-2/4 text-lg p-2 border-none bg-transparent rounded-md text-blue-700">
@@ -171,7 +171,7 @@
                     <input type="text" name="verestado" id="verestado" readonly value="{{$reporte[0]->status->nombre}}" class="w-2/4 text-lg p-2 border-none bg-transparent rounded-md text-orange-700">
                 @endif --}}
                 @if($reporte[0]->status_id ==5)
-                    <label for="hora_generacion" class="block text-gray-700 text-xl mb-2 mt-4">TIEMPO DE SOLUCION:</label>
+                    <label for="hora_generacion" class="block text-gray-700 text-xl mb-2 mt-2">TIEMPO DE SOLUCION:</label>
                     <label for="hora_generacion" class="inline  text-sky-600">DIA: </label>
                     <input type="text" name="solucion" id="solucion" value="{{ substr($reporte[0]?->tiempo_solucion, 0, 10)}}" class="w-2/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                     <br>
@@ -179,7 +179,13 @@
                     <input type="text" name="solucion" id="solucion" value="{{ substr($reporte[0]?->tiempo_solucion , 11, 20)}}" class="w-2/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                     <br>
                     <label for="hora_generacion" class="inline  text-sky-600">TIEMPO TRANSCURRIDO: </label>
-                    <input type="text" name="solucion" id="solucion" value="{{$tiempo}} horas" class="w-3/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
+                    <input type="text" name="solucion" id="solucion" value="<?php      
+                        $tiempo_decimal = $reporte[0]->tiempo;
+                        $horas = floor($tiempo_decimal);
+                        $minutos = round(($tiempo_decimal - $horas) * 60);
+
+                        echo sprintf("%02d horas con %02d minutos", $horas, $minutos);
+                    ?>" class="w-3/4 p-2 border-none bg-transparent rounded-md pointer-events-none focus:outline-none"readonly>
                 @endif
             </div>
         
@@ -291,16 +297,20 @@
                             <input type="text" name="rol" id="rol" hidden value="{{Auth::user()->roleid}}">
                             <div class="md:col-span-8 col-span-8 pt-[8px] md:!flex grid grid-cols-4 gap-4 w-[90%] mx-auto md:!justify-around">
 
-                                <button id="record-btn" class="bg-orange-600 px-4 col-span-2 rounded-md text-white">🎙️ Grabar</button>
+                                @if($reporte[0]->status_id!=5)
+                                    <button id="record-btn" class="bg-orange-600 px-4 col-span-2 rounded-md text-white">🎙️ Grabar</button>
                                     
-                                    {{-- HECHO POR IA --}}
 
-                                <form id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
-                                    <input type="file" id="fileInput" name="file" accept="image/*" style="display: none;" onchange="showPreview(event)">
-                                    <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success col-span-2 md:!w-[25%]">imagen</button>
-                                    
-                                    {{-- <button type="submit">Enviar</button> --}}
-                                </form>
+                                    <form id="uploadForm" action="#" method="POST" enctype="multipart/form-data">
+                                        <input type="file" id="fileInput" name="file" accept="image/*" style="display: none;" onchange="showPreview(event)">
+                                        <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-success col-span-2 md:!w-[25%]">imagen</button>
+                                        
+                                 
+                                    </form>
+
+                                @endif
+
+                                
                                 <div class="md:hidden"></div>
 
                                 @if($reporte[0]->status_id!=5)
@@ -675,7 +685,7 @@
                 $('#confirmarsolucion').modal('hide');
                 $('#modalmensaje').modal('show');
                 setTimeout(() => {
-                    window.location.href = '{{ route('misreportes', ['id' => Auth::user()->sucursal]) }}';
+                    window.location.href = '{{ route('misreportes', ['usuario' => Auth::user()->id]) }}';
                 }, 2000);
             },
             error: function(xhr){
@@ -873,7 +883,7 @@
 
         }else{
             $('#btnestatus').attr('disabled', true);
-            if(estado==4){
+            if(estado==4 || estado==5){
             
                 $('#modalestatus').modal('hide');
                 $('#modalsolucion').modal('show');

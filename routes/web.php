@@ -191,7 +191,7 @@ Route::middleware([
     Route::get('reportes/create{id}', [ControllerHardwareReporte::class , 'create'])->name('reportes.create');
     Route::get('/reportes/equipos/{id}/{lugar}', [ControllerHardwareReporte::class, 'equipos'])->name('reportes.equipos');
     Route::get('reportes/getequipo', [ControllerHardwareReporte::class, 'getequipo'])->name('reportes.getequipo');
-    Route::get('misreportes/{id}/{usuario}', [ControllerHardwareReporte::class, 'misreportes'])->name('misreportes');
+    Route::get('/misreportes/{usuario}', [ControllerHardwareReporte::class, 'misreportes'])->name('misreportes');
     Route::get('cambiar/estatus/{id}{rol}{sucursal}', [ControllerSoftwareReporte::class , 'status'])->name('software.status');
     Route::post('/confirmarsolucion', [ControllerHardwareReporte::class, 'confirmsolucion'])->name('confirmar.solucion');
     Route::get('crearticketh/{id}', [ControllerHardwareReporte::class, 'create'])->name('crear.ticketequipo');

@@ -436,7 +436,7 @@
                     $('#confirmar').modal('hide');
                     $('#modalmensaje').modal('show');
                     setTimeout(() => {
-                        window.location.href = '{{ route('misreportes', ['id' => Auth::user()->sucursal]) }}';
+                        window.location.href = '{{ route('misreportes', ['usuario' => Auth::user()->id]) }}';
                     }, 2000);
                 },
                 error: function(xhr){
