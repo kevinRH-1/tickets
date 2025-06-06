@@ -232,50 +232,67 @@
     
     //     });
     // });
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('seletipo').addEventListener('change', function () {
-            const valorSeleccionado = this.value; // Captura el valor del select
-            const userId = $('#lugar').val();
-            ruta = '/reportes/equipos/'+ valorSeleccionado +'/' + userId,
 
-            console.log(ruta)
-        
+
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        function cargarEquipos() {
+            const valorSeleccionado = document.getElementById('seletipo').value; // Captura el valor actual del select
+            const userId = $('#lugar').val();
+            const usuario = {{Auth::user()->id}};
+            const ruta = '/reportes/equipos/' + valorSeleccionado + '/' + userId + '/' + usuario;
+
+            console.log(ruta);
+
             $.ajax({
-                url:ruta,
-                type:'GET',
-                dataType:'json',
+                url: ruta,
+                type: 'GET',
+                dataType: 'json',
                 headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(data){
+                success: function (data) {
                     var selectElement = document.getElementById('seleequipos');
 
                     while (selectElement.options.length > 0) {
-                        selectElement.remove(0); // Elimina la primera opción en cada iteración
+                        selectElement.remove(0); // Elimina las opciones previas
                     }
 
-                    var option1 = document.createElement('option'); // Crear elemento <option>
-                    option1.value = ""; // Asignar el id como valor de la opción
+                    var option1 = document.createElement('option');
+                    option1.value = "";
                     option1.textContent = "seleccione un equipo";
-                    
                     option1.setAttribute('selected', 'selected');
                     option1.setAttribute('disabled', 'disabled');
-                    selectElement.appendChild(option1)
+                    selectElement.appendChild(option1);
 
-                    
                     data.forEach(dato => {
-                        var option = document.createElement('option'); // Crear elemento <option>
-                        option.value = dato.id; // Asignar el id como valor de la opción
-                        option.textContent = dato.descripcion; // Asignar el nombre como texto de la opción
-                        selectElement.appendChild(option); // Añadir la opción al select
+                        var option = document.createElement('option');
+                        option.value = dato.id;
+                        option.textContent = dato.descripcion;
+                        selectElement.appendChild(option);
                     });
                 },
-                error: function(xhr){
+                error: function (xhr) {
                     alert('error al consultar datos');
                 }
-            })
-        });
+            });
+        }
+
+        // Llamar a la función al cargar la página
+        cargarEquipos();
+
+        // También ejecutar la función cuando cambia el select
+        document.getElementById('seletipo').addEventListener('change', cargarEquipos);
     });
+
+
+    
+
+
+
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('seleequipos').addEventListener('change', function(){
             var id = $('#seleequipos').val();

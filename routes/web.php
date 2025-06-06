@@ -188,13 +188,14 @@ Route::middleware([
     // Route::get('reporte/eliminar{id}{sucursal}', [ControllerHardwareReporte::class, 'delete'])->name('reporte.eliminar');
     Route::get('reportes', [ControllerHardwareReporte::class,'indexgeneral'])->name('reportes.general');
     Route::get('/reportes/create{id}{categoria}', [ControllerHardwareReporte::class, 'createid'])->name('reportes.createid');
-    Route::get('reportes/create{id}', [ControllerHardwareReporte::class , 'create'])->name('reportes.create');
-    Route::get('/reportes/equipos/{id}/{lugar}', [ControllerHardwareReporte::class, 'equipos'])->name('reportes.equipos');
+    // Route::get('reportes/create{id}', [ControllerHardwareReporte::class , 'create'])->name('reportes.create');
+    Route::get('/reportes/equipos/{id}/{lugar}/{usuario}', [ControllerHardwareReporte::class, 'equipos'])->name('reportes.equipos');
     Route::get('reportes/getequipo', [ControllerHardwareReporte::class, 'getequipo'])->name('reportes.getequipo');
     Route::get('/misreportes/{usuario}', [ControllerHardwareReporte::class, 'misreportes'])->name('misreportes');
     Route::get('cambiar/estatus/{id}{rol}{sucursal}', [ControllerSoftwareReporte::class , 'status'])->name('software.status');
     Route::post('/confirmarsolucion', [ControllerHardwareReporte::class, 'confirmsolucion'])->name('confirmar.solucion');
-    Route::get('crearticketh/{id}', [ControllerHardwareReporte::class, 'create'])->name('crear.ticketequipo');
+    Route::get('crearticketh/{id}{sucursal}', [ControllerHardwareReporte::class, 'create'])->name('crear.ticketequipo');
+    // Route::get('crearticketh', [ControllerHardwareReporte::class, 'create'])->name('crear.ticketequipo');
     Route::get('/verhistorial', [ControllerHardwareReporte::class, 'historial'])->name('historial.ver');
     Route::get('filtrosreportesH', [ControllerHardwareReporte::class, 'filtros'])->name('filtros.hardware');
     Route::get('mostrarhistorial', [ControllerHardwareReporte::class, 'historial2'])->name('historial.ver2');

@@ -106,12 +106,11 @@ class ControllerHardwareReporte extends Controller
 
     }
 
-    public function create($id){
-
-        $pc = Pc::where('lugar_id', $id)->where('activo',1)->get();
-        $laptops = Laptops::where('lugar_id', $id)->where('activo',1)->get();
-        $impresoras = Impresoras::where('lugar_id', $id)->where('activo',1)->get();
-
+    public function create($id, $sucursal){
+        $pc = Pc::where('lugar_id', $sucursal)->orWhere('userid', $id)->where('activo',1)->get();
+        $laptops = Laptops::where('lugar_id', $sucursal)->orWhere('userid', $id)->where('activo',1)->get();
+        $impresoras = Impresoras::where('lugar_id', $sucursal)->orWhere('userid', $id)->where('activo',1)->get();
+        
         $fallas = CategoriaFalla::orderBy('id')->get();
         $falla = TipoFalla::orderBy('id')->get();
         $status = EstadosEquipos::orderBy('id')->get();
@@ -144,18 +143,18 @@ class ControllerHardwareReporte extends Controller
 
     }
 
-    public function equipos($cate, $lugar){
+    public function equipos($cate, $lugar, $usuario){
 
         if($cate == 1){
-            $pc = Pc::where('lugar_id', $lugar)->where('activo',1)->get();
+            $pc = Pc::where('lugar_id', $lugar)->orWhere('userid', $usuario)->where('activo',1)->get();
             return response()->json($pc);
 
         } else if($cate== 2){
-            $laptop = Laptops::where('lugar_id', $lugar)->where('activo',1)->get();
+            $laptop = Laptops::where('lugar_id', $lugar)->orWhere('userid', $usuario)->where('activo',1)->get();
             return response()->json($laptop);
 
         }else{
-            $impresora = Impresoras::where('lugar_id', $lugar)->where('activo',1)->get();
+            $impresora = Impresoras::where('lugar_id', $lugar)->orWhere('userid', $usuario)->where('activo',1)->get();
             return response()->json($impresora);
 
         }

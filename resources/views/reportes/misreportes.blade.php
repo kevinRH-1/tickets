@@ -13,7 +13,7 @@
 
         <!-- Botón derecho -->
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="{{route('crear.ticketequipo', [Auth::user()->lugar_id])}}">
+            <a href="{{route('crear.ticketequipo', [Auth::user()->id, Auth::user()->lugar_id])}}">
                 <button class="btn btn-primary btn-sm p-2" data-bs-toggle="modal" data-bs-target="#agregarNuevoReportes"><i class="bi bi-plus-circle"></i>
                     <span class="hidden md:inline ">Nuevo Reporte</span>
                 </button>
@@ -220,7 +220,7 @@
 
 
             </div>
-    
+
         </div>
     </div>
 @endsection
