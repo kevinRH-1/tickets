@@ -39,6 +39,8 @@
                     </a>
                 @endif --}}
 
+                
+
                 <x-button class="ms-4 max-w-[100px] max-h-[40px]">
                     {{ __('Iniciar sesion') }}
                 </x-button>
@@ -47,7 +49,14 @@
                 
             </div>
         </form>
-        {{-- <a href="{{route('register')}}"><button class="ms-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150">Register</button></a> --}}
+        <div class="mt-2 w-full flex justify-end">
+            <a href="{{route('registrar.usuario')}}">
+                <button class="ms-4 inline-flex items-center px-3 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150" onclick="event.stopPropagation();">
+                    Register
+                </button>
+            </a>
+        </div>
+        {{-- {{route('register')} --}}
 
     </x-authentication-card>
 </x-guest-layout>

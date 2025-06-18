@@ -114,7 +114,7 @@
                                 <th class="p-4 text-center hidden md:table-cell">PROBLEMA</th>
                                 <th class="p-4 text-center hidden md:table-cell">NIVEL</th>
                                 <th class="p-2 text-center hidden md:table-cell">ESTATUS</th>
-                                <th class="p-2 text-center md:rounded-tr-lg">VER</th>
+                                {{-- <th class="p-2 text-center md:rounded-tr-lg">VER</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -194,7 +194,7 @@
                                         <td class="p-4 text-center hidden md:table-cell">{{ \Illuminate\Support\Str::limit($item->descripcion, 40, '...') }}</td>
                                         <td class="p-4 text-center hidden {{$color}} md:table-cell">{{$item->falla?->nivel?->descripcion?? 'sin informacion'}}</td>
                                         <td class="p-4 text-center {{$color_status}} hidden md:table-cell">{{$item->status->nombre}}</td>
-                                        <td class="p-4 text-center">
+                                        {{-- <td class="p-4 text-center">
                                             <a href="{{route ('reportes.detalles', [$item->id, Auth::user()->roleid])}}">
                                                 <button class="bg-teal-500 text-white p-2 rounded hover:bg-teal-600">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -202,7 +202,7 @@
                                                     </svg>
                                                 </button>
                                             </a>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                             @endforeach
                         </tbody>

@@ -16,6 +16,15 @@ use PhpParser\Node\Expr\FuncCall;
 
 class UserController extends Controller
 {
+
+    public function registrar(){
+
+        $sucursales = Sucursal::where('activo', 1)->get();
+
+
+        return view('auth.registrar', compact('sucursales'));
+    }
+
     public function index()
     {
         if(Auth::user()->roleid==1){
@@ -46,6 +55,20 @@ class UserController extends Controller
         $usuario->activo=1;
         $usuario->save();
         return to_route('usuario.index');
+    }
+
+
+    public function store2(){
+        $request = Request();
+
+        $usuario = new User();
+        $name = substr($request->nombre, 0, 1) . $request->apellido;
+        $descripcion = $request->nombre . ' ' . $request->apellido;
+        $usuario->name = $name;
+        $usuario->descripcion = $descripcion;
+        $usuario->phone = $request->numero;
+        $usuario->email = $request->correo;
+        $usuario->lugar_id = $request->sucursal;
     }
 
     public function find($id){
