@@ -1,4 +1,5 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="w-full max-w-4xl mx-auto mt-8 bg-white p-10 rounded-lg shadow-md">
     
     <!-- Espacio para imagen -->
@@ -139,11 +140,17 @@
 
         if (validarFormulario(formData)) {
             $.ajax({
-                url:,
+                url:'/nuevousuario',
                 data: formData,
                 type:'POST',
-                headers:{
-                    
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response){
+                  window.location.href = '{{route('verlogin') }}';
+                },
+                error: function(xhr){
+                  console.log('error al crear el usuario');
                 }
             })
         }else{

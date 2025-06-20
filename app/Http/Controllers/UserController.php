@@ -25,6 +25,29 @@ class UserController extends Controller
         return view('auth.registrar', compact('sucursales'));
     }
 
+    private function generarContrasenaIdempiere($password)
+    {
+        // Generar un salt aleatorio de 8 bytes (128 bits)
+        $salt = random_bytes(8);
+
+        // Calcular el hash como en la función de verificación
+        $hashCalculado = hash('sha512', $salt . $password, true);
+        for ($i = 0; $i < 1000; $i++) {
+            $hashCalculado = hash('sha512', $hashCalculado, true);
+        }
+
+        // Convertir ambos a hexadecimal
+        $hexSalt = bin2hex($salt);
+        $hexHash = bin2hex($hashCalculado);
+
+        // Retornar ambos (o puedes guardar directamente en tu modelo)
+        return [
+            'hashedPassword' => $hexHash,
+            'hexsalt' => $hexSalt,
+        ];
+    }
+
+
     public function index()
     {
         if(Auth::user()->roleid==1){
@@ -54,12 +77,16 @@ class UserController extends Controller
         $usuario->status = 1;
         $usuario->activo=1;
         $usuario->save();
-        return to_route('usuario.index');
+        return response(['message', 'usuario creado']);
     }
 
 
     public function store2(){
+
+
         $request = Request();
+
+        $datosContrasena = $this->generarContrasenaIdempiere($request->input('password'));
 
         $usuario = new User();
         $name = substr($request->nombre, 0, 1) . $request->apellido;
@@ -69,6 +96,15 @@ class UserController extends Controller
         $usuario->phone = $request->numero;
         $usuario->email = $request->correo;
         $usuario->lugar_id = $request->sucursal;
+        $usuario->password = $datosContrasena['hashedPassword'];
+        $usuario->salt = $datosContrasena['hexsalt'];
+        $usuario->status=1;
+        $usuario->activo=0;
+        $usuario->roleid = 3;
+        
+        $usuario->save();
+
+        return response()->json(['message', 'usuario creado']);
     }
 
     public function find($id){
