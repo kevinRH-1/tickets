@@ -1,11 +1,19 @@
-@vite(['resources/css/app.css', 'resources/js/app.js'])
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<div class="w-full max-w-4xl mx-auto mt-8 bg-white p-10 rounded-lg shadow-md">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Registro</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body>
+  <div class="mt-8 bg-white p-10 rounded-lg shadow-md">
     
     <!-- Espacio para imagen -->
     <div class="flex justify-center mb-8">
       <div class="w-28 h-28 bg-gray-200 rounded-lg">
-        <img src="../resources/imagen/DobermaN.png" alt="Logo" class=" hidden lg:block  ">
+        <img src="../resources/imagen/DobermaN.png" alt="Logo" class="">
       </div>
     </div>
 
@@ -68,6 +76,8 @@
       </div>
     </form>
   </div>
+</body>
+
 
   <script src="../resources/jquery/jquery-3.6.0.min.js"></script>
 
