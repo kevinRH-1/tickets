@@ -98,7 +98,7 @@ class UserController extends Controller
         $usuario->lugar_id = $request->sucursal;
         $usuario->password = $datosContrasena['hashedPassword'];
         $usuario->salt = $datosContrasena['hexsalt'];
-        $usuario->status=1;
+        $usuario->status=0;
         $usuario->activo=0;
         $usuario->roleid = 3;
         

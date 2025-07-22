@@ -1,4 +1,6 @@
-@if ($errors->any())
+@if ($errors->has('cuenta_inactiva'))
+    <span class="text-sm text-red-600">{{ $errors->first('cuenta_inactiva') }}</span>
+@elseif ($errors->any())
     <div {{ $attributes }}>
         <div class="font-medium text-red-600">{{ __('oops! Algo salio mal.') }}</div>
 

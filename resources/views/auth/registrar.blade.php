@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-  <div class="mt-8 bg-white p-10 rounded-lg shadow-md">
+  <div class="mt-8 bg-white p-10 rounded-lg shadow-md md:!w-[60%] w-[100%] mx-auto">
     
     <!-- Espacio para imagen -->
     <div class="flex justify-center mb-8">
